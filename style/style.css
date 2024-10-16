@@ -1,0 +1,235 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/*FONTS*/
+@font-face {
+    font-family: 'Retrograde';
+    src:url('fonts/Retrograde.ttf');
+}
+
+@font-face {
+    font-family: 'Coolvetica';
+    src:url('fonts/coolvetica.otf');
+}
+
+/*HEADER AND NAVIGATION BAR*/
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 25px 0px 25px 0px;
+    background: #33386D;
+}
+  
+.header h1 {
+    font-family: Retrograde;
+    font-weight: 100;
+    font-size: 30px;
+    letter-spacing: 5px;
+    margin-left: 20px;
+    color: white;
+}
+  
+nav {
+    background: transparent;
+    height: 50px;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+  
+nav img {
+    width: 100px;
+    margin-bottom: -35px;
+    margin-left: 10px;
+}
+  
+.navbar{
+    flex: 1;
+    text-align: right;
+}
+
+.navbar ul li {
+    list-style: none;
+    display: inline-block;
+    margin: 0 20px;
+    position: relative;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: white;
+    font: Times;
+    letter-spacing: 2px;
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.navbar ul li::after{
+    content: '';
+    height: 3px;
+    width: 0;
+    background: white;
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    transition: 0.5s;
+}
+
+.navbar ul li:hover::after{
+    width: 100%;
+}
+  
+body {
+    padding-top: 100px; 
+    font-size: 14px;
+}
+  
+/*FOOTER*/
+footer{
+    margin-top: 10px;
+    background-color: #33386D;
+    padding: 0;
+}
+  
+.footer-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding-top: 10px;
+}
+  
+.footer-container > div {
+    flex: 1;
+    padding: 20px;
+}
+  
+.logo-container {
+    margin:0;
+    padding:0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+  
+.logo {
+    max-width: 50%; 
+    border-radius: 50%;
+    height: 100px; 
+    border: 2px solid black;
+}
+  
+.contact-us, .quick-links{
+    text-align: center;
+}
+  
+.contact-us h2, .quick-links h2 {
+    margin-bottom: 20px;
+    color: white;
+    font-family: Kanit;
+    font-size: 32px;
+}
+  
+.contact-us p, .quick-links li a{
+    margin-bottom: 10px;
+    color: white;
+    font-family: Lato;
+    font-size: 14px;
+    text-decoration: none;
+}
+  
+.quick-links ul li {
+    width: auto;
+    text-align: center;
+    list-style-type: none;
+    padding: 7px;
+    position: relative;
+}
+  
+.quick-links li::before{
+    content: "";
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 100%;
+    width:0;
+    height:2px;
+    background: #EB3678;
+    transition-duration: 0.5s;
+}
+  
+.quick-links li:hover::before{
+    width: 70px;
+}
+  
+.contact-us h2, .quick-links ul {
+    margin-bottom: 10px; 
+}
+  
+.copyright{
+    text-align: center; 
+    padding: 10px;
+    font-weight: bold;
+    font-size: 18px;
+    color: white;
+    background-color:#EB3678;
+}
+  
+/*VIEW PRODUCTS PAGE*/
+.event-title {
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: flex-start; 
+    width: 100%;
+    height: 419px;
+    background: url(img/events-bg.jpg);
+    background-color: black ;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    position: relative;
+    overflow: hidden;
+    padding-left: 200px;
+    z-index: 1; 
+  }
+
+  .event-title .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 0; 
+  }
+  
+  .event-title h1, .event-title h3 {
+    z-index: 2; 
+    position: relative; 
+    color: white; 
+  }
+  
+  .event-title h1 {
+    font-family: Kanit;
+    font-weight: 600; 
+    font-size: 55px;
+    margin-bottom: 20px; 
+  }
+  
+  .event-title h3 {
+    font-family: Lato;
+    font-weight: 700; 
+    font-size: 17px;
+  }
+  
+  .event-title h1 span {
+    color: orange;
+  }
+  
