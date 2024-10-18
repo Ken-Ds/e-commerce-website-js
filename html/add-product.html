@@ -18,19 +18,34 @@
 
             </div>
 
-            <div class="right-side">
+            <div class="middle">
                 <h1>ADD PRODUCT FORM: </h1>
-                <form class="prod-details">
-                    <p>Product Name: <input type="text" class="product-name" placeholder="Enter Product Name"></p>
-                    <p>Category</p>
+                <form>
+                    <p>Product Name:</p>
+                    <input type="text" placeholder="Enter Product Name">
+                    <p>Category:</p>
+                    <input type="text" placeholder="Enter Product Category">
+                    <p>Product Details:</p>
+                    <textarea name="Product Details" class="detail-box" rows="5" placeholder="Add Description..."></textarea>
                 </form>
-                
-                <div class="detail-box">
-        
-                </div>
+            </div>
+
+            <div class="right-side">
+                <h1>ADD PRODUCT STOCK & PRICE:</h1>
+                <form>
+                    <p>Stock: </p>
+                    <p><input type="text" placeholder="0"></p>
+                    <p>Price: </p>
+                    <p style="margin-left: -25px;">₱ <input type="text" placeholder="0.00"></p>
+                </form>
             </div>
         </section>
 
+        <section class="add-product-buttons-section">
+            <button class="button" type="button" onclick="location.href='view-product.html'">Cancel</button>
+            <button class="button" type="button" onclick="">Add</button>
+        </section>
+    
 
          <!--Navigation Bar-->
          <header class = "header">
