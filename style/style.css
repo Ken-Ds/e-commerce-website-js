@@ -472,4 +472,98 @@ footer{
     background-color: var(--secondary-color);
 }
 
+.add-product-body {
+    padding: 50px;
+    display: flex;
+    height: 400px;
+    width: auto;
+}
+
+.add-product-body .left-side {
+    height: auto;
+    width: 30%;
+    float: left;
+    margin-right: 15px;
+}
+
+.add-product-body h1 {
+    font-size: 40px;
+    font-family: retrograde;
+}
+
+
+.add-product-body img {
+    width: 80%;
+}
+
+.add-product-body .image {
+    text-align: center;
+    height: 100%;
+    width: 100%;
+}
+
+.to-edit {
+    background-color: var(--primary-color);
+    color:white;
+    font-family: Inter;
+    font-size: 30px;
+    border: 0;
+    width: 100px;
+}
+
+.add-product-body .image-button-container {
+    text-align: right;
+    height: 30px;
+    padding-right: 10%;
+    padding-top: 10px;
+}
+
+.add-product-body .image-button {
+    position:absolute;
+    margin-top: 11%;
+    margin-left: 16%;
+    background-color: var(--primary-color);
+    color:white;
+    font-size: 20px;
+    border: 0;
+    height: 5%;
+    width: 5%;
+}
+
+.add-product-body .image-button:hover {
+    background-color: var(--secondary-color);
+}
+
+.add-product-body .right-side {
+    height: auto;
+    width: 70%;
+    float: right;
+    margin-left: 15px;
+}
+
+.add-product-body .right-side .prod-details {
+    margin-top: 20px;
+    border: 1px black solid;
+}
+
+.add-product-body .right-side p {
+    font-size: 25px;
+    padding-left: 5%;
+    font-family: Inter;
+}
+
+.add-product-body .right-side .product-name {
+    font-size: 25px;
+    margin-left: 10%;
+}
+.add-product-body .right-side .detail-box {
+    background-color: white;
+    height: 50%;
+
+}
+
+.add-product-body .right-side .product-details {
+    width: 100%;
+    height: 100%;
+}
   
