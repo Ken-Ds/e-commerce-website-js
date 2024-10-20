@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>INGS View Orders</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../style/style.css" rel="stylesheet" >
+    </head>
+    <body>
+
+        <!-- Orders-->
+         <div class = "orders-container">
+            <h2>Orders</h2>
+            <div class="filter-orders">
+                <button onclick="filterOrders('all')" class="active" disabled>ALL</button>
+                <button onclick="filterOrders('pending')">PENDING</button>
+                <button onclick="filterOrders('delivered')">DELIVERED</button>
+            </div>
+
+          <!-- Pending Order -->
+        <div class="order" data-status="pending">
+            <div class="product-image">
+                <img src="../style/img/sample-prod.jpg" alt="Product Image" width="100px">
+            </div>
+            <div class="order-details">
+                <h3>Customer Name</h3>
+                <p>Product Name</p>
+                <p>Quantity: </p>
+                <div class="order-dits">
+                    <p class="amount">Amount: ₱1,500.00</p>
+                    <p class="order-date">Order Date: 2024-10-10</p>
+            </div>
+        </div>
+
+            <div class="order-Status" data-status="pending">
+                <h4>Status: <span class="status pending">Pending</span></h4>
+                <button class="mark-delivered" onclick="markAsDelivered(1, this)">MARK AS DELIVERED</button>
+                <p class="delivery-date"></p>
+            </div>
+        </div>
+
+        <!-- Delivered Order -->
+        <div class="order" data-status="delivered">
+            <div class="product-image">
+                <img src="../style/img/sample-prod.jpg" alt="Product Image" width="100px">
+            </div>
+            <div class="order-details">
+                <h3>Customer Name</h3>
+                <p>Product Name</p>
+                <p>Quantity: </p>
+                <div class="order-dits">
+                    <p class="amount">Amount: ₱1,000.00</p>
+                    <p class="order-date">Order Date: 2024-10-15</p>
+            </div>
+        </div>
+
+            <div class="order-Status" data-status="delivered">
+                <h4>Status: <span class="status delivered">Delivered</span></h4>
+                <button class="mark-delivered" onclick="markAsDelivered(2, this)" disabled>MARK AS DELIVERED</button>
+                <p class="delivery-date">Delivery Date: 2024-10-24</p>
+            </div>
+        </div>
+    </div>
+
+    <!--No Orders-->
+    <div class="no-orders-message" style="display: none;">
+        <img src="../style/img/noOrder.png" alt="No Orders" class="no-orders-image">
+        <p>NO Orders Available at the Moment</p>
+    </div>
+
+         <!--Navigation Bar-->
+         <header class="header">
+            <nav>
+                <a href="view-product.html"> <img src="../style/img/logo.png" alt="Logo of INGS"></a>
+                <h1>In Genius Orders</h1>
+                <div class="navbar" id="navbar">
+                    <ul>
+                        <li><a href="view-product.html">Products</a></li>
+                        <li><a href="view-orders.html" class="active">Orders</a></li>
+                        <li><a href="">Sales</a></li>
+                        <li><a href="">Profile</a></li>
+                    </ul>
+                </div>
+            </nav>
+         </header>
+
+         <!--Footer-->
+         <footer>
+            <div class="footer-container">
+                <div class="logo-container">
+                    <img class="logo" src="../style/img/logo.png" alt="Logo of INGS">
+                </div>
+                <div class="contact-us">
+                    <h2>Developers</h2>
+                    <div class="devs">
+                        <div class="dev">
+                            <p>Burgos, Miguel Joshua<br></p>
+                            <p>Cagulada, Sheryn Ann</p>
+                            <p>Chua, Harvey Lance</p>
+                        </div>
+                        <div class="dev">
+                            <p>Evangelista, Kendrick</p>
+                            <p>Lumanglas, Yenzy Hynna</p>
+                            <p>Modelo, Alexx Evan</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="quick-links">
+                    <h2>Quick Links</h2>
+                    <ul>
+                        <li><a href="view-product.html">Products</a></li>
+                        <li><a href="view-orders.html">Orders</a></li>
+                        <li><a href="">Sales</a></li>
+                        <li><a href="">Profile</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; INGS_CS312L</p>
+            </div>
+        </footer>
+
+        <!--Sample Script-->
+        <script>
+            // Mark as Delivered
+            function markAsDelivered(orderId, button) {
+                const confirmation = confirm("Are you sure the product is delivered?");
+                if (confirmation) {
+                    const xhr = new XMLHttpRequest();
+                    xhr.open("POST", "update_order.php", true);
+                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    xhr.onreadystatechange = function () {
+                        if (xhr.readyState === 4 && xhr.status === 200) {
+                            
+                            const statusElement = button.parentElement.querySelector('.status');
+                            const dateElement = button.parentElement.querySelector('.delivery-date');
+                            const currentDate = new Date();
+                            const formattedDate = currentDate.toLocaleDateString('en-US', {
+                                year: 'numeric', month: '2-digit', day: '2-digit'
+                            });
+    
+                            statusElement.textContent = "Delivered";
+                            statusElement.classList.remove('pending');
+                            statusElement.classList.add('delivered');
+    
+                            dateElement.textContent = `Delivered on: ${formattedDate}`;
+                      
+                            button.textContent = "(Date delivered)";
+                            button.disabled = true;
+
+                            button.closest('.order').setAttribute('data-status', 'delivered');
+                        }
+                    };
+                    xhr.send("order_id=" + orderId);
+                }
+            }
+
+           // Sort Orders 
+        function filterOrders(status) {
+            const orders = document.querySelectorAll('.orders-container .order');
+            
+            orders.forEach(order => {
+                const orderStatus = order.getAttribute('data-status');
+                
+                if (status === 'all' || status === orderStatus) {
+                    order.style.display = 'flex'; 
+                } else {
+                    order.style.display = 'none'; 
+                }
+            });
+
+            const buttons = document.querySelectorAll('.filter-orders button');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+                button.disabled = false;
+            });
+
+            const clickedButton = document.querySelector(`.filter-orders button[onclick="filterOrders('${status}')"]`);
+            clickedButton.classList.add('active');
+            clickedButton.disabled = true;
+
+            checkOrders();
+        }
+
+        // No Orders
+        function checkOrders() {
+            const orders = document.querySelectorAll('.orders-container .order');
+            const noOrdersMessage = document.querySelector('.no-orders-message');
+
+            const visibleOrders = Array.from(orders).filter(order => order.style.display !== 'none');
+
+            if (visibleOrders.length === 0) {
+                noOrdersMessage.style.display = 'block';
+            } else {
+                noOrdersMessage.style.display = 'none';
+            }
+        }
+
+        checkOrders();
+            
+        </script>
+    </body>
+</html>
