@@ -508,7 +508,7 @@ footer{
 }
 
 .image label {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     margin: 20px;
@@ -518,6 +518,7 @@ footer{
     height: 70px;
     border-radius: 20px;
     cursor: pointer;
+    width: 50%;
 }
 
 .image label:hover {
@@ -532,14 +533,16 @@ footer{
     border-radius: 20px;
     transition: 0.3s;
     cursor: pointer;
+    display: inline;
 }
+
 
 .add-product-body img:hover {
     transform: scale(1.05);
 }
 
 .add-product-body .stock-and-price input {
-    display: block;
+    display: inline;
     font-size: 30px;
     width: 30%;
     text-align: center;
@@ -557,7 +560,6 @@ footer{
     height: auto;
     width: auto;
     margin-left: 15px;
-   
 }
 
 .add-product-body .stock-and-price p {

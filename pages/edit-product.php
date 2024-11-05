@@ -13,7 +13,10 @@ echo "
 
                     <div class='image'>
                         <img src='../style/img/sample-prod.jpg' alt='Upload Photo' id = 'product-pic'>
-                        <label for = 'input-file'>Upload Image</label>
+                        
+                        <div>
+                            <label for = 'input-file'>Upload Image</label>
+                        </div>
                         <input type ='file' accept = 'image/jpeg, image/png, image/jpg' id = 'input-file'>
 
                         <div class='stock-and-price'>
