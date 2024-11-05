@@ -18,9 +18,13 @@ echo "
                 <div class='left-side'>
 
                     <div class='image'>
-                        <img src='$imageSrc' alt='Upload Photo' id = 'product-pic' >
+                        <img src='$imageSrc' alt='Upload Photo' id = 'product-pic'>
+
+                        <div>
                         <label for = 'input-file'>Upload Image</label>
-                        <input type ='file' name='pic' accept='image/jpeg, image/png, image/jpg' id ='input-file'>
+                        <div>
+
+                        <input type ='file' name='pic' accept = 'image/jpeg, image/png, image/jpg' id = 'input-file'>
 
                         <div class='stock-and-price'>
                             <p>Stock: <input type='text' name='stock' value='$product[stock]' placeholder='0'></p>
