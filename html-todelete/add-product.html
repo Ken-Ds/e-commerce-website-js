@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>INGS Add Product</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="../style/style.css" rel="stylesheet" >
+    </head>
+    <body>
+        
+        <form class="add-product-body">
+            <h1 style="text-align: center;">ADD PRODUCT FORM</h1>
+            <div class="sides">
+                <div class="left-side">
+                    
+                    <div class="image">
+                        <img src="..//style/img/upload-img.png" alt="Upload Photo">
+    
+                        <div class="stock-and-price">
+                            <p>Stock: <input type="text" placeholder="0"></p>
+                            <p>Price: ₱ <input type="text" placeholder="0.00"></p>
+                        </div>
+                        
+                    </div>
+    
+                </div>
+    
+                <div class="right-side">
+                    <div class="detail">
+                        <div class="lft">
+                            <p>Product Name: </p>
+                        </div>
+                        <div class="rgt">
+                            <input type="text" placeholder="Enter Product Name">
+                        </div>
+                    </div>
+                    <div class="detail">
+                        <div class="lft">
+                            <p>Category: </p>
+                        </div>
+                        <div class="rgt">
+                            <div>
+                                <select name="" id="">
+                                    <option value="" disabled selected>--Choose Category--</option>
+                                    <option>Apparel</option>
+                                    <option>Food</option>
+                                    <option>Accessory</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="detail">
+                        <div class="lft">
+                            <p>Product Details: </p>
+                        </div>
+                        <div class="rgt">
+                            <textarea name="Product Details" class="detail-box" rows="5" placeholder="Add Description..."></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="add-product-buttons-section">
+                <button class="button" type="button" onclick="location.href='view-product.html'">Cancel</button>
+                <button class="button" type="button" onclick="">Add</button>
+            </div>
+        </form>
+
+        
+    
+
+         <!--Navigation Bar-->
+         <header class = "header">
+            <nav>
+                <a href= "view-product.html"> <img src="../style/img/logo.png" alt="Logo of INGS"></a>
+                <h1>In Genius Orders</h1>
+                <div class="navbar" id="navbar">
+                    <ul>
+                        <li><a href="view-product.html" >Products</a></li>
+                        <li><a href="">Orders</a></li>
+                        <li><a href="">Sales</a></li>
+                        <li><a href="">Profile</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+        <!--Footer-->
+        <footer>
+            <div class="footer-container">
+                <div class="logo-container">
+                    <img class="logo" src="../style/img/logo.png" alt="Logo of INGS">
+                </div>
+                <div class="contact-us">
+                    <h2>Developers</h2>
+                    <div class="devs">
+                        <div class="dev">
+                            <p>Burgos, Miguel Joshua<br></p>
+                            <p>Cagulada, Sheryn Ann</p>
+                            <p>Chua, Harvey Lance</p>
+                        </div>
+                        <div class="dev">
+                            <p>Evangelista, Kendrick</p>
+                            <p>Lumanglas, Yenzy Hynna</p>
+                            <p>Modelo, Alexx Evan</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="quick-links">
+                    <h2>Quick Links</h2>
+                    <ul>
+                        <li><a href="view-product.html" >Products</a></li>
+                        <li><a href="">Orders</a></li>
+                        <li><a href="">Sales</a></li>
+                        <li><a href="">Profile</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; INGS_CS312L</p>
+            </div>
+        </footer>
+    </body>
+</html>
