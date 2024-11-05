@@ -339,6 +339,13 @@ footer{
     align-items: center;
 }
 
+.filter-product form {
+    padding: 10px 40px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .select-container {
     width: 200px;
     display: flex;
@@ -1081,6 +1088,7 @@ footer{
     background-color: var(--primary-color);
     border-radius: 0px 5px 5px 0px;
     cursor: pointer;
+    margin-top: -12.5px;
   }
 
   .search-container img:hover {

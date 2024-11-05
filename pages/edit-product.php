@@ -22,7 +22,7 @@ echo "
 
                         <div>
                         <label for = 'input-file'>Upload Image</label>
-                        <div>
+                        </div>
 
                         <input type ='file' name='pic' accept = 'image/jpeg, image/png, image/jpg' id = 'input-file'>
 
