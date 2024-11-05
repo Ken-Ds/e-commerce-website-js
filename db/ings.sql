@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `orgID` int NOT NULL,
   `pName` varchar(255) NOT NULL,
   `pDesc` varchar(255) DEFAULT NULL,
-  `pImage` blob,
+  `pImage` longblob,
   `pCategory` varchar(100) DEFAULT NULL,
   `stock` int DEFAULT NULL,
   `price` decimal(10,2) DEFAULT NULL,

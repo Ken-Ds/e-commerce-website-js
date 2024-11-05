@@ -382,6 +382,7 @@ footer{
 
 .product img {
     width: 200px;
+    height: 100%;
     align-items: center;
     border: 1px solid black;
 }

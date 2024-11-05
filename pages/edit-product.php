@@ -1,24 +1,30 @@
 <?php 
 
 include '../includes/header.php';
-include '../db/product-functions.php';
+include '../db/get-functions.php';
 
 $product = getProduct();
 
+if (empty($product['pImage'])) {
+    $imageSrc = "../style/img/prod-placeholder.jpg";
+} else {
+    $imageSrc = "data:image/png;charset=utf8;base64," . base64_encode($product['pImage']); 
+}
+
 echo "
-        <form class='add-product-body'>
+        <form class='add-product-body' action='../db/update-product.php?id=$product[productID]' method='POST' enctype='multipart/form-data'>
             <h1 style='text-align: center;'>EDIT PRODUCT FORM</h1>
             <div class='sides'>
                 <div class='left-side'>
 
                     <div class='image'>
-                        <img src='../style/img/sample-prod.jpg' alt='Upload Photo' id = 'product-pic'>
+                        <img src='$imageSrc' alt='Upload Photo' id = 'product-pic' >
                         <label for = 'input-file'>Upload Image</label>
-                        <input type ='file' accept = 'image/jpeg, image/png, image/jpg' id = 'input-file'>
+                        <input type ='file' name='pic' accept='image/jpeg, image/png, image/jpg' id ='input-file'>
 
                         <div class='stock-and-price'>
-                            <p>Stock: <input type='text' value='$product[stock]' placeholder='0'></p>
-                            <p>Price: ₱ <input type='text' value='$product[price]' placeholder='0.00'></p>
+                            <p>Stock: <input type='text' name='stock' value='$product[stock]' placeholder='0'></p>
+                            <p>Price: ₱ <input type='text' name='price' value='$product[price]' placeholder='0.00'></p>
                         </div>
                     </div>
     
@@ -30,7 +36,7 @@ echo "
                             <p>Product Name: </p>
                         </div>
                         <div class='rgt'>
-                            <input type='text' value='$product[pName]' placeholder='Enter Product Name'>
+                            <input type='text' name='name' value='$product[pName]' placeholder='Enter Product Name'>
                         </div>
                     </div>
                     <div class='detail'>
@@ -38,7 +44,7 @@ echo "
                             <p>Category: </p>
                         </div>
                         <div class='rgt'>
-                            <select name='' id=''>
+                            <select name='category' id=''>
                                 <option value='' disabled selected>--Choose Category--</option>
                                 <option value='Food'" . ($product['pCategory']== 'Food' ? 'selected' : '') . ">Food</option>
                                 <option value='Household'" . ($product['pCategory']== 'Household' ? 'selected' : '') . ">Household</option>
@@ -53,7 +59,7 @@ echo "
                             <p>Product Details: </p>
                         </div>
                         <div class='rgt'>
-                            <textarea name='Product Details' class='detail-box' rows='5' placeholder='Add Description...'>$product[pDesc]</textarea>
+                            <textarea name='desc' class='detail-box' rows='5' placeholder='Add Description...'>$product[pDesc]</textarea>
                         </div>
                     </div>
                 </div>
@@ -61,7 +67,7 @@ echo "
             
             <div class='add-product-buttons-section'>
                 <button class='button' type='button' onclick=\"window.location.href='view-product.php'\">Cancel</button>
-                <button class='button' type='button' onclick=''>Edit</button>
+                <button class='button' type='submit' onclick=\"window.location.href?id='db/update-product.php$product[productID]\">Edit</button>
             </div>
         </form>
     

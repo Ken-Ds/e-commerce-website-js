@@ -1,7 +1,7 @@
 <?php
 
 include '../includes/header.php';
-include '../db/product-functions.php';
+include '../db/get-functions.php';
 
 echo "
     <section class = 'event-title'>
