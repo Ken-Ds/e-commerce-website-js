@@ -8,43 +8,65 @@
     </head>
     <body>
         
-        <section class="add-product-body">
-            <div class="left-side">
-                <h1>ADD PRODUCT IMAGE</h1>
-                <div class="image">
-                    <button class="image-button" type="button" onclick="">+</button>
-                    <img src="..//style/img/sample-prod.jpg" alt="">
+        <form class="add-product-body">
+            <h1 style="text-align: center;">ADD PRODUCT FORM</h1>
+            <div class="sides">
+                <div class="left-side">
+                    
+                    <div class="image">
+                        <img src="..//style/img/upload-img.png" alt="Upload Photo">
+    
+                        <div class="stock-and-price">
+                            <p>Stock: <input type="text" placeholder="0"></p>
+                            <p>Price: ₱ <input type="text" placeholder="0.00"></p>
+                        </div>
+                        
+                    </div>
+    
                 </div>
-
+    
+                <div class="right-side">
+                    <div class="detail">
+                        <div class="lft">
+                            <p>Product Name: </p>
+                        </div>
+                        <div class="rgt">
+                            <input type="text" placeholder="Enter Product Name">
+                        </div>
+                    </div>
+                    <div class="detail">
+                        <div class="lft">
+                            <p>Category: </p>
+                        </div>
+                        <div class="rgt">
+                            <div>
+                                <select name="" id="">
+                                    <option value="" disabled selected>--Choose Category--</option>
+                                    <option>Apparel</option>
+                                    <option>Food</option>
+                                    <option>Accessory</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="detail">
+                        <div class="lft">
+                            <p>Product Details: </p>
+                        </div>
+                        <div class="rgt">
+                            <textarea name="Product Details" class="detail-box" rows="5" placeholder="Add Description..."></textarea>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div class="middle">
-                <h1>ADD PRODUCT FORM: </h1>
-                <form>
-                    <p>Product Name:</p>
-                    <input type="text" placeholder="Enter Product Name">
-                    <p>Category:</p>
-                    <input type="text" placeholder="Enter Product Category">
-                    <p>Product Details:</p>
-                    <textarea name="Product Details" class="detail-box" rows="5" placeholder="Add Description..."></textarea>
-                </form>
+            
+            <div class="add-product-buttons-section">
+                <button class="button" type="button" onclick="location.href='view-product.html'">Cancel</button>
+                <button class="button" type="button" onclick="">Add</button>
             </div>
+        </form>
 
-            <div class="right-side">
-                <h1>ADD PRODUCT STOCK & PRICE:</h1>
-                <form>
-                    <p>Stock: </p>
-                    <p><input type="text" placeholder="0"></p>
-                    <p>Price: </p>
-                    <p style="margin-left: -25px;">₱ <input type="text" placeholder="0.00"></p>
-                </form>
-            </div>
-        </section>
-
-        <section class="add-product-buttons-section">
-            <button class="button" type="button" onclick="location.href='view-product.html'">Cancel</button>
-            <button class="button" type="button" onclick="">Add</button>
-        </section>
+        
     
 
          <!--Navigation Bar-->

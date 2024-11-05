@@ -1,50 +1,70 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>INGS Edit Product</title>
+        <title>INGS Add Product</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="../style/style.css" rel="stylesheet" >
     </head>
     <body>
         
-        <section class="add-product-body">
-            <div class="left-side">
-                <h1>EDIT PRODUCT IMAGE</h1>
-                <div class="image">
-                    <button class="image-button" type="button" onclick="">+</button>
-                    <img src="..//style/img/sample-prod.jpg" alt="">
+        <form class="add-product-body">
+            <h1 style="text-align: center;">EDIT PRODUCT FORM</h1>
+            <div class="sides">
+                <div class="left-side">
+                    
+                    <div class="image">
+                        <img src="..//style/img/sample-prod.jpg" alt="Upload Photo">
+    
+                        <div class="stock-and-price">
+                            <p>Stock: <input type="text" value="4" placeholder="0"></p>
+                            <p>Price: ₱ <input type="text" value="50" placeholder="0.00"></p>
+                        </div>
+                        
+                    </div>
+    
                 </div>
-
+    
+                <div class="right-side">
+                    <div class="detail">
+                        <div class="lft">
+                            <p>Product Name: </p>
+                        </div>
+                        <div class="rgt">
+                            <input type="text" value="Shoes" placeholder="Enter Product Name">
+                        </div>
+                    </div>
+                    <div class="detail">
+                        <div class="lft">
+                            <p>Category: </p>
+                        </div>
+                        <div class="rgt">
+                            <select name="" id="">
+                                <option value="" disabled selected>--Choose Category--</option>
+                                <option value="Apparel" selected>Apparel</option>
+                                <option value="Food">Food</option>
+                                <option value="Accessory">Accessory</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="detail">
+                        <div class="lft">
+                            <p>Product Details: </p>
+                        </div>
+                        <div class="rgt">
+                            <textarea name="Product Details" class="detail-box" rows="5" placeholder="Add Description...">A brown Shoe</textarea>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div class="middle">
-                <h1>EDIT PRODUCT FORM: </h1>
-                <form>
-                    <p>Product Name:</p>
-                    <input type="text" value="Old Product Name" placeholder="Enter Product Name">
-                    <p>Category:</p>
-                    <input type="text" value="Old Product Category" placeholder="Enter Product Category">
-                    <p>Product Details:</p>
-                    <textarea name="Product Details" class="detail-box" rows="5" placeholder="Add Description...">This was the Previous description</textarea>
-                </form>
+            
+            <div class="add-product-buttons-section">
+                <button class="button" type="button" onclick="location.href='view-product.html'">Cancel</button>
+                <button class="button" type="button" onclick="">Add</button>
             </div>
+        </form>
 
-            <div class="right-side">
-                <h1>EDIT PRODUCT STOCK & PRICE:</h1>
-                <form>
-                    <p>Stock: </p>
-                    <p><input type="text" value="2" placeholder="0"></p>
-                    <p>Price: </p>
-                    <p style="margin-left: -25px;">₱ <input type="text" value="21" placeholder="0.00"></p>
-                </form>
-            </div>
-        </section>
-
-        <section class="add-product-buttons-section">
-            <button class="button" type="button" onclick="location.href='view-product.html'">Cancel</button>
-            <button class="button" type="button" onclick="">Save</button>
-        </section>
+        
     
 
          <!--Navigation Bar-->
