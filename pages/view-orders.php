@@ -3,12 +3,12 @@ include '../includes/header.php';
 include '../db/get-functions.php';
 
 $orders = getOrders();
-$statusFilter = isset($_GET['status']) ? $_GET['status'] : 'all';
+$statusFilter = isset($_GET['status']) ? htmlspecialchars($_GET['status']) : 'all'; 
 
 $filteredOrders = [];
 
 foreach ($orders as $order) {
-    $orderStatus = strtolower($order['custStatus']); 
+    $orderStatus = strtolower($order['status']); 
     
     if ($statusFilter === 'pending' && $orderStatus === 'pending') {
         $filteredOrders[] = $order;
@@ -19,19 +19,31 @@ foreach ($orders as $order) {
     }
 }
 
+
 function renderOrders($orders) {
     foreach ($orders as $order) {
-        $isDelivered = strtolower($order['custStatus']) === 'delivered'; 
+        $isDelivered = strtolower($order['status']) === 'delivered'; 
+        
+        $orderDetails = getOrderDetails($order['orderID']); 
+        $collapseImage = "<img src='../style/img/expand.png' alt='Expand' class='toggle-image'>"; 
+
         echo "
         <div class='order'>
             <div class='order-summary' onclick='toggleDetails(this)'>
-                <span>{$order['username']}</span>
-                <span>{$order['dateOrdered']}</span>
-                <span class='order-status'>{$order['custStatus']}</span>
-                <span>₱{$order['totalAmount']}</span>
+                <h2>{$order['username']}</h2>
+                <p>Order Date {$order['dateOrdered']}</p>
+                <p class='order-status'><em>{$order['status']}</em></p>
+                
+                <p><strong>Total Amount: ₱{$order['totalAmount']}</strong></p>
                 <button class='mark-delivered' onclick='markAsDelivered({$order['orderID']}, event)' " . ($isDelivered ? "disabled" : "") . "> Mark as Delivered </button>
+                
+                <!-- Collapse/Expand Button -->
+                <button class='collapse-expand-btn'>
+                    {$collapseImage}
+                </button>
             </div>
-            <div class='order-details' style='display: none;'>
+
+            <div class='order-products-table' style='display: none;'>
                 <table>
                     <thead>
                         <tr>
@@ -41,14 +53,38 @@ function renderOrders($orders) {
                             <th>Amount</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <!-- Populate with actual product details from your database -->
-                        <tr>
-                            <td><img src='../style/img/prod-placeholder.jpg' alt='Product'></td>
-                            <td>Sample Product</td>
-                            <td>2</td>
-                            <td>₱100</td>
-                        </tr>
+                    <tbody>";
+
+        if (!empty($orderDetails)) {
+            foreach ($orderDetails as $product) {
+                if (empty($product['pImage'])) {
+                    $imageSrc = "../style/img/prod-placeholder.jpg";
+                } else {
+                    if (is_string($product['pImage']) && file_exists($product['pImage'])) {
+                        $imageSrc = "../style/img/{$product['pImage']}";
+                    } else {
+                        $imageSrc = "data:image/jpeg;base64," . base64_encode($product['pImage']);
+                    }
+                }
+
+                $productName = $product['pName'];  
+                $quantity = $product['quantity'];  
+                $price = $product['price'];        
+                $totalAmount = $quantity * $price; 
+
+                echo "
+                <tr>
+                    <td><img src='$imageSrc' alt='Product Image' class='product-image'></td>
+                    <td>{$productName}</td>
+                    <td>{$quantity}</td>
+                    <td>₱{$totalAmount}</td>
+                </tr>";
+            }
+        } else {
+            echo "<tr><td colspan='4'>No products found for this order.</td></tr>";
+        }
+
+        echo "
                     </tbody>
                 </table>
             </div>
@@ -58,6 +94,9 @@ function renderOrders($orders) {
 ?>
 
 <section class='inner-body'>
+<div class='orders-container'>
+         <h2>Orders</h2>
+         </div>
     <div class='filter-orders'>
         <button onclick="filterOrders('all')" class="<?= $statusFilter == 'all' ? 'active' : '' ?>">All</button>
         <button onclick="filterOrders('pending')" class="<?= $statusFilter == 'pending' ? 'active' : '' ?>">Pending</button>
@@ -96,7 +135,7 @@ function markAsDelivered(orderId, event) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                alert('Order Successfully Delivered!'); 
+                alert('Order Successfully Delivered!');
                 const button = event.target;
                 button.disabled = true; 
                 const orderSummary = button.closest('.order-summary');
@@ -105,7 +144,24 @@ function markAsDelivered(orderId, event) {
                 alert('Failed to update order status.');
             }
         })
-        .catch(error => console.error('Error:', error));
+        };
+    }
+
+
+function toggleDetails(button) {
+    var orderDetails = button.closest('.order').querySelector('.order-products-table');
+    var buttonImage = button.querySelector('.toggle-image');
+    
+    if (orderDetails.style.display === 'none' || orderDetails.style.display === '') {
+        orderDetails.style.display = 'block'; 
+        buttonImage.src = '../style/img/collapse.jpg'; 
+        buttonImage.alt = 'Collapse';
+        orderContainer.style.backgroundColor = "#81acc2";
+    } else {
+        orderDetails.style.display = 'none'; 
+        buttonImage.src = '../style/img/expand.png'; 
+        buttonImage.alt = 'Expand'; 
+        orderContainer.style.backgroundColor = "#f9f9f9";
     }
 }
 </script>
