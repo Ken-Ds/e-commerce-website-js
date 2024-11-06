@@ -1,8 +1,9 @@
 <?php
 include '../db/dbconnect.php';
 
-if (isset($_GET['id'])) {
-    $product_id = $_GET['id'];
+if (isset($_GET['id']) && isset($_GET['pid'])) {
+    $product_id = $_GET['pid'];
+    $orgid = $_GET['id'];
 
     $conn->begin_transaction();
 
@@ -19,16 +20,16 @@ if (isset($_GET['id'])) {
 
         $conn->commit();
 
-        header("Location: ../pages/view-product.php?message=Product deleted successfully");
+        header("Location: ../pages/view-product.php?id={$orgid}&message=Product deleted successfully");
         exit();
     } catch (mysqli_sql_exception $exception) {
 
         $conn->rollback();
-        header("Location: ../pages/view-product.php?message=Error deleting product: " . $exception->getMessage());
+        header("Location: ../pages/view-product.php?id={$orgid}&message=Error deleting product: " . $exception->getMessage());
         exit();
     }
 } else {
-    header("Location: ../pages/view-product.php?message=No product ID specified");
+    header("Location: ../pages/view-product.php?id={$orgid}&message=No product ID specified");
     exit();
 }
 ?>

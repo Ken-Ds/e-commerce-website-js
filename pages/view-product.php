@@ -68,7 +68,19 @@
                 ?>
             </div>
         </section>
+        <script>
+            function confirmDelete(productId, productName) {
+                if (confirm("Are you sure you want to delete the product: " + productName + "?")) {
+                    var urlParams = new URLSearchParams(window.location.search);
+                    var orgId = urlParams.get('id'); 
+                    window.location.href = '../db/delete.php?pid=' + productId + '&id='+ orgId;
+                }
+            }
+
+        </script>
+
+        
+
         <?php
             include '../includes/footer.php';
         ?>
-</html>
