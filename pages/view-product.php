@@ -1,5 +1,5 @@
 <?php
-include "../includes/header.php"
+    include '../includes/header.php';
 ?>
             <section class = 'event-title'>
             <h1><span>Bravo!</span> Teknokomersiyo</h1>
@@ -22,7 +22,10 @@ include "../includes/header.php"
                         </button>
                     </div>
                 </form>
-                <button class='to-add' type='button' onclick = 'location.href="../pages/add-product.php"'> + </button>
+                <?php
+                    $id = isset($_GET['id']) ? $_GET['id'] : '';
+                ?>
+                <button class='to-add' type='button' onclick = 'location.href="add-product.php?id=<?php echo htmlspecialchars($id);?>"'> + </button>
             </div>
 
             <div class='filter-product'>
@@ -65,14 +68,7 @@ include "../includes/header.php"
                 ?>
             </div>
         </section>
-
-        <script>
-            function confirmDelete(productId, productName) {
-                if (confirm("Are you sure you want to delete the product: " + productName + "?")) {
-                    window.location.href = '../db/delete.php?id=' + productId;
-                }
-            }
-        </script>
-
-        
-<?php include "../includes/footer.php"; ?>
+        <?php
+    include '../includes/footer.php';
+?>
+</html>

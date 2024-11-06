@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $imgContent='';
 
     // Set orgID to 1 as a default value
-    $orgId = 1;  // Default orgID
+    $orgId = isset($_GET['id']) ? $_GET['id'] : '';
 
     // Validate inputs
     if (empty($pName) || empty($pCategory) || $stock < 0 || $price < 0) {

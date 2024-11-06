@@ -3,7 +3,7 @@
 include '../db/dbconnect.php';  
 include '../db/get-functions.php'; 
 
-$userID = 1; 
+$userID = isset($_GET['id']) ? $_GET['id'] : '';
 
 // Fetch organization information based on user ID
 $organizationQuery = "
