@@ -1,0 +1,145 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    display: flex;
+    height: 100vh;
+}
+
+.left-section {
+    width: 40%; 
+    background-color: #33386D; 
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.left-section img {
+    width: 150px;
+    height: auto;
+}
+
+.left-section h1 {
+    margin-top: 20px;
+    font-size: 36px;
+}
+
+.right-section {
+    position: relative;
+    width: 60%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('../img/events-bg.jpg') no-repeat center center; 
+    background-size: cover; 
+}
+
+.right-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.5); /* Reduced opacity for a lighter effect */
+    z-index: 1;
+}
+
+.signup-form {
+    position: relative; 
+    z-index: 2; 
+    width: 300px; 
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.8); 
+    padding: 7px 40px 10px 20px;
+    border-radius: 8px; 
+    margin-left: -40px; 
+}
+
+.signup-form h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+    text-align: center;
+}
+
+.signup-form input {
+    width: 100%; 
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+.signup-form button {
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px; 
+}
+
+.signup-form button:hover {
+    background-color: #218838;
+}
+
+.login-text {
+    margin-top: 10px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.login-text a {
+    color: #28a745;
+    text-decoration: none;
+}
+
+.login-text a:hover {
+    text-decoration: underline;
+}
+
+
+.user-type {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+    gap: 10px; 
+    margin-bottom: 20px; 
+}
+
+.user-type label {
+    display: flex;
+    align-items: center; 
+    gap: 8px; 
+}
+
+.user-type input[type="radio"] {
+    margin: 0;
+    vertical-align: middle; 
+}
+
+
+#orgIdContainer, #imageUploadContainer {
+    display: none;
+}
+
+
+#imageUploadContainer {
+    margin-top: 15px;
+}
+
+
+.signup-form input[type="file"] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.signup-form input[type="file"]:hover {
+    border-color: #28a745;
+}
