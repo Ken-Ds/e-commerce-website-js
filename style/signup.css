@@ -124,13 +124,14 @@ body {
 }
 
 
-#orgIdContainer, #imageUploadContainer {
+#orgIdContainer{
     display: none;
 }
 
 
 #imageUploadContainer {
     margin-top: 15px;
+    display: block;
 }
 
 

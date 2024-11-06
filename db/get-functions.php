@@ -138,7 +138,7 @@
         }
     }
 
-    function getSalesData($userID = 1) {
+    function getSalesData($userID) {
         global $conn;
     
         $query = "SELECT 

@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['userType'] = $user['userType'];
             
             
-            header("Location: ../pages/view-product.php?id={$user['userID']}");
+            header("Location: ../pages/view-product.php?id={$user['orgID']}");
             exit();
         } else {
             echo "<script>alert('Invalid password.'); window.location.href='../pages/login.php';</script>";
