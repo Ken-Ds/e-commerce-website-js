@@ -37,17 +37,16 @@ function renderOrders($orders) {
                 <p>Order Date {$order['dateOrdered']}</p>
                 <p class='order-status'><em>{$order['status']}</em></p>";
         
-        if (!empty($orderDetails)) {
-            foreach ($orderDetails as $product) {
-                $quantity = $product['quantity'];  
-                $price = $product['price'];        
-                $totalAmount = $quantity * $price; 
-                $totalOrderAmount += $totalAmount; 
-            }
-        }
-
-        echo "<p><strong>Total Amount: ₱{$totalOrderAmount}</strong></p>"; 
-
+                if (!empty($orderDetails)) {
+                    foreach ($orderDetails as $product) {
+                        $quantity = $product['quantity'];  
+                        $originalPrice = $product['originalPrice'];  
+                        $totalAmount = $quantity * $originalPrice; 
+                        $totalOrderAmount += $totalAmount;
+                    }
+                }
+        echo "<p><strong>Total Amount: ₱" . number_format($totalOrderAmount, 2) . "</strong></p>";  
+        
         echo "
                 <button class='mark-delivered' onclick='markAsDelivered({$order['orderID']}, event)' " . ($isDelivered ? "disabled" : "") . "> Mark as Delivered </button>
                 
@@ -56,7 +55,7 @@ function renderOrders($orders) {
                     {$collapseImage}
                 </button>
             </div>
-
+    
             <div class='order-products-table' style='display: none;'>
                 <table>
                     <thead>
@@ -64,47 +63,51 @@ function renderOrders($orders) {
                             <th>Product Image</th>
                             <th>Product Name</th>
                             <th>Quantity</th>
+                            <th>Original Price</th>
                             <th>Amount</th>
                         </tr>
                     </thead>
                     <tbody>";
-
-        if (!empty($orderDetails)) {
-            foreach ($orderDetails as $product) {
-                if (empty($product['pImage'])) {
-                    $imageSrc = "../style/img/prod-placeholder.jpg";
-                } else {
-                    if (is_string($product['pImage']) && file_exists($product['pImage'])) {
-                        $imageSrc = "../style/img/{$product['pImage']}";
+                    if (!empty($orderDetails)) {
+                        foreach ($orderDetails as $product) {
+                            if (empty($product['pImage'])) {
+                                $imageSrc = "../style/img/prod-placeholder.jpg";
+                            } else {
+                                if (is_string($product['pImage']) && file_exists($product['pImage'])) {
+                                    $imageSrc = "../style/img/{$product['pImage']}";
+                                } else {
+                                    $imageSrc = "data:image/jpeg;base64," . base64_encode($product['pImage']);
+                                }
+                            }
+    
+                            $productName = $product['pName'];  
+                            $quantity = $product['quantity'];  
+                            $originalPrice = $product['originalPrice'];        
+                            $totalAmount = $quantity * $originalPrice; 
+    
+                            $formattedOriginalPrice = number_format($originalPrice, 2);
+                            $formattedTotalAmount = number_format($totalAmount, 2);
+    
+                            echo "
+                            <tr>
+                                <td><img src='$imageSrc' alt='Product Image' class='product-image'></td>
+                                <td>{$productName}</td>
+                                <td>{$quantity}</td>
+                                <td>₱{$formattedOriginalPrice}</td>
+                                <td>₱{$formattedTotalAmount}</td>
+                            </tr>";
+                        }
                     } else {
-                        $imageSrc = "data:image/jpeg;base64," . base64_encode($product['pImage']);
+                        echo "<tr><td colspan='4'>No products found for this order.</td></tr>";
                     }
+    
+                    echo "
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>";
                 }
-
-                $productName = $product['pName'];  
-                $quantity = $product['quantity'];  
-                $price = $product['price'];        
-                $totalAmount = $quantity * $price; 
-
-                echo "
-                <tr>
-                    <td><img src='$imageSrc' alt='Product Image' class='product-image'></td>
-                    <td>{$productName}</td>
-                    <td>{$quantity}</td>
-                    <td>₱{$totalAmount}</td>
-                </tr>";
             }
-        } else {
-            echo "<tr><td colspan='4'>No products found for this order.</td></tr>";
-        }
-
-        echo "
-                    </tbody>
-                </table>
-            </div>
-        </div>";
-    }
-}
 ?>
 
 <section class='inner-body'>
@@ -161,22 +164,21 @@ function markAsDelivered(orderId, event) {
         };
     }
 
-
     function toggleDetails(button) {
     var orderDetails = button.closest('.order').querySelector('.order-products-table');
     var buttonImage = button.querySelector('.toggle-image');
-    var orderContainer = button.closest('.order'); // Select the specific order container
+    var orderContainer = button.closest('.order'); 
     
     if (orderDetails.style.display === 'none' || orderDetails.style.display === '') {
-        orderDetails.style.display = 'block'; // Show the details
-        buttonImage.src = '../style/img/collapse.jpg'; // Change button image to collapse
-        buttonImage.alt = 'Collapse'; // Change alt text to Collapse
-        orderContainer.style.backgroundColor = "#81acc2"; // Change background color on expand
+        orderDetails.style.display = 'block'; 
+        buttonImage.src = '../style/img/collapse.jpg'; 
+        buttonImage.alt = 'Collapse'; 
+        orderContainer.style.backgroundColor = "#81acc2";
     } else {
-        orderDetails.style.display = 'none'; // Hide the details
-        buttonImage.src = '../style/img/expand.png'; // Change button image to expand
-        buttonImage.alt = 'Expand'; // Change alt text to Expand
-        orderContainer.style.backgroundColor = "#f9f9f9"; // Revert background color on collapse
+        orderDetails.style.display = 'none'; 
+        buttonImage.src = '../style/img/expand.png'; 
+        buttonImage.alt = 'Expand'; 
+        orderContainer.style.backgroundColor = "#f9f9f9"; 
     }
 }
 </script>

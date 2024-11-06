@@ -45,7 +45,7 @@ include '../includes/header.php';
                 <tfoot>
                     <tr>
                         <td colspan="3" class="total-label">Total Sales</td>
-                        <td>$<?php echo number_format($grandTotal, 2); ?></td>
+                        <td>₱<?php echo number_format($grandTotal, 2); ?></td>
                     </tr>
                 </tfoot>
             </table>
