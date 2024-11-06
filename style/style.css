@@ -1482,6 +1482,12 @@ footer{
 }
 
 /*Filter Order*/
+
+.no-order {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .filter-orders {
     display: flex;
     justify-content: right;

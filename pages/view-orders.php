@@ -2,7 +2,8 @@
 include '../includes/header.php';
 include '../db/get-functions.php';
 
-$orders = getOrders();
+$orgid = isset($_GET['id']) ? $_GET['id'] : '';
+$orders = getOrders($orgid);
 $statusFilter = isset($_GET['status']) ? htmlspecialchars($_GET['status']) : 'all'; 
 
 $filteredOrders = [];
@@ -106,7 +107,7 @@ function renderOrders($orders) {
         <?php if (count($filteredOrders) > 0) {
             renderOrders($filteredOrders);
         } else {
-            echo "<p>No orders found.</p>";
+            echo "<img src='../style/img/noOrder.png' alt='No Orders' class = 'no-order'>";
         } ?>
     </div>
 </section>
@@ -118,7 +119,7 @@ function toggleDetails(element) {
 }
 
 function filterOrders(status) {
-    window.location.href = `view-orders.php?status=${status}`;
+    window.location.href = `view-orders.php?status=${status}&id=<?php echo $orgid ?>`;
 }
 
 function markAsDelivered(orderId, event) {
