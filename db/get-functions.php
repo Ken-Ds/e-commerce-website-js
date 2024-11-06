@@ -3,8 +3,7 @@
     include '../db/dbconnect.php';
 
     function viewProducts($sortName = '', $sortPrice = '') {
-        if(isset($_GET['id'])){
-            $id = $_GET['id'];
+        $id = isset($_GET['id']) ? $_GET['id'] : '';
             global $conn;
 
             $sql = $conn->prepare("SELECT * FROM products WHERE orgID = ?");
@@ -58,15 +57,16 @@
             } else {
                 echo "No products found";
             }
-        }
+        
     }
     
     function searchProduct($searchKey, $sortName = '', $sortPrice = '') {
+        $id = isset($_GET['id']) ? $_GET['id'] : '';
         global $conn;
-        $sql = "SELECT * FROM products WHERE pName LIKE ?";
+        $sql = "SELECT * FROM products WHERE orgID = ? AND pName LIKE ?";
         $searchTerm = "%" . $searchKey . "%";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("s", $searchTerm);
+        $stmt->bind_param("s", $id, $searchTerm);
         $stmt->execute();
         $result = $stmt->get_result();
    
@@ -169,15 +169,19 @@
     }
 
     function getOrders() {
+        $id = isset($_GET['id']) ? $_GET['id'] : '';
         global $conn;
         $sql = "SELECT orders.orderID, orders.totalAmount, orders.dateOrdered, orders.dateServed,
-                   orders.custStatus, orders.vendStatus, users.username, organizations.oName AS orgName
+                    orders.custStatus, orders.vendStatus, users.username, organizations.oName AS orgName
                 FROM orders
                 JOIN users ON orders.userID = users.userID
                 JOIN organizations ON orders.orgID = organizations.orgID
+                WHERE orders.orgID = ?
                 ORDER BY orders.dateOrdered DESC";
-
-        $result = $conn->query($sql);
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        $result = $stmt->get_result();
             
         $orders = [];
         if ($result->num_rows > 0) {
@@ -187,38 +191,5 @@
         }
         return $orders;
     }
-    
-    function getOrgInfo($userID) {
-        global $conn;
-        
-        $query = "
-            SELECT o.orgID, o.OrganizationName, o.OrganizationDescription, o.OrganizationLogo, 
-                   s.dayAvailable, s.timeStart, s.timeEnd 
-            FROM organizations o
-            LEFT JOIN booths b ON o.orgID = b.orgID
-            LEFT JOIN schedules s ON b.boothID = s.boothID
-            WHERE o.userID = ?
-        ";
-        
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param('i', $userID);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        
-        // Fetch the organization info and schedule
-        $organizationInfo = $result->fetch_assoc();
-        
-        // Create a schedule array
-        $schedule = [];
-        while ($row = $result->fetch_assoc()) {
-            $schedule[$row['dayAvailable']] = $row['timeStart'] . ' - ' . $row['timeEnd'];
-        }
-        
-        // Add schedule to the organization info
-        $organizationInfo['schedule'] = $schedule;
-        
-        return $organizationInfo;
-    }
-    
     
 ?>

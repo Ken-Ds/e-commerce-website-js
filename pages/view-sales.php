@@ -18,7 +18,8 @@ include '../includes/header.php';
                 <tbody>
                     <?php
                     // Get sales data using the method
-                    $salesData = getSalesData(1); // Assuming 1 is the userID for the store owner
+                    $id = isset($_GET['id']) ? $_GET['id'] : '';
+                    $salesData = getSalesData($id); // Assuming 1 is the userID for the store owner
                     $grandTotal = 0;
 
                     // Fetch and display each row of data
