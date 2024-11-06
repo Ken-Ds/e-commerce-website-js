@@ -1,33 +1,8 @@
 <?php
 // Include the functions.php file to access the getSalesData() function
 include '../db/get-functions.php';
+include '../includes/header.php';
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../style/style.css" rel="stylesheet">
-    <title>Sales</title>
-</head>
-<body class="sales-body">
-
-    <header class="header">
-        <nav>
-            <a href="view-product.html"><img src="../style/img/logo.png" alt="Logo of INGS"></a>
-            <h1>In Genius Orders</h1>
-            <div class="navbar" id="navbar">
-                <ul>
-                    <li><a href="view-product.html">Products</a></li>
-                    <li><a href="#">Orders</a></li>
-                    <li><a href="view-sales.php">Sales</a></li>
-                    <li><a href="view-profile.html">Profile</a></li>
-                </ul>
-            </div>
-        </nav>
-    </header>
-
     <div class="sales-container">
         <h1 class="sales-header">Sales</h1>
         <div class="table-wrapper">
@@ -76,5 +51,4 @@ include '../db/get-functions.php';
         </div>
     </div>
 
-</body>
-</html>
+<?php include "../includes/footer.php"?>
