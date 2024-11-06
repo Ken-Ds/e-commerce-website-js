@@ -65,7 +65,6 @@ echo "
                 </div>
             </div>
             
-            <!-- Add Hidden Input for orgID -->
             <input type='hidden' name='orgID' value='$orgID'>
 
             <div class='add-product-buttons-section'>

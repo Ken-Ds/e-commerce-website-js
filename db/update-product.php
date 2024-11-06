@@ -31,8 +31,11 @@ if (isset($_GET['id'])) {
             } else {
                 echo "<script>alert('File Upload Failed. Try Again!');</script>";
             }
+            
         }
+        echo "<script>alert('Product Edit Successful!'); window.location.href='../pages/view-product.php?id={$orgID}'</script>";
     } else {
+
         echo "<script>alert('Failed to edit product details. Try Again!');</script>";
     }
 
