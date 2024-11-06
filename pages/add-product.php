@@ -5,9 +5,31 @@
             function confirmSubmission(event) {
                 event.preventDefault();
                 if (confirm("Are you sure you want to add this product?")) {
-                    document.getElementById("productForm").submit();
+                    var form = document.getElementById("productForm");
+                    
+                    // Get the id parameter from the URL
+                    var urlParams = new URLSearchParams(window.location.search);
+                    var orgId = urlParams.get('id'); // Get the 'id' parameter value from the URL
+                    
+                    // Check if the 'id' parameter exists
+                    if (orgId) {
+                        // Create a hidden input field for orgId and set its value
+                        var orgIdInput = document.createElement("input");
+                        orgIdInput.type = "hidden";
+                        orgIdInput.name = "id"; 
+                        orgIdInput.value = orgId;  // Set the value to the 'id' from URL
+
+                        // Append the hidden input to the form
+                        form.appendChild(orgIdInput);
+                        
+                        // Submit the form
+                        form.submit();
+                    } else {
+                        alert("ID parameter is missing in the URL.");
+                    }
                 }
             }
+
 
             // Function to preview the selected image
             function previewImage(event) {
