@@ -536,8 +536,8 @@ footer{
 
 .add-product-body img {
     margin-top: 3%;
-    width: 60%;
-    height: 60%;
+    width: 350px;
+    height: 350px;
     border: 3px dashed black;
     border-radius: 20px;
     transition: 0.3s;
