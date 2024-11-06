@@ -160,17 +160,19 @@ $schedulesResult = $stmtSchedules->get_result();
     </style>
 </head>
 <body>
-
+<?php
+    $id = isset($_GET['id']) ? $_GET['id'] : '';
+?>
     <header class="header">
         <nav>
-            <a href="view-product.html"> <img src="../style/img/logo.png" alt="Logo of INGS"></a>
+            <a href="view-product.php?id=<?php echo htmlspecialchars($id);?>"> <img src="../style/img/logo.png" alt="Logo of INGS"></a>
             <h1>Website Name</h1>
             <div class="navbar" id="navbar">
                 <ul>
-                    <li><a href="view-product.html">Products</a></li>
-                    <li><a href="">Orders</a></li>
-                    <li><a href="view-sales.html">Sales</a></li>
-                    <li><a href="view-profile.html">Profile</a></li>
+                    <li><a href="view-product.php?id=<?php echo htmlspecialchars($id);?>">Products</a></li>
+                    <li><a href="view-orders.php?id=<?php echo htmlspecialchars($id);?>">Orders</a></li>
+                    <li><a href="view-sales.php?id=<?php echo htmlspecialchars($id);?>">Sales</a></li>
+                    <li><a href="view-profile.php?id=<?php echo htmlspecialchars($id);?>">Profile</a></li>
                 </ul>
             </div>
         </nav>
@@ -227,4 +229,6 @@ $schedulesResult = $stmtSchedules->get_result();
             </div>
         </div>
     </div>
-<?php include "../includes/footer.php"?>
+    <?php
+        include '../includes/footer.php';
+    ?>
