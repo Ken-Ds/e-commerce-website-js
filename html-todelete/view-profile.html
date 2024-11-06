@@ -4,17 +4,122 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../style/style.css" rel="stylesheet" >
-    <title>Edit Profile</title>
+    <title>View Profile</title>
+    <style>
+        /* VIEW PROFILE */
+        
+        .profile-container {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            padding: 20px;
+            font-size: 20px;
+            width: 100%;
+        }
+
+        .profile-section h2, .organization-section h2 {
+            font-size: 30px;
+            margin-bottom: 10px;
+            font-family: Retrograde;
+        }
+
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-right: 20px;
+        }
+
+        .logo-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid #000;
+            padding: 40px;
+            width: 250px;
+            height: 250px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .org-logo {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            margin-top: 20px;
+        }
+
+        .change-button {
+            font-family: Inter;
+            font-size: 20px;
+            background-color: #2b2d7c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            margin: 10px 20px;
+        }
+
+        .organization-section {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            flex: 1; 
+        }
+
+        .organization-info {
+            border: 1px solid #000;
+            padding: 30px;
+            width: 90%;
+            font-size: 20px;
+            height: 270px;
+        }
+
+        .organization-info ul {
+            list-style: none;
+            padding: 0;
+            font-size: 15px;
+            font-family: Poppins-regular;
+            text-align: justify;
+        }
+
+        /* Weekly Schedule */
+        .weekly-schedule {
+            margin-top: 40px;
+            padding: 20px;
+        }
+
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        .schedule-table th, .schedule-table td {
+            border: 1px solid #000;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .schedule-table th {
+            background-color: #2b2d7c;
+            color: white;
+        }
+
+        .schedule-table td {
+            background-color: #f4f4f4;
+        }
+    </style>
 </head>
 <body>
 
-    <header class = "header">
+    <header class="header">
         <nav>
-            <a href= "view-product.html"> <img src="../style/img/logo.png" alt="Logo of INGS"></a>
-            <h1>In Genius Orders</h1>
+            <a href="view-product.html"> <img src="../style/img/logo.png" alt="Logo of INGS"></a>
+            <h1>Website Name</h1>
             <div class="navbar" id="navbar">
                 <ul>
-                    <li><a href="view-product.html" >Products</a></li>
+                    <li><a href="view-product.html">Products</a></li>
                     <li><a href="">Orders</a></li>
                     <li><a href="view-sales.html">Sales</a></li>
                     <li><a href="view-profile.html">Profile</a></li>
@@ -22,13 +127,12 @@
             </div>
         </nav>
     </header>
-     <!-- SAMPLE DATA ONLY AND NOT FETCHING DATA WITH PHP YET -->
+
     <div class="profile-container">
         <div class="profile-section">
             <h2>Profile</h2>
             <div class="logo-container">
                 <img src="\style\img\logo.png" alt="Org Logo" class="org-logo">
-                <button class="change-button">Change</button>
             </div>
         </div>
         
@@ -36,15 +140,41 @@
             <h2>Organization Name</h2>
             <div class="organization-info">
                 <ul>
-                    <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vitae velit blandit metus gravida mollis. Sed vitae metus in lectus dapibus pellentesque. Suspendisse vitae sollicitudin diam, non convallis mi. Aenean scelerisque auctor aliquam. Nulla porta mi elit, ullamcorper pretium mauris dapibus quis. Ut blandit, sapien in blandit gravida, elit est elementum erat, ut ultricies eros velit id lorem. Nulla sit amet accumsan nulla. Interdum et malesuada fames ac ante ipsum primis in faucibus. In sodales sit amet erat vel mattis. Sed eros nunc, lacinia et ante et, tempor pharetra est. Ut vel mauris leo. Vestibulum tincidunt efficitur lobortis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Aliquam sollicitudin augue nec nisl iaculis posuere ac non dolor. Nunc volutpat id augue et elementum. Cras euismod euismod ligula vel pharetra.</li>
+                    <li>Organization Infos</li>
+                    <li>Organization Infos</li>
+                    <li>Organization Infos</li>
                 </ul>
             </div>
         </div>
     </div>
-    
-    <div class="buttons">
-        <button class="edit-profile-button">Edit Profile</button>
-    </div>    
-    
+
+    <div class="weekly-schedule">
+        <h2>Weekly Schedule</h2>
+        <table class="schedule-table">
+            <thead>
+                <tr>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                    <th>Sunday</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>9:00 AM - 5:00 PM</td>
+                    <td>9:00 AM - 5:00 PM</td>
+                    <td>9:00 AM - 5:00 PM</td>
+                    <td>9:00 AM - 5:00 PM</td>
+                    <td>9:00 AM - 5:00 PM</td>
+                    <td>10:00 AM - 2:00 PM</td>
+                    <td>OFF</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
 </body>
 </html>

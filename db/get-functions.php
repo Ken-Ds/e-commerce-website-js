@@ -164,5 +164,37 @@
     
         return $result;
     }
+    function getOrgInfo($userID) {
+        global $conn;
+        
+        $query = "
+            SELECT o.orgID, o.OrganizationName, o.OrganizationDescription, o.OrganizationLogo, 
+                   s.dayAvailable, s.timeStart, s.timeEnd 
+            FROM organizations o
+            LEFT JOIN booths b ON o.orgID = b.orgID
+            LEFT JOIN schedules s ON b.boothID = s.boothID
+            WHERE o.userID = ?
+        ";
+        
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param('i', $userID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        
+        // Fetch the organization info and schedule
+        $organizationInfo = $result->fetch_assoc();
+        
+        // Create a schedule array
+        $schedule = [];
+        while ($row = $result->fetch_assoc()) {
+            $schedule[$row['dayAvailable']] = $row['timeStart'] . ' - ' . $row['timeEnd'];
+        }
+        
+        // Add schedule to the organization info
+        $organizationInfo['schedule'] = $schedule;
+        
+        return $organizationInfo;
+    }
+    
     
 ?>
