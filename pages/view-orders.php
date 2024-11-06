@@ -150,20 +150,22 @@ function markAsDelivered(orderId, event) {
     }
 
 
-function toggleDetails(button) {
+    function toggleDetails(button) {
     var orderDetails = button.closest('.order').querySelector('.order-products-table');
     var buttonImage = button.querySelector('.toggle-image');
+    var orderContainer = button.closest('.order'); // Select the specific order container
     
     if (orderDetails.style.display === 'none' || orderDetails.style.display === '') {
-        orderDetails.style.display = 'block'; 
-        buttonImage.src = '../style/img/collapse.jpg'; 
-        buttonImage.alt = 'Collapse'; 
-        orderContainer.style.backgroundColor = "#81acc2"; 
+        orderDetails.style.display = 'block'; // Show the details
+        buttonImage.src = '../style/img/collapse.jpg'; // Change button image to collapse
+        buttonImage.alt = 'Collapse'; // Change alt text to Collapse
+        orderContainer.style.backgroundColor = "#81acc2"; // Change background color on expand
     } else {
-        orderDetails.style.display = 'none'; 
-        buttonImage.src = '../style/img/expand.png';
-        buttonImage.alt = 'Expand'; 
-        orderContainer.style.backgroundColor = "#f9f9f9";    }
+        orderDetails.style.display = 'none'; // Hide the details
+        buttonImage.src = '../style/img/expand.png'; // Change button image to expand
+        buttonImage.alt = 'Expand'; // Change alt text to Expand
+        orderContainer.style.backgroundColor = "#f9f9f9"; // Revert background color on collapse
+    }
 }
 </script>
 

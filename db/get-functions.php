@@ -168,26 +168,23 @@
         return $result;
     }
 
-    function getOrders($orgID) {
+    function getOrders() {
         global $conn;
-
-            $sql = "SELECT orders.orderID, orders.totalAmount, orders.dateOrdered, orders.dateServed,
-                        orders.status, users.username, organizations.oName AS orgName
-                    FROM orders
-                    JOIN users ON orders.userID = users.userID
-                    JOIN organizations ON orders.orgID = organizations.orgID
-                    WHERE $orgID = orders.orgID
-                    ORDER BY orders.dateOrdered DESC";
+        $sql = "SELECT orders.orderID, orders.totalAmount, orders.dateOrdered, orders.dateServed,
+                    orders.status, users.username, organizations.oName AS orgName
+                 FROM orders
+                 JOIN users ON orders.userID = users.userID
+                 JOIN organizations ON orders.orgID = organizations.orgID
+                 ORDER BY orders.dateOrdered DESC";
+    
+        $result = $conn->query($sql);
         
-            $result = $conn->query($sql);
-            
-            $orders = [];
-            if ($result->num_rows > 0) {
-                while ($row = $result->fetch_assoc()) {
-                    $orders[] = $row;
-                }
+        $orders = [];
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $orders[] = $row;
             }
-        
+        }
         return $orders;
     }
 
