@@ -134,4 +134,35 @@
     function deleteProduct(){
         
     }
+
+    function getSalesData($userID = 1) {
+        global $conn;
+    
+        $query = "SELECT 
+                    p.pName AS ProductName,
+                    od.price AS Price,
+                    od.quantity AS Quantity,
+                    (od.price * od.quantity) AS TotalAmount
+                  FROM 
+                    orders o
+                  JOIN 
+                    orderdetails od ON o.orderID = od.orderID
+                  JOIN 
+                    products p ON od.productID = p.productID
+                  WHERE 
+                    o.orgID = ?  -- Filter for store owner with orgID (userID)
+                  ORDER BY 
+                    o.orderID";
+        
+        // Prepare the query to prevent SQL injection
+        $stmt = $conn->prepare($query);
+        $stmt->bind_param("i", $userID);  // Bind the userID to the prepared statement
+        $stmt->execute();
+        
+        // Get the result
+        $result = $stmt->get_result();
+    
+        return $result;
+    }
+    
 ?>
