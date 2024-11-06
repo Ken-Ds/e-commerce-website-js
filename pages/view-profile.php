@@ -106,7 +106,6 @@ $schedulesResult = $stmtSchedules->get_result();
             flex: 1;
             padding-left: 30px; /* Increased padding */
             margin-top: 20px; /* Increased margin */
-            max-width: 800px; /* Increased width for better layout */
         }
 
         .organization-info {
