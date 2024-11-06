@@ -9,7 +9,7 @@
     <body>
         <header class = 'header'>
                 <nav>
-                    <a href= 'view-product.html'> <img src='../style/img/logo.png' alt='Logo of INGS'></a>
+                    <a href= 'view-product.php'> <img src='../style/img/logo.png' alt='Logo of INGS'></a>
                     <h1>In Genius Orders</h1>
                     <div class='navbar' id='navbar'>
                         <ul>

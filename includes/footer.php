@@ -23,8 +23,8 @@
                     <h2>Quick Links</h2>
                     <ul>
                         <li><a href='view-product.php'>Products</a></li>
-                        <li><a href=''>Orders</a></li>
-                        <li><a href=''>Sales</a></li>
+                        <li><a href='view-orders.php'>Orders</a></li>
+                        <li><a href='view-sales.php'>Sales</a></li>
                         <li><a href=''>Profile</a></li>
                     </ul>
                 </div>

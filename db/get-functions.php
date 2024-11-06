@@ -3,54 +3,61 @@
     include '../db/dbconnect.php';
 
     function viewProducts($sortName = '', $sortPrice = '') {
-        global $conn; 
-        $sql = "SELECT * FROM products";
-    
-        if ($sortName == 'asc') {
-            $sql .= " ORDER BY pName ASC";
-        } elseif ($sortName == 'desc') {
-            $sql .= " ORDER BY pName DESC";
-        } elseif ($sortPrice == 'high') {
-            $sql .= " ORDER BY price DESC";
-        } elseif ($sortPrice == 'low') {
-            $sql .= " ORDER BY price ASC";
-        }
-    
-        $result = $conn->query($sql);
-        
-        if ($result->num_rows > 0) {
-            while ($product = $result->fetch_assoc()) {
-                if (empty($product['pImage'])) {
-                    $imageSrc = "../style/img/prod-placeholder.jpg";
-                } else {
-                    $imageSrc = "data:image/jpeg;base64," . base64_encode($product['pImage']); 
-                }
-    
-                echo " 
-                    <div class='product'>
-                        <div class='prod-img'>
-                            <img src='$imageSrc' alt='{$product['pName']}'>
-                        </div>
-                        <div class='name-price'>
-                            <h3>{$product['pName']}</h3>
-                            <p> ₱{$product['price']}</p>
-                        </div>
-                        <p>{$product['pDesc']}</p>
-                        <div class='delete-container'>
-                            <button class='delete' type='button' onclick='confirmDelete({$product['productID']}, \"" . addslashes($product['pName']) . "\")'>
-                                <img class='delete-icon' src='../style/img/close-bin.png' alt='Delete'>
-                                <img class='open-icon' src='../style/img/open-bin.png' alt='Delete'>
-                            </button>
-                        </div>
-                        <div class='stock-edit'>
-                            <p>Stock: {$product['stock']}</p> 
-                            <button class='to-edit' type='button' onclick=\"window.location.href='edit-product.php?id={$product['productID']}';\">Edit</button>
-                        </div>
-                    </div>
-                ";
+        if(isset($_GET['id'])){
+            $id = $_GET['id'];
+            global $conn;
+
+            $sql = $conn->prepare("SELECT * FROM products WHERE orgID = ?");
+            $sql->bind_param("i", $id);
+            $sql->execute();
+
+            if ($sortName == 'asc') {
+                $sql .= " ORDER BY pName ASC";
+            } elseif ($sortName == 'desc') {
+                $sql .= " ORDER BY pName DESC";
+            } elseif ($sortPrice == 'high') {
+                $sql .= " ORDER BY price DESC";
+            } elseif ($sortPrice == 'low') {
+                $sql .= " ORDER BY price ASC";
             }
-        } else {
-            echo "No products found";
+        
+            
+            $result = $sql->get_result();
+            
+            if ($result->num_rows > 0) {
+                while ($product = $result->fetch_assoc()) {
+                    if (empty($product['pImage'])) {
+                        $imageSrc = "../style/img/prod-placeholder.jpg";
+                    } else {
+                        $imageSrc = "data:image/jpeg;base64," . base64_encode($product['pImage']); 
+                    }
+        
+                    echo " 
+                        <div class='product'>
+                            <div class='prod-img'>
+                                <img src='$imageSrc' alt='{$product['pName']}'>
+                            </div>
+                            <div class='name-price'>
+                                <h3>{$product['pName']}</h3>
+                                <p> ₱{$product['price']}</p>
+                            </div>
+                            <p>{$product['pDesc']}</p>
+                            <div class='delete-container'>
+                                <button class='delete' type='button' onclick='confirmDelete({$product['productID']}, \"" . addslashes($product['pName']) . "\")'>
+                                    <img class='delete-icon' src='../style/img/close-bin.png' alt='Delete'>
+                                    <img class='open-icon' src='../style/img/open-bin.png' alt='Delete'>
+                                </button>
+                            </div>
+                            <div class='stock-edit'>
+                                <p>Stock: {$product['stock']}</p> 
+                                <button class='to-edit' type='button' onclick=\"window.location.href='edit-product.php?id={$product['productID']}';\">Edit</button>
+                            </div>
+                        </div>
+                    ";
+                }
+            } else {
+                echo "No products found";
+            }
         }
     }
     
@@ -129,10 +136,6 @@
         } else {
             echo "No product ID specified.";
         }
-    }
-
-    function deleteProduct(){
-        
     }
 
     function getSalesData($userID = 1) {
