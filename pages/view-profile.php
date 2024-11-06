@@ -42,116 +42,127 @@ $schedulesResult = $stmtSchedules->get_result();
     <link href="../style/style.css" rel="stylesheet">
     <title>View Profile</title>
     <style>
-        /* VIEW PROFILE */
-        .profile-container {
-            display: flex;
-            flex-direction: row;
-            align-items: flex-start;
-            padding: 20px;
-            font-size: 20px;
-            width: 100%;
-        }
+       
+       
+/* VIEW PROFILE */
+.profile-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; /* Align items evenly */
+    align-items: center; /* Vertically align items in the center */
+    padding: 20px; /* Adjust padding as needed */
+    font-size: 18px;
+    width: 100%;
+    max-width: 1300px; /* Increased max-width for a larger layout */
+    margin: 0 auto;
+}
 
-        .profile-section h2, .organization-section h2 {
-            font-size: 30px;
-            margin-bottom: 10px;
-            font-family: Retrograde;
-        }
+.profile-section h2, .organization-section h2 {
+    font-size: 30px; /* Increased font size */
+    margin-bottom: 10px; /* Increased margin */
+    font-family: Retrograde;
+}
 
-        .profile-section {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            margin-right: 20px;
-        }
+.profile-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center the profile section content */
+    margin-right: 30px; /* Increased margin for better spacing */
+}
 
-        .logo-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border: 1px solid #000;
-            padding: 40px;
-            width: 250px;
-            height: 250px;
-            position: relative;
-            overflow: hidden;
-        }
+.logo-container {
+    display: flex;
+    justify-content: center; /* Center the logo container */
+    align-items: center; /* Center logo vertically */
+    border: 1px solid #000;
+    padding: 50px; /* Increased padding */
+    width: 300px; /* Increased width */
+    height: 300px; /* Increased height */
+    text-align: center; /* Center text and logo */
+    margin-left: 20px; /* Space between the logo and other content */
+}
 
-        .org-logo {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            margin-top: 20px;
-        }
+.org-logo {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block; /* Ensures logo is a block element to center */
+    margin: 0 auto; /* Center the logo horizontally */
+}
 
-        .change-button {
-            font-family: Inter;
-            font-size: 20px;
-            background-color: #2b2d7c;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            cursor: pointer;
-            margin: 10px 20px;
-        }
+.change-button {
+    font-family: Inter;
+    font-size: 22px; /* Increased font size */
+    background-color: #2b2d7c;
+    color: white;
+    border: none;
+    padding: 12px 18px; /* Increased padding */
+    cursor: pointer;
+    margin: 10px 20px; /* Increased margin */
+}
 
-        .organization-section {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            flex: 1; 
-        }
+.organization-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1;
+    padding-left: 30px; /* Increased padding */
+    margin-top: 20px; /* Increased margin */
+    max-width: 800px; /* Increased width for better layout */
+}
 
-        .organization-info {
-            border: 1px solid #000;
-            padding: 30px;
-            width: 90%;
-            font-size: 20px;
-            height: 270px;
-        }
+.organization-info {
+    border: 1px solid #000;
+    padding: 40px; /* Increased padding */
+    width: 100%;
+    font-size: 20px; /* Increased font size */
+    height: auto;
+}
 
-        .organization-info ul {
-            list-style: none;
-            padding: 0;
-            font-size: 15px;
-            font-family: Poppins-regular;
-            text-align: justify;
-        }
+.organization-info ul {
+    list-style: none;
+    padding: 0;
+    font-size: 16px; /* Increased font size */
+    font-family: Poppins-regular;
+    text-align: justify;
+}
 
-        .org-info-text {
-            font-size: 15px; /* Uniform font size */
-            font-family: Poppins-regular, sans-serif; /* Uniform font family */
-            color: #555;
-            margin-top: 10px;
-        }
+.org-info-text {
+    font-size: 16px; /* Increased font size */
+    font-family: Poppins-regular, sans-serif;
+    color: #555;
+    margin-top: 10px; /* Increased margin */
+}
 
-        .schedules-section {
-            width: 90%;
-            margin-top: 20px;
-            padding: 20px;
-            border: 1px solid #000;
-        }
+.schedules-section {
+    margin-top: 20px; /* Increased margin */
+    padding: 30px; /* Increased padding */
+    border: 1px solid #000;
+    font-size: 18px; /* Increased font size */
+}
 
-        .schedules-section h3 {
-            font-size: 25px;
-            margin-bottom: 10px;
-        }
+.schedules-section h3 {
+    font-size: 26px; /* Increased font size */
+    margin-bottom: 12px; /* Increased margin */
+}
 
-        .schedules-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
+.schedules-table {
+    width: 100%;
+    border-collapse: collapse;
+}
 
-        .schedules-table th, .schedules-table td {
-            padding: 10px;
-            text-align: center;
-            border: 1px solid #ddd;
-        }
+.schedules-table th, .schedules-table td {
+    padding: 12px; /* Increased padding */
+    text-align: center;
+    border: 1px solid #ddd;
+}
 
-        .schedules-table th {
-            background-color: #f2f2f2;
-        }
-    </style>
+.schedules-table th {
+    background-color: #f2f2f2;
+}
+
+
+ </style>
 </head>
 <body>
 
@@ -189,33 +200,66 @@ $schedulesResult = $stmtSchedules->get_result();
                     <li><strong>Description:</strong> <span class="org-info-text"><?php echo htmlspecialchars($organizationInfo['oDesc']); ?></span></li>
                     <li><strong>Location:</strong> <span class="org-info-text"><?php echo htmlspecialchars($organizationInfo['location']); ?></span></li>
                 </ul>
-            </div>
-
-            <!-- Schedules Section -->
-            <div class="schedules-section">
-                <h3>Booth Schedules</h3>
-                <table class="schedules-table">
-                    <thead>
-                        <tr>
-                            <th>Day Available</th>
-                            <th>Time Start</th>
-                            <th>Time End</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php while ($schedule = $schedulesResult->fetch_assoc()): ?>
+                
+                <!-- Schedules Section -->
+                <div class="schedules-section">
+                    <h3>Booth Schedules</h3>
+                    <table class="schedules-table">
+                        <thead>
                             <tr>
-                                <td><?php echo htmlspecialchars($schedule['dayAvailable']); ?></td>
-                                <td><?php echo htmlspecialchars($schedule['timeStart']); ?></td>
-                                <td><?php echo htmlspecialchars($schedule['timeEnd']); ?></td>
+                                <th>Day Available</th>
+                                <th>Time Start</th>
+                                <th>Time End</th>
                             </tr>
-                        <?php endwhile; ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <?php while ($schedule = $schedulesResult->fetch_assoc()): ?>
+                                <tr>
+                                    <td><?php echo htmlspecialchars($schedule['dayAvailable']); ?></td>
+                                    <td><?php echo htmlspecialchars($schedule['timeStart']); ?></td>
+                                    <td><?php echo htmlspecialchars($schedule['timeEnd']); ?></td>
+                                </tr>
+                            <?php endwhile; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
         </div>
     </div>
+    <footer>
+            <div class='footer-container'>
+                <div class='logo-container'>
+                    <img class='logo' src='../style/img/logo.png' alt='Logo of INGS'>
+                </div>
+                <div class='contact-us'>
+                    <h2>Developers</h2>
+                    <div class='devs'>
+                        <div class='dev'>
+                            <p>Burgos, Miguel Joshua<br></p>
+                            <p>Cagulada, Sheryn Ann</p>
+                            <p>Chua, Harvey Lance</p>
+                        </div>
+                        <div class='dev'>
+                            <p>Evangelista, Kendrick</p>
+                            <p>Lumanglas, Yenzy Hynna</p>
+                            <p>Modelo, Alexx Evan</p>
+                        </div>
+                    </div>
+                </div>
+                <div class='quick-links'>
+                    <h2>Quick Links</h2>
+                    <ul>
+                        <li><a href='../pages/view-product.php' >Products</a></li>
+                        <li><a href='../pages/view-orders.php'>Orders</a></li>
+                        <li><a href='../pages/view-sales.php'>Sales</a></li>
+                        <li><a href='../pages/view-profile.php'>Profile</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class='copyright'>
+                <p>&copy; INGS_CS312L</p>
+            </div>
+        </footer>
 
 </body>
 </html>
