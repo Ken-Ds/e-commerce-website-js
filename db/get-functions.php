@@ -144,7 +144,7 @@
         $query = "SELECT 
                     p.pName AS ProductName,
                     od.price AS Price,
-                    od.quantity AS Quantity,
+                    SUM(od.quantity) AS Quantity,
                     (od.price * od.quantity) AS TotalAmount
                   FROM 
                     orders o
@@ -154,6 +154,8 @@
                     products p ON od.productID = p.productID
                   WHERE 
                     o.orgID = ?  -- Filter for store owner with orgID (userID)
+                  GROUP BY
+                    p.pName
                   ORDER BY 
                     o.orderID";
         
@@ -168,13 +170,15 @@
         return $result;
     }
 
-    function getOrders() {
+    function getOrders($orgID) {
         global $conn;
+
         $sql = "SELECT orders.orderID, orders.totalAmount, orders.dateOrdered, orders.dateServed,
                     orders.status, users.username, organizations.oName AS orgName
                  FROM orders
                  JOIN users ON orders.userID = users.userID
                  JOIN organizations ON orders.orgID = organizations.orgID
+                 WHERE $orgID = organizations.orgID
                  ORDER BY orders.dateOrdered DESC";
     
         $result = $conn->query($sql);

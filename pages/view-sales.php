@@ -27,9 +27,9 @@ include '../includes/header.php';
                         while ($row = $salesData->fetch_assoc()) {
                             echo "<tr>";
                             echo "<td>" . htmlspecialchars($row['ProductName']) . "</td>";
-                            echo "<td>$" . htmlspecialchars(number_format($row['Price'], 2)) . "</td>";
+                            echo "<td>₱" . htmlspecialchars(number_format($row['Price'], 2)) . "</td>";
                             echo "<td>" . htmlspecialchars($row['Quantity']) . "</td>";
-                            echo "<td>$" . htmlspecialchars(number_format($row['TotalAmount'], 2)) . "</td>";
+                            echo "<td>₱" . htmlspecialchars(number_format($row['TotalAmount'], 2)) . "</td>";
                             echo "</tr>";
 
                             $grandTotal += $row['TotalAmount'];
