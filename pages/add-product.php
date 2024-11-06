@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>INGS Add Product</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="../style/style.css" rel="stylesheet">
+<?php include '../includes/header.php'; ?>
+
         <script>
             // Function to confirm before submitting the form
             function confirmSubmission(event) {
@@ -40,19 +35,15 @@
                 document.getElementById('removeButton').style.display = 'none';
             }
         </script>
-    </head>
-    <body>
-        
-        <?php include '../includes/header.php'; ?>
         
         <form id="productForm" class="add-product-body" action="../db/add-function.php" method="post" enctype="multipart/form-data">
             <h1 style="text-align: center;">ADD PRODUCT FORM</h1>
             <div class="sides">
                 <div class="left-side">
                     
-                    <div class="image" onclick="document.getElementById('pImageInput').click()">
+                    <div class="image">
                         <!-- Image Preview -->
-                        <img id="imagePreview" src="../style/img/upload-img.png" alt="Upload Photo" style="cursor: pointer;">
+                        <img id="imagePreview" src="../style/img/upload-img.png" alt="Upload Photo" style="cursor: pointer;" onclick="document.getElementById('pImageInput').click()">>
                         <!-- File input for image -->
                         <input type="file" id="pImageInput" name="pImage" accept="image/*" style="display: none;" onchange="previewImage(event)" required>
                         
@@ -83,9 +74,11 @@
                         <div class="rgt">
                             <select name="pCategory" required>
                                 <option value="" disabled selected>--Choose Category--</option>
-                                <option>Apparel</option>
                                 <option>Food</option>
-                                <option>Accessory</option>
+                                <option>Household</option>
+                                <option>Crafts</option>
+                                <option>Electronics</option>
+                                <option>Other</option>
                             </select>
                         </div>
                     </div>
@@ -106,7 +99,4 @@
             </div>
         </form>
 
-        <?php include '../includes/footer.php'; ?>
-
-    </body>
-</html>
+<?php include '../includes/footer.php'; ?>

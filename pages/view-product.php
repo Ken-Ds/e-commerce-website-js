@@ -22,7 +22,7 @@ include "../includes/header.php"
                         </button>
                     </div>
                 </form>
-                <button class='to-add' type='button' onclick = 'location.href=add-product.html'> + </button>
+                <button class='to-add' type='button' onclick = 'location.href="../pages/add-product.php"'> + </button>
             </div>
 
             <div class='filter-product'>
