@@ -1,9 +1,7 @@
-<?php
-    echo "
-    <!DOCTYPE html>
+<!DOCTYPE html>
     <html>
     <head>
-        <title>INGS Edit Product</title>
+        <title>INGS Advanced Orders</title>
         <meta charset='UTF-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1.0'>
         <link href='../style/style.css' rel='stylesheet' >
@@ -15,13 +13,11 @@
                     <h1>In Genius Orders</h1>
                     <div class='navbar' id='navbar'>
                         <ul>
-                            <li><a href='view-product.php' >Products</a></li>
-                            <li><a href='view-orders.php'>Orders</a></li>
-                            <li><a href=''>Sales</a></li>
-                            <li><a href=''>Profile</a></li>
+                            <li><a href='../pages/view-product.php' >Products</a></li>
+                            <li><a href='../pages/view-orders.php'>Orders</a></li>
+                            <li><a href='../pages/view-sales.php'>Sales</a></li>
+                            <li><a href='../pages/view-profile.php'>Profile</a></li>
                         </ul>
                     </div>
                 </nav>
             </header>
-    ";
-?>

@@ -164,6 +164,27 @@
     
         return $result;
     }
+
+    function getOrders() {
+        global $conn;
+        $sql = "SELECT orders.orderID, orders.totalAmount, orders.dateOrdered, orders.dateServed,
+                   orders.custStatus, orders.vendStatus, users.username, organizations.oName AS orgName
+                FROM orders
+                JOIN users ON orders.userID = users.userID
+                JOIN organizations ON orders.orgID = organizations.orgID
+                ORDER BY orders.dateOrdered DESC";
+
+        $result = $conn->query($sql);
+            
+        $orders = [];
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $orders[] = $row; // Corrected variable name
+            }
+        }
+        return $orders;
+    }
+    
     function getOrgInfo($userID) {
         global $conn;
         

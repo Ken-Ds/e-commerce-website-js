@@ -1,26 +1,6 @@
-<!DOCTYPE html>
-    <html>
-    <head>
-        <title>INGS</title>
-        <meta charset='UTF-8'>
-        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-        <link href='../style/style.css' rel='stylesheet' >
-    </head>
-    <body>
-        <header class = 'header'>
-                <nav>
-                    <a href= 'view-product.html'> <img src='../style/img/logo.png' alt='Logo of INGS'></a>
-                    <h1>In Genius Orders</h1>
-                    <div class='navbar' id='navbar'>
-                        <ul>
-                            <li><a href='view-product.php' >Products</a></li>
-                            <li><a href=''>Orders</a></li>
-                            <li><a href=''>Sales</a></li>
-                            <li><a href=''>Profile</a></li>
-                        </ul>
-                    </div>
-                </nav>
-            </header>
+<?php
+include "../includes/header.php"
+?>
             <section class = 'event-title'>
             <h1><span>Bravo!</span> Teknokomersiyo</h1>
             <h3>
@@ -42,7 +22,7 @@
                         </button>
                     </div>
                 </form>
-                <button class='to-add' type='button' onclick = 'location.href=add-product.html'> + </button>
+                <button class='to-add' type='button' onclick = 'location.href="../pages/add-product.php"'> + </button>
             </div>
 
             <div class='filter-product'>
@@ -86,41 +66,6 @@
             </div>
         </section>
 
-        <footer>
-            <div class='footer-container'>
-                <div class='logo-container'>
-                    <img class='logo' src='../style/img/logo.png' alt='Logo of INGS'>
-                </div>
-                <div class='contact-us'>
-                    <h2>Developers</h2>
-                    <div class='devs'>
-                        <div class='dev'>
-                            <p>Burgos, Miguel Joshua<br></p>
-                            <p>Cagulada, Sheryn Ann</p>
-                            <p>Chua, Harvey Lance</p>
-                        </div>
-                        <div class='dev'>
-                            <p>Evangelista, Kendrick</p>
-                            <p>Lumanglas, Yenzy Hynna</p>
-                            <p>Modelo, Alexx Evan</p>
-                        </div>
-                    </div>
-                </div>
-                <div class='quick-links'>
-                    <h2>Quick Links</h2>
-                    <ul>
-                        <li><a href='view-product.php'>Products</a></li>
-                        <li><a href=''>Orders</a></li>
-                        <li><a href=''>Sales</a></li>
-                        <li><a href=''>Profile</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class='copyright'>
-                <p>&copy; INGS_CS312L</p>
-            </div>
-        </footer>
-
         <script>
             function confirmDelete(productId, productName) {
                 if (confirm("Are you sure you want to delete the product: " + productName + "?")) {
@@ -128,7 +73,6 @@
                 }
             }
         </script>
-    </body>
 
-    
-</html>
+        
+<?php include "../includes/footer.php"; ?>
