@@ -1,9 +1,11 @@
 <?php 
-
 include '../includes/header.php';
 include '../db/get-functions.php';
 
-$product = getProduct();
+// Get the product details
+$product = getProduct(); 
+
+$orgID = isset($_GET['id']) ? $_GET['id'] : ''; 
 
 if (empty($product['pImage'])) {
     $imageSrc = "../style/img/prod-placeholder.jpg";
@@ -16,24 +18,18 @@ echo "
             <h1 style='text-align: center;'>EDIT PRODUCT FORM</h1>
             <div class='sides'>
                 <div class='left-side'>
-
                     <div class='image'>
-                        <img src='$imageSrc' alt='Upload Photo' id = 'product-pic'>
-
+                        <img src='$imageSrc' alt='Upload Photo' id='product-pic'>
                         <div>
-                        <label for = 'input-file'>Upload Image</label>
+                        <label for='input-file'>Upload Image</label>
                         </div>
-
-                        <input type ='file' name='pic' accept = 'image/jpeg, image/png, image/jpg' id = 'input-file'>
-
+                        <input type='file' name='pic' accept='image/jpeg, image/png, image/jpg' id='input-file'>
                         <div class='stock-and-price'>
                             <p>Stock: <input type='text' name='stock' value='$product[stock]' placeholder='0'></p>
                             <p>Price: ₱ <input type='text' name='price' value='$product[price]' placeholder='0.00'></p>
                         </div>
                     </div>
-    
                 </div>
-    
                 <div class='right-side'>
                     <div class='detail'>
                         <div class='lft'>
@@ -69,9 +65,12 @@ echo "
                 </div>
             </div>
             
+            <!-- Add Hidden Input for orgID -->
+            <input type='hidden' name='orgID' value='$orgID'>
+
             <div class='add-product-buttons-section'>
-                <button class='button' type='button' onclick=\"window.location.href='view-product.php'\">Cancel</button>
-                <button class='button' type='submit' onclick=\"window.location.href?id='db/update-product.php$product[productID]\">Edit</button>
+                <button class='button' type='button' onclick=\"window.location.href='view-product.php?id=$orgID'\">Cancel</button>
+                <button class='button' type='submit'>Edit</button>
             </div>
         </form>
     
@@ -85,5 +84,5 @@ echo "
     </script>
     ";
 
-    include '../includes/footer.php';
+include '../includes/footer.php';
 ?>

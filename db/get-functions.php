@@ -7,19 +7,19 @@
             global $conn;
 
             $sql = $conn->prepare("SELECT * FROM products WHERE orgID = ?");
-            $sql->bind_param("i", $id);
-            $sql->execute();
 
             if ($sortName == 'asc') {
-                $sql .= " ORDER BY pName ASC";
+                $sql = $conn->prepare("SELECT * FROM products WHERE orgID = ? ORDER BY pName ASC");
             } elseif ($sortName == 'desc') {
-                $sql .= " ORDER BY pName DESC";
+                $sql = $conn->prepare("SELECT * FROM products WHERE orgID = ? ORDER BY pName DESC");
             } elseif ($sortPrice == 'high') {
-                $sql .= " ORDER BY price DESC";
+                $sql = $conn->prepare("SELECT * FROM products WHERE orgID = ? ORDER BY price ASC");
             } elseif ($sortPrice == 'low') {
-                $sql .= " ORDER BY price ASC";
+                $sql = $conn->prepare("SELECT * FROM products WHERE orgID = ? ORDER BY price DESC");
             }
         
+            $sql->bind_param("i", $id);
+            $sql->execute();
             
             $result = $sql->get_result();
             
@@ -49,7 +49,7 @@
                             </div>
                             <div class='stock-edit'>
                                 <p>Stock: {$product['stock']}</p> 
-                                <button class='to-edit' type='button' onclick=\"window.location.href='edit-product.php?id={$product['productID']}';\">Edit</button>
+                                <button class='to-edit' type='button' onclick=\"window.location.href='edit-product.php?pid={$product['productID']}&id={$id}';\">Edit</button>
                             </div>
                         </div>
                     ";
@@ -66,7 +66,7 @@
         $sql = "SELECT * FROM products WHERE orgID = ? AND pName LIKE ?";
         $searchTerm = "%" . $searchKey . "%";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("s", $id, $searchTerm);
+        $stmt->bind_param("ss", $id, $searchTerm);
         $stmt->execute();
         $result = $stmt->get_result();
    
@@ -119,8 +119,8 @@
     function getProduct(){
         global $conn;
         
-        if (isset($_GET['id'])) {
-            $product_id = $_GET['id'];
+        if (isset($_GET['pid'])) {
+            $product_id = $_GET['pid'];
 
             $sql = "SELECT * FROM products WHERE productID = ?";
             $stmt = $conn->prepare($sql);

@@ -2,6 +2,7 @@
 include 'dbconnect.php';
 
 if (isset($_GET['id'])) {
+    $orgID = isset($_POST['orgID']) ? $_POST['orgID'] : '';  
     $prodid = $_GET['id'];
     $stock = $_POST['stock'];
     $price = $_POST['price'];
@@ -26,7 +27,7 @@ if (isset($_GET['id'])) {
             $update = $conn->prepare("UPDATE products SET pImage='".$imgContent."' WHERE productID=$prodid");
 
             if($update->execute()){
-                echo "<script>alert('Product Edit Successful!'); window.location.href='../pages/view-product.php'</script>";
+                echo "<script>alert('Product Edit Successful!'); window.location.href='../pages/view-product.php?id={$orgID}'</script>";
             } else {
                 echo "<script>alert('File Upload Failed. Try Again!');</script>";
             }
