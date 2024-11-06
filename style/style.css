@@ -677,6 +677,27 @@ footer{
     background-color: var(--secondary-color);
 }
 
+.removeButton {
+    background-color: #f44336;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    display: block;
+    margin: 10px auto;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+
+.removeButton:hover {
+    background-color: #d32f2f;
+}
+
+
 /* VIEW PROFILE */
 
 .profile-container {
