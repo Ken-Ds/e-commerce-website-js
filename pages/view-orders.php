@@ -34,7 +34,7 @@ function renderOrders($orders) {
         <div class='order'>
             <div class='order-summary' onclick='toggleDetails(this)'>
                 <h2>{$order['username']}</h2>
-                <p>Order Date {$order['dateOrdered']}</p>
+                <p>Order Date: {$order['dateOrdered']}</p>
                 <p class='order-status'><em>{$order['status']}</em></p>";
         
                 if (!empty($orderDetails)) {
