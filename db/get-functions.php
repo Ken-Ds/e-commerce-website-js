@@ -13,9 +13,9 @@
             } elseif ($sortName == 'desc') {
                 $sql = $conn->prepare("SELECT * FROM products WHERE orgID = ? ORDER BY pName DESC");
             } elseif ($sortPrice == 'high') {
-                $sql = $conn->prepare("SELECT * FROM products WHERE orgID = ? ORDER BY price ASC");
-            } elseif ($sortPrice == 'low') {
                 $sql = $conn->prepare("SELECT * FROM products WHERE orgID = ? ORDER BY price DESC");
+            } elseif ($sortPrice == 'low') {
+                $sql = $conn->prepare("SELECT * FROM products WHERE orgID = ? ORDER BY price ASC");
             }
         
             $sql->bind_param("i", $id);
