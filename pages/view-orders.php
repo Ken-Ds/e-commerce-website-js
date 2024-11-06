@@ -24,19 +24,31 @@ foreach ($orders as $order) {
 function renderOrders($orders) {
     foreach ($orders as $order) {
         $isDelivered = strtolower($order['status']) === 'delivered'; 
-        
         $orderDetails = getOrderDetails($order['orderID']); 
 
         $collapseImage = "<img src='../style/img/expand.png' alt='Expand' class='toggle-image'>"; 
+
+        $totalOrderAmount = 0;
 
         echo "
         <div class='order'>
             <div class='order-summary' onclick='toggleDetails(this)'>
                 <h2>{$order['username']}</h2>
                 <p>Order Date {$order['dateOrdered']}</p>
-                <p class='order-status'><em>{$order['status']}</em></p>
-                
-                <p><strong>Total Amount: ₱{$order['totalAmount']}</strong></p>
+                <p class='order-status'><em>{$order['status']}</em></p>";
+        
+        if (!empty($orderDetails)) {
+            foreach ($orderDetails as $product) {
+                $quantity = $product['quantity'];  
+                $price = $product['price'];        
+                $totalAmount = $quantity * $price; 
+                $totalOrderAmount += $totalAmount; 
+            }
+        }
+
+        echo "<p><strong>Total Amount: ₱{$totalOrderAmount}</strong></p>"; 
+
+        echo "
                 <button class='mark-delivered' onclick='markAsDelivered({$order['orderID']}, event)' " . ($isDelivered ? "disabled" : "") . "> Mark as Delivered </button>
                 
                 <!-- Collapse/Expand Button -->
@@ -150,20 +162,22 @@ function markAsDelivered(orderId, event) {
     }
 
 
-function toggleDetails(button) {
+    function toggleDetails(button) {
     var orderDetails = button.closest('.order').querySelector('.order-products-table');
     var buttonImage = button.querySelector('.toggle-image');
+    var orderContainer = button.closest('.order'); // Select the specific order container
     
     if (orderDetails.style.display === 'none' || orderDetails.style.display === '') {
-        orderDetails.style.display = 'block'; 
-        buttonImage.src = '../style/img/collapse.jpg'; 
-        buttonImage.alt = 'Collapse'; 
-        orderContainer.style.backgroundColor = "#81acc2"; 
+        orderDetails.style.display = 'block'; // Show the details
+        buttonImage.src = '../style/img/collapse.jpg'; // Change button image to collapse
+        buttonImage.alt = 'Collapse'; // Change alt text to Collapse
+        orderContainer.style.backgroundColor = "#81acc2"; // Change background color on expand
     } else {
-        orderDetails.style.display = 'none'; 
-        buttonImage.src = '../style/img/expand.png';
-        buttonImage.alt = 'Expand'; 
-        orderContainer.style.backgroundColor = "#f9f9f9";    }
+        orderDetails.style.display = 'none'; // Hide the details
+        buttonImage.src = '../style/img/expand.png'; // Change button image to expand
+        buttonImage.alt = 'Expand'; // Change alt text to Expand
+        orderContainer.style.backgroundColor = "#f9f9f9"; // Revert background color on collapse
+    }
 }
 </script>
 
