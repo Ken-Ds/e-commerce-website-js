@@ -19,6 +19,7 @@ SET time_zone = "+00:00";
 
 CREATE SCHEMA `ings`;
 USE `ings`;
+
 --
 -- Database: `ings`
 --
