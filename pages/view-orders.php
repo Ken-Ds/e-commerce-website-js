@@ -24,19 +24,31 @@ foreach ($orders as $order) {
 function renderOrders($orders) {
     foreach ($orders as $order) {
         $isDelivered = strtolower($order['status']) === 'delivered'; 
-        
         $orderDetails = getOrderDetails($order['orderID']); 
 
         $collapseImage = "<img src='../style/img/expand.png' alt='Expand' class='toggle-image'>"; 
+
+        $totalOrderAmount = 0;
 
         echo "
         <div class='order'>
             <div class='order-summary' onclick='toggleDetails(this)'>
                 <h2>{$order['username']}</h2>
                 <p>Order Date {$order['dateOrdered']}</p>
-                <p class='order-status'><em>{$order['status']}</em></p>
-                
-                <p><strong>Total Amount: ₱{$order['totalAmount']}</strong></p>
+                <p class='order-status'><em>{$order['status']}</em></p>";
+        
+        if (!empty($orderDetails)) {
+            foreach ($orderDetails as $product) {
+                $quantity = $product['quantity'];  
+                $price = $product['price'];        
+                $totalAmount = $quantity * $price; 
+                $totalOrderAmount += $totalAmount; 
+            }
+        }
+
+        echo "<p><strong>Total Amount: ₱{$totalOrderAmount}</strong></p>"; 
+
+        echo "
                 <button class='mark-delivered' onclick='markAsDelivered({$order['orderID']}, event)' " . ($isDelivered ? "disabled" : "") . "> Mark as Delivered </button>
                 
                 <!-- Collapse/Expand Button -->

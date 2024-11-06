@@ -1487,6 +1487,8 @@ footer{
     justify-content: right;
     margin-bottom: 20px;
     gap: 2px;
+    margin-right: 20px;
+    
 }
 
 .filter-orders button {
@@ -1504,6 +1506,7 @@ footer{
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-size: 17px;
     font-weight: 700;
+    margin-right: 5px;
 }
 
 .filter-orders button:focus {
