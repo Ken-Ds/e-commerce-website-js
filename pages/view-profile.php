@@ -106,7 +106,6 @@ $schedulesResult = $stmtSchedules->get_result();
             flex: 1;
             padding-left: 30px; /* Increased padding */
             margin-top: 20px; /* Increased margin */
-            max-width: 800px; /* Increased width for better layout */
         }
 
         .organization-info {
@@ -228,29 +227,4 @@ $schedulesResult = $stmtSchedules->get_result();
             </div>
         </div>
     </div>
-    <footer>
-        <div class='footer-container'>
-            <div class='logo-container'>
-                <img class='logo' src='../style/img/logo.png' alt='Logo of INGS'>
-            </div>
-            <div class='contact-us'>
-                <h2>Developers</h2>
-                <div class='devs'>
-                    <div class='dev'>
-                        <p>Burgos, Miguel Joshua<br></p>
-                        <p>Cagulada, Sheryn Ann</p>
-                        <p>Chua, Harvey Lance</p>
-                    </div>
-                    <div class='dev'>
-                        <p>Evangelista, Kendrick</p>
-                        <p>Lumanglas, Yenzy Hynna</p>
-                        <p>Modelo, Alexx Evan</p>
-                    </div>
-                </div>
-            </div>
-            <div class='quick-links'>
-                <h2>Quick Links</h2>
-                <ul>
-                    <li><a href='../pages/view-product.php' >Products</a></li>
-                    <li><a href='../pages/view-orders.php'>Orders</a></li>
-                    <li><a href='../
+<?php include "../includes/footer.php"?>
