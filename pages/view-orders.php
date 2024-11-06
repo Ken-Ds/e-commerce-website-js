@@ -15,7 +15,7 @@ foreach ($orders as $order) {
     } elseif ($statusFilter === 'delivered' && $orderStatus === 'delivered') {
         $filteredOrders[] = $order;
     } elseif ($statusFilter === 'all') {
-        $filteredOrders[] = $order; 
+        $filteredOrders[] = $order;
     }
 }
 
@@ -25,6 +25,7 @@ function renderOrders($orders) {
         $isDelivered = strtolower($order['status']) === 'delivered'; 
         
         $orderDetails = getOrderDetails($order['orderID']); 
+
         $collapseImage = "<img src='../style/img/expand.png' alt='Expand' class='toggle-image'>"; 
 
         echo "
@@ -155,14 +156,13 @@ function toggleDetails(button) {
     if (orderDetails.style.display === 'none' || orderDetails.style.display === '') {
         orderDetails.style.display = 'block'; 
         buttonImage.src = '../style/img/collapse.jpg'; 
-        buttonImage.alt = 'Collapse';
-        orderContainer.style.backgroundColor = "#81acc2";
+        buttonImage.alt = 'Collapse'; 
+        orderContainer.style.backgroundColor = "#81acc2"; 
     } else {
         orderDetails.style.display = 'none'; 
-        buttonImage.src = '../style/img/expand.png'; 
+        buttonImage.src = '../style/img/expand.png';
         buttonImage.alt = 'Expand'; 
-        orderContainer.style.backgroundColor = "#f9f9f9";
-    }
+        orderContainer.style.backgroundColor = "#f9f9f9";    }
 }
 </script>
 
