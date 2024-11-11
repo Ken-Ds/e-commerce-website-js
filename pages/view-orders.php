@@ -33,8 +33,8 @@ function renderOrders($orders) {
         echo "
         <div class='order'>
             <div class='order-summary' onclick='toggleDetails(this)'>
-                <h2>{$order['username']}</h2>
-                <p>Order Date: {$order['dateOrdered']}</p>
+                <h2 class = 'order-username'>{$order['username']}</h2>
+                <p class = 'order-date'>Order Date: {$order['dateOrdered']}</p>
                 <p class='order-status'><em>{$order['status']}</em></p>";
         
                 if (!empty($orderDetails)) {
@@ -45,7 +45,7 @@ function renderOrders($orders) {
                         $totalOrderAmount += $totalAmount;
                     }
                 }
-        echo "<p><strong>Total Amount: ₱" . number_format($totalOrderAmount, 2) . "</strong></p>";  
+        echo "<p class = 'order-total'><strong>Total Amount: ₱" . number_format($totalOrderAmount, 2) . "</strong></p>";  
         
         echo "
                 <button class='mark-delivered' onclick='markAsDelivered({$order['orderID']}, event)' " . ($isDelivered ? "disabled" : "") . "> Mark as Delivered </button>
@@ -123,7 +123,10 @@ function renderOrders($orders) {
         <?php if (count($filteredOrders) > 0) {
             renderOrders($filteredOrders);
         } else {
-            echo "<img src='../style/img/noOrder.png' alt='No Orders' class = 'no-order'>";
+            echo "<div class='no-orders-message'>
+            <img src='../style/img/noOrder.png' alt='No Orders' class='no-orders-image'>
+            <p>No orders found!</p>
+          </div>";     
         } ?>
     </div>
 </section>
