@@ -1678,20 +1678,22 @@ footer{
     width: 100%;
     text-align: center;
     padding: 20px;
-    font-size: 18px;
-    color: #ccc;
-    border: 1px solid #ddd;
+    font-size: 24px;
+    color: #7d7878;
+    border: 2px solid #ddd;
     border-radius: 10px;
-    background-color: #f9f9f9;
-    margin-top: 20px;
+    background-color: transparent;
+    margin-top: 30px;
 }
 
 .no-orders-image {
-    width: 150px;
+    width: 300px;
     height: auto;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
-
 
 .expand-btn {
     width: 20px; 
@@ -1744,12 +1746,37 @@ footer{
     right: 10px;
 }
 
-
 .order-summary {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    cursor: pointer;
+    padding: 10px 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.order-summary h2, .order-summary p {
+    margin: 0;
+    padding: 0 ;
+}
+
+.order-username, .order-date, .order-status, .order-total {
+    flex: 1;
+    text-align: center;
+}
+
+.order-summary .order-username {
+    margin-left: 10px;
+    text-align: left;
+}
+
+.order-summary .order-total {
+    margin-right: 20 px;
+}
+
+.order-summary p {
+    padding: 5px 10px;
 }
 
 
@@ -1769,8 +1796,8 @@ footer{
 }
 
 .product-image {
-    width: 200px;
-    height: 150px;
+    width: 100px;
+    height: 80px;
     object-fit: cover;
     border-radius: 5px;
 }
@@ -1787,7 +1814,7 @@ footer{
 .order-products-table th, .order-products-table td {
     padding: 8px;
     text-align: center;
-    font-size: 14px;
+    font-size: 18px;
     border: 2px solid black; 
 
 }
