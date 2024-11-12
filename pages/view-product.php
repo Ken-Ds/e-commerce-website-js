@@ -64,6 +64,7 @@
                     window.location.href = '../db/delete.php?pid=' + productId + '&id='+ orgId;
                 }
             }
+            
             function fetchProducts(searchKey = '', sortName = '', sortPrice = '') {
                 var formData = new FormData();
                 formData.append('searchKey', searchKey);
@@ -119,6 +120,9 @@
                             closeDelElement.className='delete-icon';
                             closeDelElement.src = '../style/img/close-bin.png';
                             closeDelElement.alt = 'Delete';
+                            deleteBtn.onclick=function() {
+                                confirmDelete(product.productID, product.pName);
+                            };
 
                             var stockEditDiv = document.createElement('div');
                             stockEditDiv.className = "stock-edit";
@@ -128,6 +132,9 @@
                             toEditBtn.className = "to-edit";
                             toEditBtn.type = "button";
                             toEditBtn.innerText = 'Edit';
+                            toEditBtn.onclick=function(){
+                                window.location.href="edit-product.php?pid=" + product.productID + "&id=" + <?php echo $id?>;
+                            };
 
                             imgDiv.appendChild(imgElement);
                             namePriceDiv.appendChild(name);

@@ -1,14 +1,15 @@
 <?php
 include 'dbconnect.php';
 
-if (isset($_GET['id'])) {
+if (isset($_GET['pid'])) {
     $orgID = isset($_POST['orgID']) ? $_POST['orgID'] : '';  
-    $prodid = $_GET['id'];
+    $prodid = $_GET['pid'];
     $stock = $_POST['stock'];
     $price = $_POST['price'];
     $name = $_POST['name'];
     $category = $_POST['category'];
     $desc = $_POST['desc'];
+    
 
     $stmt = $conn->prepare("UPDATE products SET stock=?, price=?, pName=?, pCategory=?, pdesc=? WHERE productID=?");
     $stmt->bind_param("idsssi", $stock, $price, $name, $category, $desc, $prodid);
@@ -35,7 +36,6 @@ if (isset($_GET['id'])) {
         }
         echo "<script>alert('Product Edit Successful!'); window.location.href='../pages/view-product.php?id={$orgID}'</script>";
     } else {
-
         echo "<script>alert('Failed to edit product details. Try Again!');</script>";
     }
 

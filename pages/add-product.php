@@ -84,13 +84,13 @@ include '../includes/header.php';
         if (orgId) {
             window.location.href = 'view-product.php?id=' + orgId;
         } else {
-            window.location.href = 'add-product.php';
+            window.location.href = '../db/add.php';
         }
     }
 
 </script>
 
-<form id="productForm" class="add-product-body" action="../db/add-function.php" method="post" enctype="multipart/form-data">
+<form id="productForm" class="add-product-body" action="../db/add.php" method="post" enctype="multipart/form-data">
     <h1 style="text-align: center;">ADD PRODUCT FORM</h1>
     <div class="sides">
         <div class="left-side">

@@ -14,7 +14,7 @@ if (empty($product['pImage'])) {
 }
 
 ?>
-        <form class='add-product-body' action='../db/update-product.php?id=<?php echo $product['productID']?>' method='POST' enctype='multipart/form-data'>
+        <form class='add-product-body' action='../db/edit.php?pid=<?php echo $product['productID']?>' method='POST' enctype='multipart/form-data'>
             <h1 style='text-align: center;'>EDIT PRODUCT FORM</h1>
             <div class='sides'>
                 <div class='left-side'>
