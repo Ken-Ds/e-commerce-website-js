@@ -19,8 +19,16 @@ echo "<!DOCTYPE html>
                             <li><a href='../pages/view-orders.php?id=";  echo htmlspecialchars($id); echo"'>Orders</a></li>
                             <li><a href='../pages/view-sales.php?id=";  echo htmlspecialchars($id); echo"'>Sales</a></li>
                             <li><a href='../pages/view-profile.php?id=";  echo htmlspecialchars($id); echo"'>Profile</a></li>
-                        </ul>
-                    </div>
-                </nav>
-            </header>";
+                          <!-- Logout Form with CSS Styling -->
+                        <li>
+                            <form action='../pages/logout.php' method='POST' class='logout-form'>
+                                <button type='submit' class='logout-button'>
+                                    <img src='../style/img/logout.png' alt='Logout' class='logout-img'>
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>";
 ?>
