@@ -13,20 +13,20 @@ if (empty($product['pImage'])) {
     $imageSrc = "data:image/png;charset=utf8;base64," . base64_encode($product['pImage']); 
 }
 
-echo "
-        <form class='add-product-body' action='../db/update-product.php?id=$product[productID]' method='POST' enctype='multipart/form-data'>
+?>
+        <form class='add-product-body' action='../db/update-product.php?id=<?php echo $product['productID']?>' method='POST' enctype='multipart/form-data'>
             <h1 style='text-align: center;'>EDIT PRODUCT FORM</h1>
             <div class='sides'>
                 <div class='left-side'>
                     <div class='image'>
-                        <img src='$imageSrc' alt='Upload Photo' id='product-pic'>
+                        <img src='<?php echo $imageSrc ?>' alt='Upload Photo' id='product-pic'>
                         <div>
                         <label for='input-file'>Upload Image</label>
                         </div>
                         <input type='file' name='pic' accept='image/jpeg, image/png, image/jpg' id='input-file'>
                         <div class='stock-and-price'>
-                            <p>Stock: <input type='text' name='stock' value='$product[stock]' placeholder='0'></p>
-                            <p>Price: ₱ <input type='text' name='price' value='$product[price]' placeholder='0.00'></p>
+                            <p>Stock: <input type='text' name='stock' value='<?php echo $product['stock'] ?>' placeholder='0'></p>
+                            <p>Price: ₱ <input type='text' name='price' value='<?php echo $product['price']?>' placeholder='0.00'></p>
                         </div>
                     </div>
                 </div>
@@ -36,7 +36,7 @@ echo "
                             <p>Product Name: </p>
                         </div>
                         <div class='rgt'>
-                            <input type='text' name='name' value='$product[pName]' placeholder='Enter Product Name'>
+                            <input type='text' name='name' value='<?php echo $product['pName']?>' placeholder='Enter Product Name'>
                         </div>
                     </div>
                     <div class='detail'>
@@ -46,11 +46,11 @@ echo "
                         <div class='rgt'>
                             <select name='category' id=''>
                                 <option value='' disabled selected>--Choose Category--</option>
-                                <option value='Food'" . ($product['pCategory']== 'Food' ? 'selected' : '') . ">Food</option>
-                                <option value='Household'" . ($product['pCategory']== 'Household' ? 'selected' : '') . ">Household</option>
-                                <option value='Crafts'" . ($product['pCategory']== 'Crafts' ? 'selected' : '') . ">Crafts</option>
-                                <option value='Electronics'" . ($product['pCategory']== 'Electronics' ? 'selected' : '') . ">Electronics</option>
-                                <option value='Other'" . ($product['pCategory']== 'Other' ? 'selected' : '') . ">Other</option>
+                                <option value='Food' <?php echo ($product['pCategory']== 'Food' ? 'selected' : '') ?>>Food</option>
+                                <option value='Household' <?php echo ($product['pCategory']== 'Household' ? 'selected' : '') ?>>Household</option>
+                                <option value='Crafts' <?php echo ($product['pCategory']== 'Crafts' ? 'selected' : '') ?>>Crafts</option>
+                                <option value='Electronics' <?php echo ($product['pCategory']== 'Electronics' ? 'selected' : '') ?>>Electronics</option>
+                                <option value='Other' <?php echo ($product['pCategory']== 'Other' ? 'selected' : '') ?>>Other</option>
                             </select>
                         </div>
                     </div>
@@ -59,16 +59,16 @@ echo "
                             <p>Product Details: </p>
                         </div>
                         <div class='rgt'>
-                            <textarea name='desc' class='detail-box' rows='5' placeholder='Add Description...'>$product[pDesc]</textarea>
+                            <textarea name='desc' class='detail-box' rows='5' placeholder='Add Description...'><?php echo $product['pDesc'] ?></textarea>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <input type='hidden' name='orgID' value='$orgID'>
+            <input type='hidden' name='orgID' value='<?php echo $orgID ?>'>
 
             <div class='add-product-buttons-section'>
-                <button class='button' type='button' onclick=\"window.location.href='view-product.php?id=$orgID'\">Cancel</button>
+                <button class='button' type='button' onclick="window.location.href='view-product.php?id=<?php echo $orgID?>">Cancel</button>
                 <button class='button' type='submit'>Edit</button>
             </div>
         </form>
@@ -81,7 +81,5 @@ echo "
         productPic.src = URL.createObjectURL(inputFile.files[0]);
     }
     </script>
-    ";
 
-include '../includes/footer.php';
-?>
+<?php include '../includes/footer.php';?>
