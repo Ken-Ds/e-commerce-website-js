@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Cart</title>
+    <link rel="stylesheet" href="../style/view-cart-style.css">
+</head>
+<body>
+    <div class="container">
+        
+        <!-- Search Bar -->
+        <div class="search-bar-container">
+            <input type="text" placeholder="Find a Product">
+            <button>
+                <img src="../style/img/search-btn.png" alt="Search Icon">
+            </button>
+        </div>
+
+        <!-- Cart Layout -->
+        <div class="cart-layout">
+            
+            <!-- Booth Container -->
+            <div class="cart-booth-container">
+                <div class="cart-booth">
+                    <div class="cart-booth-header">
+                        <input type="checkbox" class="cart-booth-checkbox">
+                        <h3 class="cart-booth-title">Booth 1</h3>
+                        <button class="cart-toggle-btn">
+                            <img src="../style/img/arrow_drop_down.png" alt="Toggle Button">
+                        </button>
+                    </div>
+                    
+                    <!-- Product Item -->
+                    <div class="cart-product">
+                        <input type="checkbox">
+                        <img src="../style/img/prod-placeholder.jpg" alt="Product Image">
+                        <span class="cart-product-name">Product Name</span>
+                        <span class="cart-product-price">₱ 50.00</span>
+                        <div class="cart-quantity">
+                            <button class="cart-quantity-btn">
+                                <img src="../style/img/Minus.png" alt="Decrease Quantity">
+                            </button>
+                            <input type="number" class="cart-quantity-input" value="4" min="1">
+                            <button class="cart-quantity-btn">
+                                <img src="../style/img/Plus.png" alt="Increase Quantity">
+                            </button>
+                        </div>
+                    </div>
+                    <div class="cart-product">
+                        <input type="checkbox">
+                        <img src="../style/img/prod-placeholder.jpg" alt="Product Image">
+                        <span class="cart-product-name">Product Name</span>
+                        <span class="cart-product-price">₱ 50.00</span>
+                        <div class="cart-quantity">
+                            <button class="cart-quantity-btn">
+                                <img src="../style/img/Minus.png" alt="Decrease Quantity">
+                            </button>
+                            <input type="number" class="cart-quantity-input" value="4" min="1">
+                            <button class="cart-quantity-btn">
+                                <img src="../style/img/Plus.png" alt="Increase Quantity">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="cart-booth">
+                    <div class="cart-booth-header">
+                        <input type="checkbox" class="cart-booth-checkbox">
+                        <h3 class="cart-booth-title">Booth 2</h3>
+                        <button class="cart-toggle-btn">
+                            <img src="../style/img/arrow_drop_down.png" alt="Toggle Button">
+                        </button>
+                    </div>
+                    
+                    <!-- Product Item -->
+                    <div class="cart-product">
+                        <input type="checkbox">
+                        <img src="../style/img/prod-placeholder.jpg" alt="Product Image">
+                        <span class="cart-product-name">Product Name</span>
+                        <span class="cart-product-price">₱ 50.00</span>
+                        <div class="cart-quantity">
+                            <button class="cart-quantity-btn">
+                                <img src="../style/img/Minus.png" alt="Decrease Quantity">
+                            </button>
+                            <span>4</span>
+                            <button class="cart-quantity-btn">
+                                <img src="../style/img/Plus.png" alt="Increase Quantity">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Order Summary -->
+            <div class="cart-order-summary">
+                <h3 class="cart-order-summary-title">Order Summary</h3>
+                <div class="cart-summary-items">
+                    <div class="cart-summary-item">Item 1 <span>₱10.00</span></div>
+                    <div class="cart-summary-item">Item 2 <span>₱15.00</span></div>
+                    <div class="cart-summary-item">Item 3 <span>₱20.00</span></div>
+                    <div class="cart-summary-item">Item 4 <span>₱5.00</span></div>
+                    <div class="cart-summary-item">Item 5 <span>₱8.00</span></div>
+                    <div class="cart-summary-item">Item 6 <span>₱12.00</span></div>
+                    <div class="cart-summary-item">Item 7 <span>₱25.00</span></div>
+                </div>
+                <div class="cart-total">
+                    <span>Total (7 items)</span>
+                    <span>₱600.00</span>
+                </div>
+                <button class="cart-checkout-btn">Check Out (12)</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>\\
