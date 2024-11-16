@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>INGS Advanced Orders</title>
+        <link rel="stylesheet" href="../style/view-booth.css">
+    </head>
+    <body>
+        <section class = "event-container">
+            <h1><span>Bravo!</span> Teknokomersiyo</h1>
+            <h3>
+                Featuring booths where students can display and 
+                sell their unique creations, fostering community engagement 
+                and supporting local artisans.  
+            </h3>
+            <div class='overlay'></div>
+        </section>
+
+        <section class="main-container">
+            <section class="sidebar">
+                <div class="sidebar-container">
+                    <h2>Vendors</h2>
+                    <button onclick="hideBooth()">All</button>
+                    <button onclick="renderBooth()">Juan's Sari-Sari Store</button>
+                    <button onclick="renderBooth()">Org 2</button>
+                    <button onclick="renderBooth()">Org 3</button>
+                    <button onclick="renderBooth()">Org 4</button>
+                </div>
+            </section>
+
+            <section class= "info-container">
+                <div class="hide-container">
+                    <div class = "org-container">
+                        <div class="org-logo">
+                            <img src="../style/img/sample-logo.png" alt="">
+                        </div>
+
+                        <div class="org-details">
+                            <h2>Organization Name</h2>
+                            <p>Organization Description</p>
+                            
+                            <div class="booth-details">
+                                <select class="select-booth">
+                                    <option value="1" selected>↪ Booth 1</option>
+                                    <option value="2">↪ Booth 2</option>
+                                </select>
+                                <p>Location: </p>
+                                <p>Schedule: </p>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Day Available</th>
+                                            <th>Start Time</th>
+                                            <th>End Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Monday</td>
+                                            <td>10:00</td>
+                                            <td>12:00</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tuesday</td>
+                                            <td>10:00</td>
+                                            <td>12:00</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filters">
+                    <select>
+                        <option value="" disabled selected>Category</option>
+                        <option>Food</option>
+                        <option>Household</option>
+                        <option>Crafts</option>
+                        <option>Electronics</option>
+                        <option>Other</option>
+                    </select>
+                    <select>
+                        <option value="" disabled selected>Alphabetical</option>
+                        <option>Ascending (A-Z)</option>
+                        <option>Descending (Z-A)</option>
+                    </select>
+                    <select>
+                        <option value="" disabled selected>Price</option>
+                        <option>Highest to Lowest</option>
+                        <option>Lowest to Highest</option>
+                    </select>
+                </div>
+
+                <div class="products">
+                    <div class="product">
+                        <div class="img-container">
+                            <img src="../style/img/sample-prod.jpg" alt="Product">
+                        </div>
+                        <h3>Pro4/Pro6/MKH21 Earphone Wireless</h3>
+                        <p><span>₱</span>100.00</p>
+                    </div>
+                    <div class="product">
+                        <div class="img-container">
+                            <img src="../style/img/sample-prod.jpg" alt="Product">
+                        </div>
+                        <h3>Product Name</h3>
+                        <p><span>₱</span>100.00</p>
+                    </div>
+                    <div class="product">
+                        <div class="img-container">
+                            <img src="../style/img/sample-prod.jpg" alt="Product">
+                        </div>
+                        <h3>Product Name</h3>
+                        <p><span>₱</span>100.00</p>
+                    </div>
+                    <div class="product">
+                        <div class="img-container">
+                            <img src="../style/img/sample-prod.jpg" alt="Product">
+                        </div>
+                        <h3>Product Name</h3>
+                        <p><span>₱</span>100.00</p>
+                    </div>
+                    <div class="product">
+                        <div class="img-container">
+                            <img src="../style/img/sample-prod.jpg" alt="Product">
+                        </div>
+                        <h3>Product Name</h3>
+                        <p><span>₱</span>100.00</p>
+                    </div>
+                    <div class="product">
+                        <div class="img-container">
+                            <img src="../style/img/sample-prod.jpg" alt="Product">
+                        </div>
+                        <h3>Product Name</h3>
+                        <p><span>₱</span>100.00</p>
+                    </div>
+                    <div class="product">
+                        <div class="img-container">
+                            <img src="../style/img/sample-prod.jpg" alt="Product">
+                        </div>
+                        <h3>Product Name</h3>
+                        <p><span>₱</span>100.00</p>
+                    </div>
+                    <div class="product">
+                        <div class="img-container">
+                            <img src="../style/img/sample-prod.jpg" alt="Product">
+                        </div>
+                        <h3>Product Name</h3>
+                        <p><span>₱</span>100.00</p>
+                    </div>
+                    <div class="product">
+                        <div class="img-container">
+                            <img src="../style/img/sample-prod.jpg" alt="Product">
+                        </div>
+                        <h3>Product Name</h3>
+                        <p><span>₱</span>100.00</p>
+                    </div>
+                    <div class="product">
+                        <div class="img-container">
+                            <img src="../style/img/sample-prod.jpg" alt="Product">
+                        </div>
+                        <h3>Product Name</h3>
+                        <p><span>₱</span>100.00</p>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <script>
+            function hideBooth(){
+                var orgDiv = document.querySelector(".hide-container");
+                orgDiv.style.display='none';
+            }
+
+            function renderBooth(){
+                var orgDiv = document.querySelector(".hide-container");
+                orgDiv.style.display='block';
+            }
+
+        </script>
+    </body>
+</html>

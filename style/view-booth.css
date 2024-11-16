@@ -1,0 +1,352 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+/*IMPORT FONTS*/
+
+@font-face {
+    font-family: Retrograde;
+    src: url(../style/fonts/Retrograde.ttf);
+}
+
+@font-face {
+    font-family: Coolvetica;
+    src: url(../style/fonts/coolvetica.otf);
+}
+@font-face {
+    font-family: Poppins;
+    src: url(../style/fonts/Poppins-Regular.ttf);
+}
+@font-face {
+    font-family: Inter;
+    src: url(../style/fonts/Inter-Regular.otf);
+}
+
+@font-face {
+    font-family: Booked;
+    src: url(../style/fonts/Booked.ttf);
+}
+
+@font-face {
+    font-family: Market;
+    src: url(../style/fonts/Green\ Market.otf);
+}
+
+@font-face {
+    font-family: Magazine;
+    src: url(../style/fonts/Magazine.ttf);
+}
+
+@font-face {
+    font-family: Voguella;
+    src: url(../style/fonts/Voguella.ttf);
+}
+
+@font-face {
+    font-family: Milk;
+    src: url(../style/fonts/Milk\ And\ Honey.ttf);
+}
+
+@font-face {
+    font-family: Bondrians;
+    src: url(../style/fonts/Bondrians.ttf);
+}
+
+.body {
+    background-color: #DBDBDB;
+    height: 100%;
+}
+
+.event-container {
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+    width: 100%;
+    height: 419px;
+    background: url(img/events-bg.jpg);
+    background-color: black ;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    position: relative;
+    overflow: hidden;
+    z-index: 1; 
+}
+
+.event-container .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.75);
+    z-index: 0; 
+}
+  
+.event-container h1, .event-container h3 {
+    padding-left: 200px;
+    z-index: 2; 
+    position: relative; 
+    color: white; 
+}
+  
+.event-container h1 {
+    font-family: Milk;
+    font-size: 60px;
+    margin-bottom: 20px; 
+}
+  
+.event-container h3 {
+    font-family: Coolvetica;
+    font-weight: 100;
+    font-size: 25px;
+}
+  
+.event-container h1 span {
+    color: orange;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    min-height: 100%;
+}
+
+.sidebar {
+    background-color: orange;
+    min-height: 100%;
+    width: 15%;
+    overflow-y: auto; 
+}
+
+.sidebar-container {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(to right, aqua, #4b8ec5);
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-container * {
+    padding: 15px 20px;
+}
+
+.sidebar-container img {
+    align-items: center;
+    justify-items: center;
+    width: 50px;
+    height: 50px;
+}
+.sidebar-container h2 {
+    font-family: Booked;
+    font-size: 40px;
+    text-align: center;
+}
+
+.sidebar-container button {
+    color: black;
+    font-family: Bondrians;
+    letter-spacing: 5px;
+    font-size: 35px;
+    background: none;
+    border: none;
+}
+
+.sidebar-container button:hover {
+    background-color: rgb(253, 253, 142);
+}
+
+.info-container {
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+}
+
+.org-container {
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    background-color: #33386D;
+    transition: all 0.3s ease;
+}
+
+.hide-container {
+    display: none;
+}
+
+.org-container img {
+    width: auto;
+    height: 300px;
+    border: 1px solid black;
+    border-radius: 50%;
+}
+
+.org-details {
+    flex-wrap: wrap;
+    font-family: Inter;
+    margin: 20px;
+    padding: 15px;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 60%;
+    height: auto;
+}
+
+.org-details h2 {
+    font-size: 30px;
+    font-family: Voguella;
+}
+.org-details p {
+    margin-left: 10px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.select-booth {
+    padding: 5px;
+    font-family: Milk;
+    font-weight: 400;
+    margin-left: 15px;
+    margin-top: 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+}
+
+.select-booth:hover {  
+    cursor: pointer;  
+}
+
+.booth-details p {
+    margin-left: 30px;
+    font-size:16px;
+}
+
+table {
+    width: auto;
+    margin: 0 40px;
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: #6B7BB8; 
+    color: black;
+}
+
+th {
+    font-family: Voguella;
+    padding: 12px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 17px;
+    text-align: center;
+    border: 1px solid #b1afaf;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #f9f9f9; 
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f1f1f1; 
+}
+
+td {
+    font-family: Inter;
+    border: 1px solid #b1afaf;
+    color: black;
+    font-size: 15px;
+    padding: 10px;
+    text-align: center;
+}
+
+tbody tr:hover {
+    background-color: #f1ebff; 
+}
+
+
+.filters {
+    width: 100%;
+    background-color: #AEAEB7;
+    height: 50px;
+    display:flex;
+    justify-content: space-between;
+    gap: 50px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.filters select {
+    background-color: #AEAEB7;
+    font-family: Poppins;
+    font-size: 20px;
+    border: none;
+    flex-grow: 1;
+}
+
+.products {
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
+    gap: 5px; 
+    margin: 20px 0 20px 20px;
+    justify-items: center;
+    align-items: center;
+}
+
+.product {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    box-shadow: -2px 4px 4px rgba(0, 0, 0, 0.25);
+    border: 1px solid black;
+    margin: 10px;
+    padding: 10px;
+}
+
+.img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product img {
+    width: 140px;
+    height: 112px;
+}
+
+.product h3 {
+    margin-top: 20px;
+    font-family: Poppins;
+    font-size: 14px;
+    text-align: center;
+}
+
+.product p {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    padding-top: 10px;
+    font-family: Inter;
+    font-size: 18px;
+    color: #CC4116;
+    font-weight: bold;
+}
+
+.product p span {
+    font-family: Inter;
+    font-size: 13px;
+    text-align: right;
+    color: #CC4116;
+}

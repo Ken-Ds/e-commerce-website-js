@@ -1,7 +1,7 @@
 <?php
     include '../includes/header.php';
 ?>
-            <section class = 'event-title'>
+        <section class = 'event-title'>
             <h1><span>Bravo!</span> Teknokomersiyo</h1>
             <h3>
                 Featuring booths where students can display and 
