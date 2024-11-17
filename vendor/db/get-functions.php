@@ -120,4 +120,8 @@
             die("Error preparing statement: " . $conn->error);
         }
     }
+
+    function returnValue($value){
+        return $value;
+    }
 ?>

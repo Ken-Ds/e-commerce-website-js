@@ -1,0 +1,66 @@
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary-color: #33386D;
+    --secondary-color: #6B7BB8;
+
+}
+
+@font-face {
+    font-family: Bondrians;
+    src: url(../fonts/Bondrians.ttf);
+}
+
+@font-face {
+    font-family: Booked;
+    src: url(../fonts/Booked.ttf);
+}
+
+@font-face {
+    font-family: Coolvetica;
+    src: url(../fonts/coolvetica.otf);
+}
+
+@font-face {
+    font-family: Energy;
+    src: url(../fonts/Energy\ Station.ttf);
+}
+
+@font-face {
+    font-family: Market;
+    src: url(../fonts/Green\ Market.otf);
+}
+
+@font-face {
+    font-family: Inter;
+    src: url(../fonts/Inter-Regular.otf);
+}
+
+@font-face {
+    font-family: Magazine;
+    src: url(../fonts/Magazine.ttf);
+}
+
+@font-face {
+    font-family: Milk;
+    src: url(../fonts/Milk\ And\ Honey.ttf);
+}
+
+@font-face {
+    font-family: Poppins;
+    src: url(../fonts/Poppins-Regular.ttf);
+}
+
+@font-face {
+    font-family: Retrograde;
+    src: url(../fonts/Retrograde.ttf);
+}
+
+@font-face {
+    font-family: Voguella;
+    src: url(../fonts/Voguella.ttf);
+}

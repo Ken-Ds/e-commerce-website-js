@@ -1,0 +1,97 @@
+/*FOOTER*/
+footer{
+    background-color: var(--primary-color);
+}
+  
+.footer-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding-top: 10px;
+}
+  
+.footer-container > div {
+    flex: 1;
+    padding: 20px;
+}
+  
+.logo-container {
+    margin:0;
+    padding:0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+  
+.logo {
+    max-width: 100%; 
+    height: 125px; 
+}
+  
+.contact-us, .quick-links{
+    text-align: center;
+}
+  
+.footer-container h2 {
+    margin-bottom: 20px;
+    color: white;
+    font-family: Retrograde;
+    font-size: 32px;
+}
+  
+.devs {
+    display: flex; 
+    justify-content: space-between; 
+    padding: 20px;
+}
+.dev {
+    flex: 1; 
+}
+
+.contact-us p, .quick-links li a{
+    margin-bottom: 10px;
+    color: white;
+    font-family: Lato;
+    font-size: 14px;
+    text-decoration: none;
+}
+  
+.quick-links ul li {
+    width: auto;
+    text-align: center;
+    list-style-type: none;
+    padding: 7px;
+    position: relative;
+}
+  
+.quick-links li::before{
+    content: "";
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 100%;
+    width:0;
+    height:2px;
+    background: var(--secondary-color);
+    transition-duration: 0.5s;
+}
+  
+.quick-links li:hover::before{
+    width: 70px;
+}
+  
+.contact-us h2, .quick-links ul {
+    margin-bottom: 10px; 
+}
+  
+.copyright{
+    text-align: center; 
+    padding: 10px;
+    font-weight: bold;
+    font-size: 18px;
+    color: white;
+    background-color:var(--secondary-color);
+}
+  

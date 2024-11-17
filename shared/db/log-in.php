@@ -1,5 +1,5 @@
 <?php
-include '../db/dbconnect.php';
+include '../../vendor/db/dbconnect.php';
 
 session_start();  
 
@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['type'] = $user['type'];
 
-                header("Location: ../pages/view-product.php?id={$user['orgID']}");
+                header("Location: ../../vendor/pages/view-product.php?id={$user['orgID']}");
                 exit();
             } else {
                 // User is not Vendor

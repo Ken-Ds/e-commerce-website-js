@@ -1,61 +1,8 @@
-* {
-    margin: 0;
-    padding: 0;
-}
+@import url(../../../shared/style/css/theme.css);
 
 html, body {
     height: 100%;
     margin: 0;
-}
-
-/*IMPORT FONTS*/
-
-@font-face {
-    font-family: Retrograde;
-    src: url(../style/fonts/Retrograde.ttf);
-}
-
-@font-face {
-    font-family: Coolvetica;
-    src: url(../style/fonts/coolvetica.otf);
-}
-@font-face {
-    font-family: Poppins;
-    src: url(../style/fonts/Poppins-Regular.ttf);
-}
-@font-face {
-    font-family: Inter;
-    src: url(../style/fonts/Inter-Regular.otf);
-}
-
-@font-face {
-    font-family: Booked;
-    src: url(../style/fonts/Booked.ttf);
-}
-
-@font-face {
-    font-family: Market;
-    src: url(../style/fonts/Green\ Market.otf);
-}
-
-@font-face {
-    font-family: Magazine;
-    src: url(../style/fonts/Magazine.ttf);
-}
-
-@font-face {
-    font-family: Voguella;
-    src: url(../style/fonts/Voguella.ttf);
-}
-
-@font-face {
-    font-family: Milk;
-    src: url(../style/fonts/Milk\ And\ Honey.ttf);
-}
-
-@font-face {
-    font-family: Bondrians;
-    src: url(../style/fonts/Bondrians.ttf);
 }
 
 .body {
@@ -70,7 +17,7 @@ html, body {
     align-items: center;
     width: 100%;
     height: 419px;
-    background: url(img/events-bg.jpg);
+    background: url(../../../shared/style/img/events-bg.jpg);
     background-color: black ;
     background-repeat: no-repeat;
     background-position: center center;
@@ -91,7 +38,7 @@ html, body {
 }
   
 .event-container h1, .event-container h3 {
-    padding-left: 200px;
+    text-align: center;
     z-index: 2; 
     position: relative; 
     color: white; 

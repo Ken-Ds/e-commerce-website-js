@@ -1,6 +1,16 @@
 <?php
-    include '../includes/header.php';
+    include '../includes/navbar.php';
 ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>In Genius Orders</title>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <link href='../style/css/view-products.css' rel='stylesheet'>
+</head>
+<body>
         <section class = 'event-title'>
             <h1><span>Bravo!</span> Teknokomersiyo</h1>
             <h3>
@@ -18,7 +28,7 @@
                     <div class='search-inner'>
                         <input type='text' name ='searchKey' class = 'search-bar' placeholder='Search a Product'> 
                         <button type="submit" class="search">
-                            <img src='../style/img/search-btn.png' alt='Search Icon'>
+                            <img src='../../shared/style/img/search-btn.png' alt='Search Icon'>
                         </button>
                     </div>
                 </form>

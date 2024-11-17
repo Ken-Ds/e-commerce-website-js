@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login/Signup</title>
-    <link rel="stylesheet" href="../style/login.css">
+    <title>In Genius Orders</title>
+    <link rel="stylesheet" href="../style/css/login.css">
 </head>
 <body>
     <div class="container">

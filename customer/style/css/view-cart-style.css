@@ -1,32 +1,6 @@
-:root {
-    --primary-color: #33386D;
-    --secondary-color: #6B7BB8;
-}
-
-/* Fonts */
-@font-face {
-    font-family: 'Retrograde';
-    src: url('fonts/Retrograde.ttf');
-}
-
-@font-face {
-    font-family: 'Coolvetica';
-    src: url('fonts/coolvetica.otf');
-}
-
-@font-face {
-    font-family: 'Inter';
-    src: url('fonts/Inter-Regular.otf');
-}
-
-@font-face {
-    font-family: 'Poppins-Regular';
-    src: url('fonts/Poppins-Regular.ttf');
-}
+@import url(../../../shared/style/css/theme.css);
 
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 

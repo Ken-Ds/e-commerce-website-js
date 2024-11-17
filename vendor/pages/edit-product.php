@@ -1,5 +1,5 @@
 <?php 
-include '../includes/header.php';
+include '../includes/navbar.php';
 include '../db/get-functions.php';
 
 // Get the product details
@@ -13,6 +13,16 @@ if (empty($product['pImage'])) {
     $imageSrc = "data:image/png;charset=utf8;base64," . base64_encode($product['pImage']); 
 }
 ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>In Genius Orders</title>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <link href='../style/css/add-edit.css' rel='stylesheet'>
+</head>
+<body>
 
 <form class='add-product-body' action='../db/edit.php?pid=<?php echo $product['productID']?>' method='POST' enctype='multipart/form-data' onsubmit="return validateForm()">
     <h1 style='text-align: center;'>EDIT PRODUCT FORM</h1>

@@ -1,0 +1,75 @@
+@import url(navbar.css);
+@import url(footer.css);
+
+/* VIEW SALES */
+
+.sales-body {
+    overflow: hidden;
+    background-color: #f8f8f8;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+}
+
+.table-wrapper {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.sales-container {
+    width: 100%;
+    max-width: 1000px;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 0 20px; 
+}
+
+.sales-header {
+    font-family: Poppins;
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.sales-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.sales-table th, .sales-table td {
+    font-family: Inter;
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.sales-table th {
+    font-family: coolvetica;
+    font-weight: bold;
+}
+
+.sales-table tbody tr:hover {
+    background-color: #f2f2f2;
+}
+
+.total-label {
+    font-size: 20px;
+    text-align: right;
+    font-weight: bold;
+}
+
+.sales-table tfoot td {
+    font-size: 25px;
+    font-family: Inter;
+    font-weight: bold;
+    padding-top: 15px;
+    position: sticky;
+    bottom: 0;
+    background-color: #ccc;
+}

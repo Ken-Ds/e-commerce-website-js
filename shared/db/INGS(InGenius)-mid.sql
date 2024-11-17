@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `booths` (
   `location` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`boothID`),
   KEY `fk_orgID_booths` (`orgID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `booths`
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `orderdetails` (
   `price` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`orderID`,`productID`),
   KEY `fk_productID_orderdetails` (`productID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `orderdetails`
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `orders` (
   PRIMARY KEY (`orderID`),
   KEY `fk_orgID_orders` (`orgID`),
   KEY `fk_userID_orders` (`userID`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `orders`
@@ -128,7 +128,7 @@ CREATE TABLE IF NOT EXISTS `organizations` (
   `oLogo` longblob,
   PRIMARY KEY (`orgID`),
   UNIQUE KEY `unique_oname` (`oName`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `organizations`
@@ -159,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `price` decimal(10,2) DEFAULT NULL,
   PRIMARY KEY (`productID`),
   KEY `fk_orgID_products` (`orgID`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `products`
@@ -195,7 +195,7 @@ CREATE TABLE IF NOT EXISTS `schedules` (
   `timeStart` time NOT NULL,
   `timeEnd` time NOT NULL,
   PRIMARY KEY (`boothID`,`dayAvailable`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `schedules`
@@ -232,7 +232,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`),
   KEY `fk_orgID_users` (`orgID`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
