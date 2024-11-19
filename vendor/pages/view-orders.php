@@ -251,7 +251,7 @@
         event.stopPropagation(); 
 
         if (confirm('Are you sure you want to mark this order as delivered?')) {
-            fetch(`update-order-status.php`, {
+            fetch(`../db/update-order-status.php`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
