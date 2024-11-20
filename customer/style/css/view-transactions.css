@@ -37,25 +37,31 @@
     align-items: center;
 }
 
-.row p{
-    font-size: 25px;
+.row .row-table{
+    font-size: 23px;
     color: rgb(95, 95, 95);
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.row p:nth-child(2){
-    padding-left: 35%;
+.row-table th:nth-child(1){
+    text-align: left;
 }
 
-.row p:nth-child(3){
-    padding-left: 15%;
+.row-table th:nth-child(2){
+    text-align: right;
 }
 
-.row p:nth-child(4){
-    padding-left: 10%;
+.row-table th:nth-child(3){
+    text-align: right;
 }
 
-.row p:nth-child(5){
-    padding-left: 10%;
+.row-table th:nth-child(4){
+    text-align: left;
+}
+
+.row-table th:nth-child(5){
+    text-align: right;
 }
 
 .transactions-box{
@@ -70,7 +76,6 @@
     border-bottom: 1px solid rgba(163, 163, 163, 0.514);
     background-color: rgb(243, 243, 243);
     display: flex;
-    align-items: center;
     padding-top: 1%;
     padding-bottom: 1%;
     padding-left: 2%;
@@ -81,16 +86,34 @@
     color: rgb(95, 95, 95);
 }
 
-.transactions-box .details{
-    height: auto;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    padding-top: 1%;
-    padding-bottom: 1%;
-    padding-left: 2%;
+.details-table{
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.transactions-box .details tr{
-    font-weight: 1px;
+.details-table td {
+    font-size: 30px;
+    border: 1px solid #ccc;
+    padding: 15px;
+    text-align: left;
+}
+
+.details-table td:nth-child(1){
+    width: 30%;
+}
+
+.details-table td:nth-child(2){
+    width: 20%;
+}
+
+.details-table td:nth-child(3){
+    width: 20%;
+}
+
+.details-table td:nth-child(4){
+    width: 15%;
+}
+
+.details-table td:nth-child(5){
+    width: 15%;
 }
