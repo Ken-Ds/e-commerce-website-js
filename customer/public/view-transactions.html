@@ -9,9 +9,9 @@
 
 <body>
     <section class="filter-bar">
-        <p>All</p>
-        <p>Claimed</p>
-        <p>Unclaimed</p>
+        <button>All</button>
+        <button>Claimed</button>
+        <button>Unclaimed</button>
     </section>
 
     <section class="page">
@@ -30,7 +30,53 @@
     
         <section class="transactions-box">
             <div class="organization-name">
-                <P>Organization Name</P>
+                <div>
+                    <P>Organization Name</P>
+                </div>
+
+                <div>
+                    <button class="collapse-expand-bttn" onclick="toggleDetails(this)">
+                        <img src="../style/img/expand.png" alt="Expand Button">
+                    </button>
+                </div>
+            </div>
+
+            <table class="details-table">
+                <tbody>
+                    <tr>
+                        <td>Product</td>
+                        <td>2</td>
+                        <td>$10</td>
+                        <td rowspan="2">11/15/2024</td>
+                        <td rowspan="2">Pending</td>
+                    </tr>
+                    <tr>
+                        <td>Product 100</td>
+                        <td>2</td>
+                        <td>$2</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td></td>
+                        <td>TOTAL:</td>
+                        <td>$24</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </section>
+
+        <section class="transactions-box">
+            <div class="organization-name">
+                <div>
+                    <P>Organization Name</P>
+                </div>
+
+                <div>
+                    <button class="collapse-expand-bttn" onclick="toggleDetails(this)">
+                        <img src="../style/img/expand.png" alt="Exapnd Button">
+                    </button>
+                </div>
             </div>
 
             <table class="details-table">
@@ -38,28 +84,66 @@
                     <tr>
                         <td>Product 1</td>
                         <td>2</td>
-                        <td>Amount</td>
-                        <td>Order Date</td>
-                        <td>Status</td>
+                        <td>$10</td>
+                        <td rowspan="2">11/15/2024</td>
+                        <td rowspan="2">Pending</td>
                     </tr>
-                </tbody>
-            </table>
-
-            <table class="details-table">
-                <tbody>
                     <tr>
                         <td>Product 100</td>
                         <td>2</td>
-                        <td>Amount</td>
-                        <td>Order Date</td>
-                        <td>Status</td>
+                        <td>$2</td>
                     </tr>
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <td></td>
+                        <td>TOTAL:</td>
+                        <td>$24</td>
+                    </tr>
+                </tfoot>
             </table>
-
         </section>
-
     </section>
 
 </body>
 </html>
+
+<script>
+    function toggleDetails(button){
+        const img = button.querySelector('img');
+        const detailsTable = button.closest('.organization-name').nextElementSibling;
+        const rows = detailsTable.querySelectorAll('tbody tr');
+        
+        if (img.src.endsWith('expand.png')) {
+            img.src = '../style/img/collapse.jpg';
+            img.alt = "Collapse Button"
+            rows.forEach((row, index) => {
+                const imageCell = row.querySelector('td');
+
+                const newImage = document.createElement('img');
+                newImage.src = '../style/img/store-icon.png';
+                newImage.alt = 'Product Image';
+                newImage.style.width = '100px';
+
+                const productDescription = document.createElement('p');
+                productDescription.innerText = "Product Description";
+
+                imageCell.insertBefore(newImage, imageCell.firstChild)
+                imageCell.append(productDescription);
+            });
+        } else {
+            img.src = '../style/img/expand.png';
+            img.alt = "Expand Button"
+
+            rows.forEach((row, index) => {
+                const imageCell = row.querySelector('td');
+                imageCell.querySelector('img').remove();
+                imageCell.querySelector('p').remove();
+            });
+        }
+
+        
+    }
+
+
+</script>
