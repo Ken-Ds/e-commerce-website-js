@@ -1,0 +1,89 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f9f9f9;
+}
+
+.profile-container {
+    width: 90%;
+    max-width: px; 
+    height: 50%; 
+    background-color: #fff;
+    padding: 40px; 
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+}
+
+h1 {
+    font-size: 32px; 
+    margin-bottom: 15px; 
+    padding-bottom: 10px; 
+    border-bottom: 2px solid #ccc;
+}
+
+.profile-content {
+    display: flex;
+    gap: 30px; 
+    align-items: flex-start;
+}
+
+.profile-picture {
+    flex: 1;
+    border: 2px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px; 
+    background-color: #f0f0f0;
+    color: #888;
+    font-size: 22px; 
+}
+
+.profile-details {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+h2 {
+    font-size: 24px; 
+    color: #888;
+    margin-bottom: 15px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.detail-item {
+    flex: 1;
+    font-size: 18px; 
+}
+
+.detail-item span {
+    display: block;
+    font-size: 16px;
+    color: #888;
+}
+
+.detail-item p {
+    font-size: 20px; 
+    margin: 10px 0;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 20px 0;
+}
