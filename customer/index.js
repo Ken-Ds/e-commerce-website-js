@@ -8,12 +8,16 @@ const app = express();
 
 app.use(express.static('public'));
 
+const sq = require("db");
+
+
 const PORT = 3000;
 
-app.get('/', (req, res)=>{
-    res.status(200);
-    res.send("Welcome to root URL of Server");
-});
+const router = express.Router();
+
+router.post('/'), (request, response) => {
+    let custname = request.body.custname;
+}
 
 app.listen(PORT, (error) =>{
     if(!error)
