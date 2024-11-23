@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style/css/order-page.css">
+    <title>Order Page</title>
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <div class="productOrder-container">
+        <div class="productOrder-main">
+            <div class="productOrder-image">
+                <img src="../../shared/style/img/sample-prod.jpg" alt="Product Image">
+            </div>
+            <div class="productOrder-details">
+                <h2 id="productOrder-name">Product Name</h2>
+                <p id="productOrder-price">₱ 50.00</p>
+                <p id="productOrder-description">Product Description</p>
+                <div class="quantityOrder-container">
+                    <label for="quantity">Quantity:</label>
+                    <button class="quantity-btn" id="decrease">−</button>
+                    <input type="number" id="quantity" value="1" min="1">
+                    <button class="quantity-btn" id="increase">+</button>
+                </div>
+                <p id="available-stock">Available Stock: 2</p>
+                <div class="actions">
+                    <button class="btn" id="buy-now">Buy Now</button>
+                    <button class="btn" id="add-to-cart">Add To Cart</button>
+                </div>
+            </div>
+        </div>
+        <div class="other-products">
+            <h3>Other Products</h3>
+            <div class="products-grid" id="products-grid">
+
+                <div class="product-item">
+                    <img src="../../shared/style/img/sample-prod.jpg" alt="Product Image">
+                </div>
+                <div class="product-item">
+                    <img src="../../shared/style/img/sample-prod.jpg" alt="Product Image">
+                </div>
+                <div class="product-item">
+                    <img src="../../shared/style/img/sample-prod.jpg" alt="Product Image">
+                </div>
+                <div class="product-item">
+                    <img src="../../shared/style/img/sample-prod.jpg" alt="Product Image">
+                </div>
+                <div class="product-item">
+                    <img src="../../shared/style/img/sample-prod.jpg" alt="Product Image">
+                </div>
+                <div class="product-item">
+                    <img src="../../shared/style/img/sample-prod.jpg" alt="Product Image">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // Header
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('header-placeholder').innerHTML = data);
+
+        // Footer
+        fetch('footer.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('footer-placeholder').innerHTML = data);
+
+        // Increase and Decrease Button
+        const quantityInput = document.getElementById("quantity");
+        const decreaseButton = document.getElementById("decrease");
+        const increaseButton = document.getElementById("increase");
+
+        increaseButton.addEventListener("click", () => {
+            let currentQuantity = parseInt(quantityInput.value); 
+            currentQuantity++; 
+            quantityInput.value = currentQuantity; 
+        });
+
+        decreaseButton.addEventListener("click", () => {
+            let currentQuantity = parseInt(quantityInput.value); 
+            if (currentQuantity > 1) { 
+                currentQuantity--; 
+                quantityInput.value = currentQuantity;
+            }
+        });
+    </script>
+</body>
+</html>
