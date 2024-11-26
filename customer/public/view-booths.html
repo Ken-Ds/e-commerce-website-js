@@ -4,9 +4,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>INGS Advanced Orders</title>
-        <link rel="stylesheet" href="../style/css/view-booth.css">
+        <link rel="stylesheet" href="style/css/view-booth.css">
     </head>
     <body>
+
+        <section id="navbar"></section>
+
         <section class = "event-container">
             <h1><span>Bravo!</span> Teknokomersiyo</h1>
             <h3>
@@ -33,7 +36,7 @@
                 <div class="hide-container">
                     <div class = "org-container">
                         <div class="org-logo">
-                            <img src="../../shared/style/img/sample-logo.png" alt="">
+                            <img src="/style/img/sample-logo.png" alt="">
                         </div>
 
                         <div class="org-details">
@@ -95,81 +98,17 @@
                 </div>
 
                 <div class="products">
-                    <div class="product">
-                        <div class="img-container">
-                            <img src="../../shared/style/img/sample-prod.jpg" alt="Product">
-                        </div>
-                        <h3>Pro4/Pro6/MKH21 Earphone Wireless</h3>
-                        <p><span>₱</span>100.00</p>
-                    </div>
-                    <div class="product">
-                        <div class="img-container">
-                            <img src="../../shared/style/img/sample-prod.jpg" alt="Product">
-                        </div>
-                        <h3>Product Name</h3>
-                        <p><span>₱</span>100.00</p>
-                    </div>
-                    <div class="product">
-                        <div class="img-container">
-                            <img src="../../shared/style/img/sample-prod.jpg" alt="Product">
-                        </div>
-                        <h3>Product Name</h3>
-                        <p><span>₱</span>100.00</p>
-                    </div>
-                    <div class="product">
-                        <div class="img-container">
-                            <img src="../../shared/style/img/sample-prod.jpg" alt="Product">
-                        </div>
-                        <h3>Product Name</h3>
-                        <p><span>₱</span>100.00</p>
-                    </div>
-                    <div class="product">
-                        <div class="img-container">
-                            <img src="../../shared/style/img/sample-prod.jpg" alt="Product">
-                        </div>
-                        <h3>Product Name</h3>
-                        <p><span>₱</span>100.00</p>
-                    </div>
-                    <div class="product">
-                        <div class="img-container">
-                            <img src="../../shared/style/img/sample-prod.jpg" alt="Product">
-                        </div>
-                        <h3>Product Name</h3>
-                        <p><span>₱</span>100.00</p>
-                    </div>
-                    <div class="product">
-                        <div class="img-container">
-                            <img src="../../shared/style/img/sample-prod.jpg" alt="Product">
-                        </div>
-                        <h3>Product Name</h3>
-                        <p><span>₱</span>100.00</p>
-                    </div>
-                    <div class="product">
-                        <div class="img-container">
-                            <img src="../../shared/style/img/sample-prod.jpg" alt="Product">
-                        </div>
-                        <h3>Product Name</h3>
-                        <p><span>₱</span>100.00</p>
-                    </div>
-                    <div class="product">
-                        <div class="img-container">
-                            <img src="../../shared/style/img/sample-prod.jpg" alt="Product">
-                        </div>
-                        <h3>Product Name</h3>
-                        <p><span>₱</span>100.00</p>
-                    </div>
-                    <div class="product">
-                        <div class="img-container">
-                            <img src="../../shared/style/img/sample-prod.jpg" alt="Product">
-                        </div>
-                        <h3>Product Name</h3>
-                        <p><span>₱</span>100.00</p>
-                    </div>
                 </div>
             </section>
         </section>
 
+        <section id="footer"></section>
+
         <script>
+            getProducts();
+            loadNavbar();
+            loadFooter();
+
             function hideBooth(){
                 var orgDiv = document.querySelector(".hide-container");
                 orgDiv.style.display='none';
@@ -178,6 +117,77 @@
             function renderBooth(){
                 var orgDiv = document.querySelector(".hide-container");
                 orgDiv.style.display='block';
+            }
+
+            function loadNavbar() {
+                fetch('header.html')  
+                    .then(response => response.text()) 
+                    .then(html => {
+                        document.getElementById('navbar').innerHTML = html; 
+                    })
+                    .catch(error => console.error('Error loading navbar:', error));
+            }
+
+            
+            function loadFooter(){
+                fetch('footer.html')  
+                    .then(response => response.text()) 
+                    .then(html => {
+                        document.getElementById('footer').innerHTML = html; 
+                    })
+                    .catch(error => console.error('Error loading navbar:', error));
+            }
+
+            function getProducts(){
+                var url = `getproducts`;
+                console.log('Fetching products from:', url); 
+
+                fetch(url)
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then( data=> {
+                        showProducts(data);
+                    })
+                    .catch( error => {
+                        console.error('Error fetching products:', error); ;
+                        alert("error");
+                    });
+            }
+
+            function showProducts(products){
+
+                var div = document.querySelector('.products');
+
+                products.forEach(product => {
+                    var prodDiv = document.createElement('div');
+                    prodDiv.className = "product";
+
+                    var image = product.pImage ? product.pImage : "/style/img/prod-placeholder.jpg";
+
+                    var imgDiv = document.createElement('div');
+                    imgDiv.className = "img-container";
+                    console.log('Image src:', product.pImage);
+                    var img = document.createElement('img');
+                    img.src = image;
+                    img.alt = "Product Image";
+                    
+                    var name = document.createElement('h3');
+                    name.innerText = product.pName;
+
+                    var price = document.createElement('p');
+                    price.innerText = product.price + ".00";
+                    var tag = document.createElement('span');
+                    tag.innerText = "₱";
+
+                    imgDiv.appendChild(img);
+                    price.prepend(tag);
+
+                    prodDiv.appendChild(imgDiv);
+                    prodDiv.appendChild(name);
+                    prodDiv.appendChild(price);
+                    div.appendChild(prodDiv);
+                })
             }
 
         </script>

@@ -95,7 +95,7 @@
                         productContainer.innerHTML = 'No products found!';
                     } else {
                         data.forEach(product => {
-                            var img = product.pImage ? 'data:image/jpeg;base64,' + product.pImage : "../style/img/prod-placeholder.jpg";
+                            var img = product.pImage ? 'data:image/jpeg;base64,' + product.pImage : "/style/img/prod-placeholder.jpg";
 
                             var productDiv = document.createElement('div');
                             productDiv.className = 'product';

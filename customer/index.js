@@ -3,23 +3,18 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 var mysql = require('mysql');
-
 const app = express();
 
 app.use(express.static('public'));
 
-const sq = require("db");
-
-
 const PORT = 3000;
 
-const router = express.Router();
+const sql = require('./routes/db');
+const getProdsRoute = require('./routes/getProducts');
 
-router.post('/'), (request, response) => {
-    let custname = request.body.custname;
-}
+app.use('/getproducts', getProdsRoute);
 
-app.listen(PORT, (error) =>{
+app.listen(PORT, 'localhost', (error) =>{
     if(!error)
         console.log("Server is Successfully Running, and App is listening on port "+ PORT)
     else 
