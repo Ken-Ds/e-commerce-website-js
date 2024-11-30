@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 29, 2024 at 09:16 AM
+-- Generation Time: Nov 30, 2024 at 02:21 PM
 -- Server version: 8.2.0
 -- PHP Version: 8.2.13
 
@@ -44,6 +44,37 @@ INSERT INTO `booths` (`boothID`, `orgID`, `location`) VALUES
 (1, 1, 'Market Area, Quezon City'),
 (2, 2, 'Handicraft Lane, Baguio City'),
 (3, 3, 'Tech Mall, Manila');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cart`
+--
+
+DROP TABLE IF EXISTS `cart`;
+CREATE TABLE IF NOT EXISTS `cart` (
+  `userID` int NOT NULL,
+  `productID` int NOT NULL,
+  `quantity` int NOT NULL,
+  `orgID` int NOT NULL,
+  PRIMARY KEY (`userID`,`productID`),
+  KEY `fk_org` (`orgID`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`userID`, `productID`, `quantity`, `orgID`) VALUES
+(3, 1, 5, 1),
+(3, 6, 1, 3),
+(3, 22, 2, 2),
+(5, 16, 2, 1),
+(5, 23, 1, 2),
+(5, 5, 1, 3),
+(6, 6, 1, 3),
+(6, 28, 3, 2),
+(6, 13, 5, 1);
 
 -- --------------------------------------------------------
 
