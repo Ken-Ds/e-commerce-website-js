@@ -64,3 +64,18 @@
     font-family: Voguella;
     src: url(../fonts/Voguella.ttf);
 }
+
+@font-face {
+    font-family: Bebas;
+    src: url(../fonts/BebasNeue-Regular.ttf);
+}
+
+@font-face {
+    font-family: Noodle;
+    src: url(../fonts/big_noodle_titling.ttf);
+}
+
+@font-face {
+    font-family: Butler;
+    src: url(../fonts/Butler_Regular.otf);
+}

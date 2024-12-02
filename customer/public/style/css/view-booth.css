@@ -16,7 +16,7 @@ html, body {
     justify-content: center; 
     align-items: center;
     width: 100%;
-    height: 419px;
+    height: 100%;
     background: url(../img/events-bg.jpg);
     background-color: black ;
     background-repeat: no-repeat;
@@ -46,75 +46,201 @@ html, body {
   
 .event-container h1 {
     font-family: Milk;
-    font-size: 60px;
-    margin-bottom: 20px; 
+    font-size: 80px;
 }
   
 .event-container h3 {
     font-family: Coolvetica;
     font-weight: 100;
-    font-size: 25px;
+    font-size: 40px;
+    margin: 20px 200px;
 }
   
 .event-container h1 span {
     color: orange;
 }
 
+.event-container button {
+    font-family: Inter;
+    font-size: 20px;
+    letter-spacing: 2px;
+    display: inline-block;
+    text-align: center;
+    padding: 0.7em 2em;
+    border: 3px solid var(--primary-color);
+    border-radius: 2px;
+    position: relative;
+    color: var(--primary-color);
+    text-decoration: none;
+    box-shadow: 0 2px 10px rgba(0,0,0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.1);
+    transition: 0.3s ease all;
+    z-index: 2;
+}
+
+.event-container button::before{
+    transition: 0.5s all ease;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    right: 50%;
+    bottom: 0;
+    opacity: 0;
+    content: '';
+    color: var(--primary-color);
+    background-color: var(--primary-color);
+    z-index: -1;
+}
+
+.event-container button:hover {
+    color: white;
+}
+
+.event-container button:hover::before{
+    transition: 0.5s all ease;
+    left: 0;
+    right: 0;
+    opacity: 1;
+}
+
+
 .main-container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     width: 100%;
     min-height: 100%;
 }
 
-.sidebar {
-    background-color: orange;
-    min-height: 100%;
-    width: 15%;
-    overflow-y: auto; 
-}
-
-.sidebar-container {
-    height: 100%;
-    width: 100%;
-    background: linear-gradient(to right, aqua, #4b8ec5);
+.vendors-container {
+    height: 700px;
+    background-color: black;
     display: flex;
     flex-direction: column;
-}
-
-.sidebar-container * {
-    padding: 15px 20px;
-}
-
-.sidebar-container img {
     align-items: center;
-    justify-items: center;
-    width: 50px;
-    height: 50px;
-}
-.sidebar-container h2 {
-    font-family: Booked;
-    font-size: 40px;
-    text-align: center;
-}
-
-.sidebar-container button {
     color: black;
-    font-family: Bondrians;
-    letter-spacing: 5px;
-    font-size: 35px;
-    background: none;
-    border: none;
+    padding: 0px 50px;
 }
 
-.sidebar-container button:hover {
-    background-color: rgb(253, 253, 142);
+.vendors-container h2 {
+    color: white;
+    font-family: Noodle;
+    font-size: 60px;
+    padding: 10px;
+    margin-top: 10px;
 }
+
+.vendors-container p {
+    color: white;
+    font-family: Arial;
+    font-size: 25px;
+    padding: 10px;
+}
+
+.vendor-slideshow {
+    height: 450px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    overflow-x: auto;           
+    white-space: nowrap;         
+    margin: 0px 50px;
+    
+}
+
+
+/* Customize the scrollbar itself */
+.vendor-slideshow::-webkit-scrollbar {
+    height: 10px;              /* Set the height to make the scrollbar thinner */
+  }
+  
+  /* Style the track (background) of the scrollbar */
+  .vendor-slideshow::-webkit-scrollbar-track {
+    background: #e9a1a1;      /* Light gray background */
+  }
+  
+  /* Style the thumb (the draggable part) of the scrollbar */
+  .vendor-slideshow::-webkit-scrollbar-thumb {
+    background: #888;         /* Darker gray for the thumb */
+    border-radius: 10px;      /* Optional: Rounded corners */
+  }
+
+  .vendor-slideshow {
+    position: relative; /* Ensures the button is the reference for positioning pseudo-elements */
+}
+
+.vendor-slideshow button {
+    background: var(--primary-color);
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    height: 400px;
+    max-width: 400px;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: visible;
+    text-align: center; /* Center-align text */
+    position: relative; /* Allows the overlay to be layered over the button */
+}
+
+.vendor-slideshow button h3 {
+    font-size: 25px;
+    font-family: Butler;
+    padding-top: 20px;
+    color: white;
+    max-width: 100%; /* Prevent h3 from exceeding button width */
+    overflow: hidden; /* Hide overflowing text */
+    white-space: nowrap; /* Prevent text wrapping */
+    text-overflow: ellipsis; /* Add "..." for overflowing text */
+    text-align: center; /* Center the text */
+}
+
+.vendor-slideshow button img {
+    height: 300px;
+    width: 300px;
+    object-fit: cover;
+    z-index: 1; /* Ensure the image stays on top of the overlay */
+}
+
+.vendor-slideshow button:hover {
+    background: var(--secondary-color);
+}
+
+/* Add dark overlay on hover */
+.vendor-slideshow button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0); /* Initially transparent */
+    z-index: 2; /* Place the overlay above the content */
+    transition: background 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.vendor-slideshow button:hover::before {
+    background: rgba(0, 0, 0, 0.5); /* Add a semi-transparent dark overlay */
+}
+
+.vendor-slideshow button.active {
+    background: var(--secondary-color); 
+    font-weight: bold;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 
 .info-container {
     display: flex;
     flex-direction: column;
-    width: 85%;
+    width: 100%;
+}
+
+#info-container {
+    scroll-margin-top: 150px; 
 }
 
 .org-container {
@@ -134,7 +260,7 @@ html, body {
 
 .org-container img {
     width: auto;
-    height: 300px;
+    height: 350px;
     border: 1px solid black;
     border-radius: 50%;
 }
@@ -147,43 +273,30 @@ html, body {
     background-color: white;
     border: 1px solid black;
     border-radius: 5px;
-    width: 60%;
+    width: 40%;
     height: auto;
 }
 
 .org-details h2 {
-    font-size: 30px;
+    font-size: 35px;
+    color: black;
     font-family: Voguella;
 }
 .org-details p {
     margin-left: 10px;
     padding: 10px;
-    font-size: 16px;
-}
-
-.select-booth {
-    padding: 5px;
-    font-family: Milk;
-    font-weight: 400;
-    margin-left: 15px;
-    margin-top: 15px;
-    border: none;
-    border-radius: 5px;
     font-size: 20px;
 }
 
-.select-booth:hover {  
-    cursor: pointer;  
-}
-
-.booth-details p {
-    margin-left: 30px;
-    font-size:16px;
+.booth-details {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 table {
     width: auto;
-    margin: 0 40px;
     border-collapse: collapse;
 }
 
@@ -197,7 +310,7 @@ th {
     padding: 12px;
     text-align: center;
     font-weight: bold;
-    font-size: 17px;
+    font-size: 23px;
     text-align: center;
     border: 1px solid #b1afaf;
 }
@@ -214,7 +327,7 @@ td {
     font-family: Inter;
     border: 1px solid #b1afaf;
     color: black;
-    font-size: 15px;
+    font-size: 20px;
     padding: 10px;
     text-align: center;
 }
@@ -227,12 +340,40 @@ tbody tr:hover {
 .filters {
     width: 100%;
     background-color: #AEAEB7;
-    height: 50px;
+    height: 70px;
     display:flex;
     justify-content: space-between;
     gap: 50px;
-    padding: 10px;
+    padding: 10px 50px;
     box-sizing: border-box;
+}
+
+#filters {
+    scroll-margin-top: 150px; 
+}
+
+.filters button {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.filters button img{
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.filters h2 {
+    display: flex;
+    align-items: center;
+    font-family: Arial;
+    font-size: 25px;
+    color: black;
+    padding: 10px;
 }
 
 .filters select {
@@ -243,24 +384,117 @@ tbody tr:hover {
     flex-grow: 1;
 }
 
+#products-label {
+    font-family: Bebas;
+    font-size: 50px;
+    margin: 40px 50px 0px;
+    font-weight: 200;
+}
+
+#query-label {
+    margin: 0px 50px 0px;
+    color: gray;
+    display: none;
+}
+
 .products {
     display: grid; 
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); 
-    gap: 5px; 
-    margin: 20px 0 20px 20px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+    gap: 10px; 
+    margin: 40px 50px;
     justify-items: center;
     align-items: center;
 }
 
 .product {
+    cursor: pointer;
     position: relative;
-    width: 200px;
-    height: 200px;
-    box-shadow: -2px 4px 4px rgba(0, 0, 0, 0.25);
-    border: 1px solid black;
+    width: 250px;
+    height: 250px;
+    box-shadow: 2px 2px 0 0 rgba(0, 0, 0, 0.25);
     margin: 10px;
     padding: 10px;
+    border-radius: 10px;
+    border: 2px solid black;
+    transition-duration: 200ms;
 }
+
+.product:hover {
+    box-shadow: 3px 3px transparent, 6px 6px 0 0 var(--primary-color);
+    border: 2px solid var(--primary-color);
+    transform: translate(-2px, -2px);
+    font-weight: bold;
+    height: 300px;
+}
+
+.product:hover button {
+    display: block;
+}
+
+.product button {
+    cursor: pointer;
+    background-color: white;
+    width: 100%;
+    height: 50px;
+    color: black;
+    font-weight: 500;
+    display: none;
+    font-family: Poppins;
+    font-size: 18px;
+    transition: 0.3s ease all;
+    z-index: 2;
+    position: relative;
+}
+
+.product button::before{
+    transition: 0.5s all ease;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    right: 50%;
+    bottom: 0;
+    opacity: 0;
+    content: '';
+    color: var(--primary-color);
+    background-color: var(--primary-color);
+    z-index: -1;
+}
+
+.product button:hover {
+    color: white;
+    font-weight: 500;
+}
+
+.product button:hover::before{
+    transition: 0.5s all ease;
+    left: 0;
+    right: 0;
+    opacity: 1;
+}
+
+.product button:active {
+    background-color: var(--secondary-color); 
+    transform: translateY(2px); 
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.product button.clicked{
+    background-color: var(--primary-color);
+    transition: 0.5s all ease ;
+}
+
+/* Transition back to normal when not clicked */
+.product button:not(.clicked) {
+    background-color: white;
+    transition: 0.3s ease all; /* Ensure smooth transition back to normal */
+}
+
+.product button img {
+    height: 50px;
+    width: 50px;
+    transition: opacity 0.3s ease; 
+}
+
 
 .img-container {
     display: flex;
@@ -269,23 +503,23 @@ tbody tr:hover {
 }
 
 .product img {
-    width: 140px;
-    height: 112px;
+    width: auto;
+    height: 175px;
 }
 
 .product h3 {
     margin-top: 20px;
     font-family: Poppins;
-    font-size: 14px;
+    font-size: 18px;
     text-align: center;
 }
 
 .product p {
-    position: absolute;
     bottom: 10px;
     right: 10px;
     padding-top: 10px;
     font-family: Inter;
+    text-align: right;
     font-size: 18px;
     color: #CC4116;
     font-weight: bold;

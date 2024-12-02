@@ -17,67 +17,52 @@
                 sell their unique creations, fostering community engagement 
                 and supporting local artisans.  
             </h3>
+            <button id="scrollButton">Shop Now!</button>
             <div class='overlay'></div>
         </section>
 
         <section class="main-container">
-            <section class="sidebar">
-                <div class="sidebar-container">
-                    <h2>Vendors</h2>
-                    <button onclick="hideBooth()">All</button>
-                    <button onclick="renderBooth()">Juan's Sari-Sari Store</button>
-                    <button onclick="renderBooth()">Org 2</button>
-                    <button onclick="renderBooth()">Org 3</button>
-                    <button onclick="renderBooth()">Org 4</button>
-                </div>
-            </section>
 
-            <section class= "info-container">
+            <div class="vendors-container">
+                <h2>Featured Organizations</h2>
+                <p>Support the participating school organizations! </p>
+                <div class="vendor-slideshow" id="vendor-buttons">
+                </div>
+              </div>
+
+            <section class= "info-container" id="info-container">
                 <div class="hide-container">
-                    <div class = "org-container">
+                    <div class = "org-container" >
                         <div class="org-logo">
-                            <img src="/style/img/sample-logo.png" alt="">
+                            <img id="logo" src="/style/img/prod-placeholder.jpg">
                         </div>
 
                         <div class="org-details">
-                            <h2>Organization Name</h2>
-                            <p>Organization Description</p>
+                            <h2 id="org-name">Organization Name</h2>
+                            <p id="org-desc">Organization Description</p>
                             
-                            <div class="booth-details">
-                                <select class="select-booth">
-                                    <option value="1" selected>↪ Booth 1</option>
-                                    <option value="2">↪ Booth 2</option>
-                                </select>
-                                <p>Location: </p>
-                                <p>Schedule: </p>
-                                <table>
+                            <div class="booth-details">         
+                                <table id="schedule-table">
                                     <thead>
                                         <tr>
-                                            <th>Day Available</th>
-                                            <th>Start Time</th>
-                                            <th>End Time</th>
+                                            <th>Booth No.</th>
+                                            <th>Location</th>
+                                            <th>Day</th>
+                                            <th>Time</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Monday</td>
-                                            <td>10:00</td>
-                                            <td>12:00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Tuesday</td>
-                                            <td>10:00</td>
-                                            <td>12:00</td>
-                                        </tr>
-                                    </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="filters">
-                    <select>
+                <div class="filters" id="filters">
+                    <h2>SORT BY</h2>
+                    <button>
+                        <img src="style/img/reset-icon.png" onclick="resetFilters()">
+                    </button>
+                    <select id="cat-select">
                         <option value="" disabled selected>Category</option>
                         <option>Food</option>
                         <option>Household</option>
@@ -85,18 +70,20 @@
                         <option>Electronics</option>
                         <option>Other</option>
                     </select>
-                    <select>
+                    <select id="alpha-select">
                         <option value="" disabled selected>Alphabetical</option>
                         <option>Ascending (A-Z)</option>
                         <option>Descending (Z-A)</option>
                     </select>
-                    <select>
+                    <select id="price-select">
                         <option value="" disabled selected>Price</option>
                         <option>Highest to Lowest</option>
                         <option>Lowest to Highest</option>
                     </select>
                 </div>
 
+                <h1 id="products-label">Top Products</h1>
+                <h3 id="query-label">Showing Results for: </h3>
                 <div class="products">
                 </div>
             </section>
@@ -106,17 +93,190 @@
 
         <script>
             getProducts();
+            getOrgs();
             loadNavbar();
             loadFooter();
+
+            var orgID = null;
+
+            document.getElementById("scrollButton").addEventListener("click", function () {
+                document.getElementById("filters").scrollIntoView({
+                    behavior: "smooth" 
+                });
+            });
+
+            var catSelect = document.getElementById("cat-select");
+            catSelect.addEventListener("change", function () {
+                const selectedValue = catSelect.value;
+                console.log("Selected option:", selectedValue);
+                getProducts(orgID,selectedValue);
+                
+                const queryLabel = document.getElementById("query-label");
+                queryLabel.innerText = "Showing Results for: Category " + catSelect.value;
+                catSelect.selectedIndex = 0;
+                queryLabel.style.display = "block";
+            });
+
+            var alphaSelect = document.getElementById("alpha-select");
+            alphaSelect.addEventListener("change", function() {
+                const selectedValue = alphaSelect.value;
+                getProducts(orgID, null, selectedValue);
+
+                const queryLabel = document.getElementById("query-label");
+                queryLabel.innerText = "Showing Results for: " + alphaSelect.value;
+                alphaSelect.selectedIndex = 0;
+                queryLabel.style.display = "block";
+            })
+
+            var priceSelect = document.getElementById("price-select");
+            priceSelect.addEventListener("change", function() {
+                const selectedValue = priceSelect.value;
+                getProducts(orgID, null, null, selectedValue);
+
+                const queryLabel = document.getElementById("query-label");
+                queryLabel.innerText = "Showing Results for: Price " + priceSelect.value;
+                priceSelect.selectedIndex = 0;
+                queryLabel.style.display = "block";
+            })
+
+
+            function resetFilters(){
+                getProducts(orgID);
+                const queryLabel = document.getElementById("query-label");
+                queryLabel.style.display= 'none';
+
+                document.getElementById("cat-select").selectedIndex = 0;
+            }
+
+            function checkIfActive(button){
+                const buttons = document.querySelectorAll('.vendor-slideshow button');
+                if(button.classList.contains('active')) {
+                    hideBooth();
+                    button.classList.remove('active');
+                    orgID=null;
+                    button.onclick = null;
+                    var label = document.getElementById("products-label");
+                    label.innerText ="Top Products";
+
+                    getProducts();
+                } else {
+                    buttons.forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    getOrgDetails(button.innerText);
+                    resetFilters();
+                    button.classList.add('active');
+                    document.getElementById("info-container").scrollIntoView({
+                        behavior: "smooth"
+                    });
+                }
+            }
 
             function hideBooth(){
                 var orgDiv = document.querySelector(".hide-container");
                 orgDiv.style.display='none';
             }
 
-            function renderBooth(){
-                var orgDiv = document.querySelector(".hide-container");
-                orgDiv.style.display='block';
+            function getOrgDetails(orgName){
+
+                var url = `getorgdetails?oName=${orgName}`;
+                console.log("Fetching org details from: ", url)
+
+                fetch(url)
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then (data => {
+                        renderBooth(data);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching org details', error)
+                        alert("error");
+                    })
+            }
+
+            function renderBooth(orgs) {
+                if (orgs.length > 0) {
+                    const org = orgs[0]; 
+                    console.log("Retrieved org: ", org);
+                    orgID = org.orgID;
+
+                    var hideDiv = document.querySelector(".hide-container");
+                    hideDiv.style.display = 'block';
+
+                    var logo = document.querySelector("#logo");
+                    var image = org.oLogo ? org.oLogo : "/style/img/prod-placeholder.jpg";
+                    logo.src = image;
+                    logo.alt = org.oName + " Logo";
+
+                    var name = document.querySelector("#org-name");
+                    name.innerText = org.oName;
+
+                    var desc = document.querySelector("#org-desc");
+                    desc.innerText = org.oDesc;
+
+                    var label = document.getElementById("products-label");
+                    label.innerText = org.oName + " Products"
+
+                    var scheduleTable = document.getElementById("schedule-table");
+                    const oldData = document.querySelector('table tbody');
+
+                    getProducts(org.orgID);
+                    if (oldData) {
+                        oldData.parentNode.removeChild(oldData);
+                    } else {
+                        console.log('No tbody found');
+                    };
+
+                    var tbody = document.createElement("tbody");
+
+                    var no = 1;
+
+                    console.log()
+                    org.booths.forEach(booth => {
+                        const numberOfSchedules = booth.schedules.length + 1;
+
+                        // Create the first row for the booth details (No and Location)
+                        const firstRow = document.createElement("tr");
+
+                        const noCell = document.createElement("td");
+                        noCell.textContent = no;
+                        noCell.rowSpan = numberOfSchedules; // Span the number of rows based on the number of schedules
+                        firstRow.appendChild(noCell);
+
+                        const locationCell = document.createElement("td");
+                        locationCell.textContent = booth.location;
+                        locationCell.rowSpan = numberOfSchedules; // Span the number of rows based on the number of schedules
+                        firstRow.appendChild(locationCell);
+
+                        // Append the first row to the tbody
+                        tbody.appendChild(firstRow);
+
+                        // Create the schedule rows
+                        booth.schedules.forEach(schedule => {
+                            const scheduleRow = document.createElement("tr");
+
+                            const dayCell = document.createElement("td");
+                            dayCell.textContent = schedule.dayAvailable;
+                            scheduleRow.appendChild(dayCell);
+
+                            const timeCell = document.createElement("td");
+                            timeCell.textContent = `${schedule.timeStart} - ${schedule.timeEnd}`;
+                            scheduleRow.appendChild(timeCell);
+
+                            // Append the schedule row to tbody
+                            tbody.appendChild(scheduleRow);
+                        });
+
+                        no++; // Increment the booth number for the next booth
+                    });
+
+
+                    scheduleTable.appendChild(tbody);
+
+                } else {
+                    console.error("No organization data available");
+                }
             }
 
             function loadNavbar() {
@@ -138,8 +298,63 @@
                     .catch(error => console.error('Error loading navbar:', error));
             }
 
-            function getProducts(){
+            function getOrgs(){
+                var url = `getorgs`;
+                console.log('Fetching products from: ', url);
+
+                fetch(url)
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(data => {
+                        showOrgs(data);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching products: ', error);
+                        alert("error");
+                    })
+            }
+
+            function showOrgs(orgs){
+                var div = document.querySelector('.vendor-slideshow');
+
+                orgs.forEach(org => {
+                    var btn = document.createElement("button");
+                    var name = document.createElement("h3");
+                    name.innerText = org.oName;
+                    var img = document.createElement("img");
+                    img.src = org.oLogo;
+                    
+                    btn.addEventListener("click", () => {
+                        checkIfActive(btn);
+                    });
+
+                    btn.appendChild(name);
+                    btn.prepend(img);
+                    div.appendChild(btn);
+                })
+            }
+
+            function getProducts(orgID, cat, alpha, price){
                 var url = `getproducts`;
+
+                if (orgID) {
+                    url += `?orgID=${orgID}`
+                    if(cat) {
+                        url += `&cat=${cat}`;
+                    } else if (alpha) {
+                        url += `&alpha=${alpha}`;
+                    } else if (price) {
+                        url += `&price=${price}`;
+                    }
+                } else if (cat) {
+                    url += `?cat=${cat}`;
+                } else if (alpha) {
+                    url += `?alpha=${alpha}`;
+                } else if (price) {
+                    url += `?price=${price}`;
+                }
+
                 console.log('Fetching products from:', url); 
 
                 fetch(url)
@@ -159,6 +374,16 @@
 
                 var div = document.querySelector('.products');
 
+                const oldData = document.querySelectorAll('.product');
+
+                if (oldData) {
+                    oldData.forEach( data => {
+                        data.parentNode.removeChild(data);
+                    })
+                } else {
+                    console.log('No products found')
+                }
+
                 products.forEach(product => {
                     var prodDiv = document.createElement('div');
                     prodDiv.className = "product";
@@ -167,7 +392,6 @@
 
                     var imgDiv = document.createElement('div');
                     imgDiv.className = "img-container";
-                    console.log('Image src:', product.pImage);
                     var img = document.createElement('img');
                     img.src = image;
                     img.alt = "Product Image";
@@ -180,12 +404,35 @@
                     var tag = document.createElement('span');
                     tag.innerText = "₱";
 
+                    var addcart = document.createElement('div');
+                    var button = document.createElement('button');
+                    button.innerText="Add To Cart"
+
+                    button.addEventListener("click", function() {
+                        var successImg = document.createElement('img');
+                        successImg.src = "/style/img/success-icon.png";
+                        button.appendChild(successImg);
+                        button.classList.add("clicked");
+
+                        button.innerHTML = ''; 
+                        button.appendChild(successImg);  
+
+                        setTimeout(function() {
+                            button.innerHTML = 'Add To Cart';
+                            button.classList.remove("clicked");
+                        }, 2000); 
+                    })
+
+                    addcart.appendChild(button);
+
+
                     imgDiv.appendChild(img);
                     price.prepend(tag);
 
                     prodDiv.appendChild(imgDiv);
                     prodDiv.appendChild(name);
                     prodDiv.appendChild(price);
+                    prodDiv.appendChild(addcart);
                     div.appendChild(prodDiv);
                 })
             }

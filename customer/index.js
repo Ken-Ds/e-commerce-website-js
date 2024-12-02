@@ -11,8 +11,12 @@ const PORT = 3000;
 
 const sql = require('./routes/db');
 const getProdsRoute = require('./routes/getProducts');
+const getOrgsRoute = require('./routes/getOrgs');
+const getOrgDetailsRoute = require('./routes/getOrgDetails');
 
 app.use('/getproducts', getProdsRoute);
+app.use('/getorgs', getOrgsRoute);
+app.use('/getorgdetails', getOrgDetailsRoute)
 
 app.listen(PORT, 'localhost', (error) =>{
     if(!error)

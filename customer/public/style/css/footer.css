@@ -47,7 +47,7 @@ body {
     color: #ff6b6b;
 }
 
-h2 {
+.footer-column h2 {
     font-size: 30px;
     margin-bottom: 15px;
     font-family: Retrograde;
