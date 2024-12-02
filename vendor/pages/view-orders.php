@@ -29,6 +29,7 @@
     <link href='../style/css/view-orders.css' rel='stylesheet'>
 </head>
 <body>
+    
 
 <section class='inner-body'>
     <div class='orders-container'>

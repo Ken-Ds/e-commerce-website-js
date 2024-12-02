@@ -8,10 +8,12 @@
 </head>
 
 <body>
+    <section id="navbar" style="padding-bottom: 140px;"></section>
+
     <section class="filter-bar">
-        <button>All</button>
-        <button>Claimed</button>
-        <button>Unclaimed</button>
+        <button onclick="filterOrders('all')">All</button>
+        <button onclick="filterOrders('claimed')">Claimed</button>
+        <button onclick="filterOrders('unclaimed')">Unclaimed</button>
     </section>
 
     <section class="page">
@@ -27,126 +29,343 @@
                 </thead>
             </table>
         </section>
+
+        <section class="trans"></section>
+    <section id="footer"></section>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script>
+        loadNavbar();
+        getOrders();
+        loadFooter();
+
+        const filterButtons = document.querySelectorAll('.filter-bar button');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove the 'selected' class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('selected'));
+                
+                // Add the 'selected' class to the clicked button
+                button.classList.add('selected');
+                
+                // Apply the filter logic
+                applyFilter(button.textContent.toLowerCase());
+            });
+        });
+
+        function applyFilter(filter) {
+            // Replace this with your filtering logic
+            console.log(`Filter applied: ${filter}`);
+        }
     
-        <section class="transactions-box">
-            <div class="organization-name">
-                <div>
-                    <P>Organization Name</P>
-                </div>
+        function getOrders(){
+            const userID = 6;
+    
+            var u = `getorders`;
+    
+            var url = `${u}?userID=${userID}`;
+    
+            fetch(url)
+            .then(response => {
+                return response.json();
+            })
+            .then(data => {
+                showOrders(data);
+            })
+            .catch(error => {
+                console.error('Error fetching orders: ', error);
+                alert("error");
+            })
+        }
+    
+        function showOrders(orders){
+            var section = document.querySelector('.trans');
+            section.innerHTML = ''; // Clear previous content
 
-                <div>
-                    <button class="collapse-expand-bttn" onclick="toggleDetails(this)">
-                        <img src="../style/img/expand.png" alt="Expand Button">
-                    </button>
-                </div>
-            </div>
+            if (orders.length === 0) {
+                section.innerHTML = '<p>No orders found.</p>';
+            } else {      
+                orders.forEach(order =>{
+                    var transactionsBox = document.createElement("section");
+                    transactionsBox.className = "transactions-box";
+    
+                    var organizationName = document.createElement("div");
+                    organizationName.className = "organization-name"
+    
+                    var orgNameDiv = document.createElement("div");
+                    var orgNameP = document.createElement("p");
+                    orgNameP.textContent = order.orgName;
+    
+                    var orgNameDiv2 = document.createElement("div");
+    
+                    var orgNameButton = document.createElement("button");
+                    orgNameButton.className = "collapse-expand-bttn";
+                    orgNameButton.onclick = function(){
+                        toggleDetails(this);
+                    };
+                    var orgNameButtonImage = document.createElement("img");
+                    orgNameButtonImage.src = '../style/img/expand.png';
+                    orgNameButtonImage.alt = "Expand Button";
+    
+                    orgNameDiv.appendChild(orgNameP);
+    
+                    orgNameButton.appendChild(orgNameButtonImage);
+                    orgNameDiv2.appendChild(orgNameButton);
+    
+                    organizationName.appendChild(orgNameDiv);
+                    organizationName.appendChild(orgNameDiv2);
 
-            <table class="details-table">
-                <tbody>
-                    <tr>
-                        <td>Product</td>
-                        <td>2</td>
-                        <td>$10</td>
-                        <td rowspan="2">11/15/2024</td>
-                        <td rowspan="2">Pending</td>
-                    </tr>
-                    <tr>
-                        <td>Product 100</td>
-                        <td>2</td>
-                        <td>$2</td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td></td>
-                        <td>TOTAL:</td>
-                        <td>$24</td>
-                        <td></td>
-                        <td><button>Download Receipt</button></td>
-                    </tr>
-                </tfoot>
-            </table>
-        </section>
+                    var detailsTable = document.createElement("table");
+                    detailsTable.className = "details-table";
 
-        <section class="transactions-box">
-            <div class="organization-name">
-                <div>
-                    <P>Organization Name</P>
-                </div>
+                    var tbody = document.createElement("tbody");
 
-                <div>
-                    <button class="collapse-expand-bttn" onclick="toggleDetails(this)">
-                        <img src="../style/img/expand.png" alt="Exapnd Button">
-                    </button>
-                </div>
-            </div>
+                    var u2 = 'getorderdetails';
+                    var orderID = order.orderID;
 
-            <table class="details-table">
-                <tbody>
-                    <tr>
-                        <td>Product 1</td>
-                        <td>2</td>
-                        <td>$10</td>
-                        <td rowspan="2">11/15/2024</td>
-                        <td rowspan="2">Pending</td>
-                    </tr>
-                    <tr>
-                        <td>Product 100</td>
-                        <td>2</td>
-                        <td>$2</td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td></td>
-                        <td>TOTAL:</td>
-                        <td>$24</td>
-                        <td></td>
-                        <td><button>Download Receipt</button></td>
-                    </tr>
-                </tfoot>
-            </table>
-        </section>
-    </section>
+                    var url2 = `${u2}?orderID=${orderID}`
+
+                    fetch(url2)
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(orderDetails => {
+                       orderDetails.forEach((orderDetail, idx) =>{
+                        var trBody = document.createElement("tr");
+
+                        var tdName = document.createElement("td");
+                        tdName.textContent = orderDetail.pName;
+
+                        var tdQuantity = document.createElement("td");
+                        tdQuantity.textContent = orderDetail.quantity;
+
+                        var tdPrice = document.createElement("td");
+                        tdPrice.innerText = "₱" + orderDetail.price;
+
+                        trBody.appendChild(tdName);
+                        trBody.appendChild(tdQuantity);
+                        trBody.appendChild(tdPrice);
+
+                        if (idx === 0) {
+                            var dateObj = new Date(order.dateOrdered);
+                            var tdDate = document.createElement("td");
+                            tdDate.innerText = dateObj.toLocaleDateString("en-US", {year: 'numeric', month: 'numeric', day: 'numeric'})
+                            tdDate.rowSpan = 10;
+
+                            if(order.status == "Pending"){
+                                var status = "Unclaimed"
+                            } else{
+                                var status = "Claimed"
+                            }
+                            var tdStatus = document.createElement("td")
+                            tdStatus.textContent = status;
+                            tdStatus.rowSpan = 10;
+
+                            trBody.appendChild(tdDate);
+                            trBody.appendChild(tdStatus);
+                        }
+
+                        tbody.appendChild(trBody);
+                        trBody.orderDetail = orderDetail;
+                        
+                       });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching orders: ', error);
+                        alert("error");
+                    })
+
+                    var tfoot = document.createElement("tfoot");
+                    var trFoot = document.createElement("tr");
+
+                    var tdBlank1 = document.createElement("td");
+
+                    var tdTotalText = document.createElement("td");
+                    tdTotalText.textContent = "TOTAL:";
+
+                    var tdTotal = document.createElement("td");
+                    tdTotal.textContent = "₱" + order.totalAmount;
+
+                    var tdButton = document.createElement("td");
+                    const tdbt = document.createElement('button');
+                    tdbt.innerText = "Download Receipt";
+                    tdbt.onclick = () => downloadReceipt(order); // Pass the order details
+                    tdButton.appendChild(tdbt);
+
+                    var tdBlank2 = document.createElement("td");
+
+                    trFoot.appendChild(tdBlank1);
+                    trFoot.appendChild(tdTotalText);
+                    trFoot.appendChild(tdTotal);
+                    trFoot.appendChild(tdBlank2);
+                    trFoot.appendChild(tdbt);
+
+                    tfoot.appendChild(trFoot);
+
+                    detailsTable.appendChild(tbody);
+                    detailsTable.appendChild(tfoot);
+    
+                    transactionsBox.appendChild(organizationName);
+                    transactionsBox.appendChild(detailsTable);
+                    
+                    section.appendChild(transactionsBox);
+                });
+            }
+        }
+
+        function filterOrders(filter) {
+            const userID = 6;
+            let u = 'getorders';
+            let url = `${u}?userID=${userID}`;
+        
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    let filteredOrders = data;
+        
+                    if (filter === 'claimed') {
+                        filteredOrders = data.filter(order => order.status.toLowerCase() === 'delivered');
+                    } else if (filter === 'unclaimed') {
+                        filteredOrders = data.filter(order => order.status.toLowerCase() === 'pending');
+                    }
+
+                    showOrders(filteredOrders);
+                })
+                .catch(error => {
+                    console.error('Error fetching filtered orders: ', error);
+                    alert("Error fetching filtered orders.");
+                });
+        }
+
+        function toggleDetails(button) {
+            const img = button.querySelector('img');
+            const detailsTable = button.closest('.organization-name').nextElementSibling;
+            const rows = detailsTable.querySelectorAll('tbody tr');
+            
+            if (img.src.endsWith('expand.png')) {
+                img.src = '../style/img/collapse.jpg';
+                img.alt = "Collapse Button";
+        
+                rows.forEach((row, index) => {
+                    const imageCell = row.querySelector('td');
+        
+                    if (!imageCell.dataset.fetched) {
+                        const orderDetail = row.orderDetail;
+                        if (orderDetail) {
+                            const newImage = document.createElement('img');
+                            newImage.src = orderDetail.pImage ? orderDetail.pImage : "/style/img/prod-placeholder.jpg";
+                            newImage.alt = "Product Image";
+                            newImage.style.width = '100px';
+        
+                            const productDescription = document.createElement('p');
+                            productDescription.innerText = orderDetail.pDesc;
+        
+                            imageCell.insertBefore(newImage, imageCell.firstChild);
+                            imageCell.append(productDescription);
+        
+                            imageCell.dataset.fetched = "true";
+                        }
+                    }
+                });
+                detailsTable.classList.add('expanded');
+            } else {
+                img.src = '../style/img/expand.png';
+                img.alt = "Expand Button";
+                detailsTable.classList.remove('expanded');
+        
+                rows.forEach((row, index) => {
+                    const imageCell = row.querySelector('td');
+                    const imgElement = imageCell.querySelector('img');
+                    const descriptionElement = imageCell.querySelector('p');
+        
+                    if (imgElement) imgElement.remove();
+                    if (descriptionElement) descriptionElement.remove();
+        
+                    delete imageCell.dataset.fetched;
+                });
+                
+            }
+        }
+
+        
+        function loadNavbar() {
+            fetch('header.html')  
+                .then(response => response.text()) 
+                .then(html => {
+                    document.getElementById('navbar').innerHTML = html; 
+                })
+                .catch(error => console.error('Error loading navbar:', error));
+        }
+    
+        function loadFooter(){
+            fetch('footer.html')  
+                .then(response => response.text()) 
+                .then(html => {
+                    document.getElementById('footer').innerHTML = html; 
+                })
+                .catch(error => console.error('Error loading navbar:', error));
+        }
+
+        async function downloadReceipt(order) {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF();
+        
+            
+            pdf.setFontSize(20);
+            pdf.text("Order Receipt", 105, 20, { align: "center" });
+
+            let y = 27;
+            pdf.setFontSize(15);
+            pdf.setFont("times");
+            pdf.text(`Status:${order.status}`, 105, y, { align: "center" });
+        
+            y += 10;
+            pdf.setFontSize(12);
+            pdf.text(`Organization: ${order.orgName}`, 10, y);
+
+            y += 10;
+            pdf.text("Order Details:", 10, y);
+            y += 10;
+        
+            pdf.setFont("times", "bold");
+            pdf.text("Product", 10, y);
+            pdf.text("Quantity", 80, y, { align: "right" });
+            pdf.text("Price", 110, y, { align: "right" });
+            pdf.text("Total", 150, y, { align: "right" });
+            pdf.setFont("times", "normal");
+            y += 10;
+        
+            
+            const url = `getorderdetails?orderID=${order.orderID}`;
+            try {
+                const response = await fetch(url);
+                const orderDetails = await response.json();
+
+                orderDetails.forEach(detail => {
+                    pdf.text(detail.pName, 10, y);
+                    pdf.text(detail.quantity.toString(), 80, y, { align: "right" });
+                    pdf.text(`Php ${detail.price}`, 110, y, { align: "right" });
+                    pdf.text(`Php ${detail.quantity * detail.price}`, 150, y, { align: "right" });
+                    y += 10;
+                });
+            } catch (error) {
+                console.error("Error fetching order details for PDF:", error);
+                alert("Failed to fetch order details.");
+                return;
+            }
+            
+            y += 10;
+            pdf.setFont("times", "bold");
+            pdf.text("Total Amount:", 10, y);
+            pdf.text(`Php${order.totalAmount}`, 150, y, { align: "right" });
+            
+            pdf.save(`Order_${order.orderID}_Receipt.pdf`);
+        }
+    
+    </script>
+    
 
 </body>
 </html>
 
-<script>
-    function toggleDetails(button){
-        const img = button.querySelector('img');
-        const detailsTable = button.closest('.organization-name').nextElementSibling;
-        const rows = detailsTable.querySelectorAll('tbody tr');
-        
-        if (img.src.endsWith('expand.png')) {
-            img.src = '../style/img/collapse.jpg';
-            img.alt = "Collapse Button"
-            rows.forEach((row, index) => {
-                const imageCell = row.querySelector('td');
-
-                const newImage = document.createElement('img');
-                newImage.src = '../style/img/store-icon.png';
-                newImage.alt = 'Product Image';
-                newImage.style.width = '100px';
-
-                const productDescription = document.createElement('p');
-                productDescription.innerText = "Product Description";
-
-                imageCell.insertBefore(newImage, imageCell.firstChild)
-                imageCell.append(productDescription);
-            });
-        } else {
-            img.src = '../style/img/expand.png';
-            img.alt = "Expand Button"
-
-            rows.forEach((row, index) => {
-                const imageCell = row.querySelector('td');
-                imageCell.querySelector('img').remove();
-                imageCell.querySelector('p').remove();
-            });
-        }
-
-        
-    }
-
-</script>
