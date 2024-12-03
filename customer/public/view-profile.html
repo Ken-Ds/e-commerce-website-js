@@ -7,39 +7,72 @@
     <title>Profile Page</title>
 </head>
 <body>
+    <div id="header-placeholder"></div>
+
     <div class="profile-container">
         <h1>My Profile</h1>
         <div class="profile-content">
             <div class="profile-picture">
-                <p>Profile Picture</p>
+                <img id="profileImg" src="" alt="Profile Picture" style="max-width: 600px; height: 300px;">
             </div>
             <div class="profile-details">
                 <h2>Basic Profile Details</h2>
                 <div class="detail-row">
                     <div class="detail-item">
                         <span>First Name</span>
-                        <p>Johny</p>
+                        <p id="firstName">Loading...</p>
                     </div>
                     <div class="detail-item">
                         <span>Last Name</span>
-                        <p>Bravo</p>
+                        <p id="lastName">Loading...</p>
                     </div>
                 </div>
                 <hr>
                 <div class="detail-row">
                     <div class="detail-item">
                         <span>User Name</span>
-                        <p>johnyyy123</p>
+                        <p id="username">Loading...</p>
                     </div>
                 </div>
                 <div class="detail-row">
                     <div class="detail-item">
                         <span>Email</span>
-                        <p>johny@email.com</p>
+                        <p id="email">Loading...</p>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
+   
+
+    <script>
+        
+         fetch('header.html')
+            .then(response => response.text())
+            .then(data => document.getElementById('header-placeholder').innerHTML = data);
+        
+        const userID = new URLSearchParams(window.location.search).get('userID');
+
+        if (userID) {
+            fetch(`/getprofile?userID=${userID}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('firstName').textContent = data.firstname;
+                    document.getElementById('lastName').textContent = data.lastname;
+                    document.getElementById('username').textContent = data.username;
+                    document.getElementById('email').textContent = data.email;
+
+                    if (data.uImg) {
+                        document.getElementById('profileImg').src = data.uImg;
+                    }
+                })
+                .catch(err => {
+                    console.error('Error fetching profile:', err);
+                    alert('Failed to load user profile');
+                });
+        } else {
+            alert('User ID is required to view the profile');
+        }
+    </script>
 </body>
 </html>
