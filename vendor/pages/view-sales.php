@@ -1,7 +1,27 @@
 <?php
-// Include the functions.php file to access the getSalesData() function
 include '../db/get-functions.php';
 include '../includes/navbar.php';
+
+session_start();
+
+if (!isset($_SESSION['userID'])) {
+    header('Location: ../shared/pages/login.php');
+    exit();
+}
+
+$userID = $_SESSION['userID'];
+
+$query = "SELECT orgID FROM users WHERE userID = ?";
+$stmt = $conn->prepare($query);
+$stmt->bind_param("i", $userID);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows > 0) {
+    $orgID = $result->fetch_assoc()['orgID'];
+} else {
+    die("Error: Organization ID not found for the user.");
+}
 ?>
 
 <!DOCTYPE html>
@@ -28,9 +48,8 @@ include '../includes/navbar.php';
                 </thead>
                 <tbody>
                     <?php
-                    // Get sales data using the method
-                    $id = isset($_GET['id']) ? $_GET['id'] : '';
-                    $salesData = getSalesData($id); // Assuming 1 is the userID for the store owner
+                    // Fetch sales data using the updated function
+                    $salesData = getSalesData($userID, $orgID);
                     $grandTotal = 0;
 
                     // Fetch and display each row of data
@@ -48,9 +67,6 @@ include '../includes/navbar.php';
                     } else {
                         echo "<tr><td colspan='4'>No sales data available.</td></tr>";
                     }
-
-                    // Close the connection
-                    $conn->close();
                     ?>
                 </tbody>
                 <tfoot>
@@ -63,4 +79,6 @@ include '../includes/navbar.php';
         </div>
     </div>
 
-<?php include "../includes/footer.php"?>
+<?php include "../includes/footer.php"; ?>
+</body>
+</html>

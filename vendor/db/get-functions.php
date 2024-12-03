@@ -25,14 +25,14 @@
         }
     }
 
-    function getSalesData($userID) {
+    function getSalesData($userID, $orgID) {
         global $conn;
     
         $query = "SELECT 
                     p.pName AS ProductName,
                     od.price AS Price,
                     SUM(od.quantity) AS Quantity,
-                    (od.price * od.quantity) AS TotalAmount
+                    (od.price * SUM(od.quantity)) AS TotalAmount
                   FROM 
                     orders o
                   JOIN 
@@ -40,18 +40,17 @@
                   JOIN 
                     products p ON od.productID = p.productID
                   WHERE 
-                    o.orgID = ?  -- Filter for store owner with orgID (userID)
+                    o.orgID = ?        
+                    AND o.status = 'Delivered'  
                   GROUP BY
                     p.pName
                   ORDER BY 
                     o.orderID";
-        
-        // Prepare the query to prevent SQL injection
+    
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("i", $userID);  // Bind the userID to the prepared statement
+        $stmt->bind_param("i", $orgID); 
         $stmt->execute();
-        
-        // Get the result
+    
         $result = $stmt->get_result();
     
         return $result;
