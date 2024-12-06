@@ -4,111 +4,459 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Cart</title>
-    <link rel="stylesheet" href="/style/css/view-cart-style.css">
+    <link rel="stylesheet" href="../style/css/view-cart-style.css">
+    <script>
+
+    //AUTHOR: ALEXX EVAN O. MODELO
+
+        loadNavbar();
+        loadFooter();
+
+        function loadNavbar() {
+            fetch('header.html')  
+                .then(response => response.text()) 
+                .then(html => {
+                    document.getElementById('navbar').innerHTML = html; 
+                })
+                .catch(error => console.error('Error loading navbar:', error));
+        }
+        
+        function loadFooter() {
+            fetch('footer.html')  
+                .then(response => response.text()) 
+                .then(html => {
+                    document.getElementById('footer').innerHTML = html; 
+                })
+                .catch(error => console.error('Error loading footer:', error));
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+        const cartBoothContainer = document.querySelector('.cart-booth-container');
+        const orderSummaryContainer = document.querySelector('.cart-summary-items');
+        const cartTotalContainer = document.querySelector('.cart-total');
+        const checkoutButton = document.querySelector('.cart-checkout-btn');
+
+        let cartItems = [];
+        const userID = new URLSearchParams(window.location.search).get('userID');
+
+        if (!userID) {
+            cartBoothContainer.innerHTML = `<p>No userID provided. Please add ?userID=YOUR_USER_ID to the URL.</p>`;
+            return;
+        }
+
+        // Fetch cart items with booth (organization) details
+        async function fetchCartItems() {
+            try {
+                const response = await fetch(`/getcart?userID=${userID}`);
+                cartItems = await response.json();
+                console.log('API Response:', cartItems);
+
+                if (Array.isArray(cartItems) && cartItems.length > 0) {
+                    renderBooths();
+                    updateCartSummary();
+                } else {
+                    cartBoothContainer.innerHTML = `<p>No items in your cart.</p>`;
+                    document.querySelector('.cart-order-summary').style.display = 'none'; // Hide the order summary if no items
+                }
+            } catch (error) {
+                cartBoothContainer.innerHTML = `<p>Unable to load cart items. Please try again later.</p>`;
+            }
+        }
+
+        function renderBooths() {
+        cartBoothContainer.innerHTML = '';
+
+        const booths = cartItems.reduce((acc, item) => {
+            const orgName = item.oName;
+            if (!acc[orgName]) {
+                acc[orgName] = { orgName, orgLogo: item.oLogo, products: [] };
+            }
+            acc[orgName].products.push(item);
+            return acc;
+        }, {});
+
+        for (const orgName in booths) {
+            const booth = booths[orgName];
+            const hasMultipleItems = booth.products.length > 1;
+            const boothHTML = `
+                <div class="cart-booth" data-org-name="${booth.orgName}">
+                    <div class="cart-booth-header">
+                        <input type="checkbox" class="cart-booth-checkbox" data-org-name="${booth.orgName}" checked>
+                        <h3 class="cart-booth-title">${booth.orgName}</h3>
+                        ${hasMultipleItems ? `
+                        <button class="cart-toggle-btn">
+                            <img src="../style/img/arrow_drop_up.png" alt="Toggle Button">
+                        </button>` : ''}
+                    </div>
+                    <!-- Full View (Initially visible) -->
+                    <div class="cart-products cart-products-full">
+                        ${booth.products.map(item => `
+                            <div class="cart-product">
+                                <input type="checkbox" class="cart-product-checkbox" data-product-id="${item.productID}" checked>
+                                <img src="${item.pImage}" alt="${item.pName}">
+                                <span class="cart-product-name">${item.pName}</span>
+                                <span class="cart-product-price">₱${item.price.toFixed(2)}</span>
+                                <div class="cart-quantity">
+                                    <button class="cart-quantity-btn cart-quantity-minus" data-product-id="${item.productID}">
+                                        <img src="../style/img/minus.png" alt="Decrease Quantity">
+                                    </button>
+                                    <input type="number" class="cart-quantity-input" value="${item.quantity}" min="1" max="99" data-product-id="${item.productID}">
+                                    <button class="cart-quantity-btn cart-quantity-plus" data-product-id="${item.productID}">
+                                        <img src="../style/img/plus.png" alt="Increase Quantity">
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+
+                    <!-- Minimized View (Initially hidden) -->
+                    ${hasMultipleItems ? `
+                    <div class="cart-products cart-products-minimized cart-products-hidden">
+                        <div class="cart-products-images">
+                            ${booth.products.slice(0, 3).map(item => `
+                                <img src="${item.pImage}" alt="${item.pName}">
+                            `).join('')}
+                        </div>
+                        ${booth.products.length > 3 ? `<button class="cart-more-btn">+ more</button>` : ''}
+                        <div class="cart-products-total-price">
+                            Total Price: ₱${booth.products.reduce((total, item) => total + (item.quantity * item.price), 0).toFixed(2)}
+                        </div>
+                    </div>` : ''}
+                </div>
+            `;
+            cartBoothContainer.innerHTML += boothHTML;
+        }
+
+        addQuantityHandlers();
+        addToggleHandlers();
+        addMoreButtonHandlers();
+        addBoothCheckboxHandlers();
+        addProductCheckboxHandlers();
+    }
+
+
+
+        function addBoothCheckboxHandlers() {
+            const boothCheckboxes = document.querySelectorAll('.cart-booth-checkbox');
+            boothCheckboxes.forEach((checkbox) => {
+            checkbox.addEventListener('change', (e) => {
+                const boothName = e.target.dataset.orgName;
+                const booth = document.querySelector(`.cart-booth[data-org-name="${boothName}"]`);
+                const productCheckboxes = booth.querySelectorAll('.cart-product-checkbox');
+                console.log(`Toggling booth: ${boothName}, Checking ${productCheckboxes.length} products`);
+
+                productCheckboxes.forEach((checkbox) => {
+                    checkbox.checked = e.target.checked;
+                });
+
+                updateCartSummary();
+            });
+        });
+    }
+
+        function addProductCheckboxHandlers() {
+            const productCheckboxes = document.querySelectorAll('.cart-product-checkbox');
+            productCheckboxes.forEach((checkbox) => {
+            checkbox.addEventListener('change', (e) => {
+                const boothName = e.target.closest('.cart-booth').dataset.orgName;
+                const boothCheckbox = document.querySelector(`.cart-booth[data-org-name="${boothName}"] .cart-booth-checkbox`);
+            
+                if (!e.target.checked) {
+                    boothCheckbox.checked = false;
+                }
+                
+                const productCheckboxesInBooth = e.target.closest('.cart-booth').querySelectorAll('.cart-product-checkbox');
+                const allChecked = Array.from(productCheckboxesInBooth).every(checkbox => checkbox.checked);
+                if (allChecked) {
+                    boothCheckbox.checked = true;
+                }
+
+                updateCartSummary();
+            });
+        });
+    }
+
+        
+
+        function updateOrderSummary() {
+            orderSummaryContainer.innerHTML = '';
+            let totalQuantity = 0;
+            let totalPrice = 0;
+
+            cartItems.forEach((item) => {
+                const productCheckbox = document.querySelector(`.cart-product-checkbox[data-product-id="${item.productID}"]`);
+                
+                if (productCheckbox && productCheckbox.checked) {
+                    totalQuantity += item.quantity;
+                    totalPrice += item.quantity * item.price;
+
+                    const itemHTML = `
+                        <div class="cart-summary-item">
+                            x${item.quantity} ${item.pName} <span>₱${(item.quantity * item.price).toFixed(2)}</span>
+                        </div>
+                    `;
+                    orderSummaryContainer.innerHTML += itemHTML;
+                }
+        });
+
+        cartTotalContainer.innerHTML = `
+            <div>Total (${totalQuantity} items)</div>
+            <div>₱${totalPrice.toFixed(2)}</div>
+        `;
+
+        checkoutButton.innerHTML = `Check Out (${totalQuantity})`;
+    }
+
+
+        function addToggleHandlers() {
+            const toggleButtons = document.querySelectorAll('.cart-toggle-btn');
+            toggleButtons.forEach((button) => {
+                button.addEventListener('click', () => {
+                    const booth = button.closest('.cart-booth');
+                    const fullView = booth.querySelector('.cart-products-full');
+                    const minimizedView = booth.querySelector('.cart-products-minimized');
+                    const toggleIcon = button.querySelector('img');
+
+                    if (minimizedView.style.display === "none") {
+                        minimizedView.style.display = "block";
+                        fullView.style.display = "none";
+                        toggleIcon.src = '../style/img/arrow_drop_down.png';
+                    } else {
+                        minimizedView.style.display = "none";
+                        fullView.style.display = "block";
+                        toggleIcon.src = '../style/img/arrow_drop_up.png'; 
+                    }
+                });
+            });
+        }
+
+        function addMoreButtonHandlers() {
+            const moreButtons = document.querySelectorAll('.cart-more-btn');
+            moreButtons.forEach((button) => {
+                button.addEventListener('click', (e) => {
+                    const booth = e.target.closest('.cart-booth');
+                    const minimizedView = booth.querySelector('.cart-products-minimized');
+                    const fullView = booth.querySelector('.cart-products-full');
+                    minimizedView.style.display = 'none';
+                    fullView.style.display = 'block';
+                });
+            });
+    }
+
+
+
+        function updateCartSummary() {
+            orderSummaryContainer.innerHTML = '';
+            let totalQuantity = 0;
+            let totalPrice = 0;
+            let hasSelectedItems = false;
+
+            cartItems.forEach((item) => {
+                const productCheckbox = document.querySelector(`.cart-product-checkbox[data-product-id="${item.productID}"]`);
+
+                if (productCheckbox && productCheckbox.checked) {
+                    totalQuantity += item.quantity;
+                    totalPrice += item.quantity * item.price;
+
+                    const itemHTML = `
+                        <div class="cart-summary-item">
+                            x${item.quantity} ${item.pName} <span>₱${(item.quantity * item.price).toFixed(2)}</span>
+                        </div>
+                    `;
+                    orderSummaryContainer.innerHTML += itemHTML;
+                    hasSelectedItems = true;
+                }
+        });
+
+            if (hasSelectedItems) {
+                cartTotalContainer.innerHTML = `
+                    <div>Total (${totalQuantity} items)</div>
+                    <div>₱${totalPrice.toFixed(2)}</div>
+                `;
+                checkoutButton.innerHTML = `Check Out (${totalQuantity})`;
+                document.querySelector('.cart-order-summary').classList.remove('hidden');
+            } else {
+                document.querySelector('.cart-order-summary').classList.add('hidden');
+            }
+        }
+
+
+
+
+        function addQuantityHandlers() {
+            const minusButtons = document.querySelectorAll('.cart-quantity-minus');
+            const plusButtons = document.querySelectorAll('.cart-quantity-plus');
+            const quantityInputs = document.querySelectorAll('.cart-quantity-input');
+
+            minusButtons.forEach((button) => {
+                button.addEventListener('click', () => {
+                    const productID = button.dataset.productId;
+                    const item = cartItems.find((item) => item.productID == productID);
+
+                    if (item.quantity > 1) {
+                        item.quantity -= 1;
+                        updateCartSummary();
+                        renderBooths();
+                    } else {
+                        if (window.confirm("Are you sure you want to remove this product from your cart?")) {
+                            removeProductFromCart(item.productID);
+                        }
+                    }
+                });
+            });
+
+            plusButtons.forEach((button) => {
+                button.addEventListener('click', () => {
+                    const productID = button.dataset.productId;
+                    const item = cartItems.find((item) => item.productID == productID);
+
+                    if (item.quantity < 99) {
+                        item.quantity += 1;
+                        updateCartSummary();
+                        renderBooths();
+                    }
+                });
+            });
+
+            quantityInputs.forEach((input) => {
+                input.addEventListener('input', () => {
+                    const productID = input.dataset.productId;
+                    const item = cartItems.find((item) => item.productID == productID);
+
+                    let value = parseInt(input.value);
+                    if (isNaN(value) || value < 1) {
+                        value = 1;
+                    } else if (value > 99) {
+                        value = 99;
+                    }
+                    item.quantity = value;
+                    updateCartSummary();
+                });
+            });
+        }
+
+        document.querySelector('.cart-checkout-btn').addEventListener('click', () => {
+        const selectedItems = cartItems.filter(item => {
+        if (!item || !item.productID) {
+            console.error('Invalid item in cartItems:', item);
+            return false;
+        }
+
+        const productCheckbox = document.querySelector(`.cart-product-checkbox[data-product-id="${item.productID}"]`);
+
+        if (!productCheckbox) {
+            console.error(`Checkbox for productID ${item.productID} not found in DOM`);
+            return false;
+        }
+
+        return productCheckbox.checked;
+    });
+
+    console.log('Filtered Selected Items:', selectedItems);
+
+    if (selectedItems.length > 0) {
+        const confirmation = window.confirm('Are you sure you want to proceed with the checkout for the selected items?');
+
+        if (confirmation) {
+            createOrder(selectedItems);
+        }
+    } else {
+        alert('Please select at least one item to checkout.');
+    }
+
+});
+
+
+        function createOrder(selectedItems) {
+            const userID = new URLSearchParams(window.location.search).get('userID');
+
+            if (!userID || selectedItems.length === 0) {
+                alert('Invalid user ID or no items to checkout.');
+                return;
+            }
+
+            const booths = [
+                {
+                    totalAmount: selectedItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
+                    products: selectedItems.map(product => ({
+                        productID: product.productID,
+                        quantity: product.quantity,
+                        price: product.price,
+                    })),
+                },
+            ];
+
+            const orderData = { userID, booths };
+
+            fetch('/add-order', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(orderData),
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Order created successfully!');
+                        selectedItems.forEach(product => {
+                            removeProductFromCart(product.productID);
+                        });
+                    } else {
+                        alert(`Failed to create order: ${data.error}`);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error creating order:', error);
+                    alert('An error occurred while creating the order.');
+                });
+        }
+
+        
+        function removeProductFromCart(productID) {
+            const userID = new URLSearchParams(window.location.search).get('userID');
+
+            fetch(`/delete-from-cart`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userID, productID }),
+            })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.success) {
+                    fetchCartItems();
+                    location.reload();
+                    updateCartSummary();
+                } else {
+                    console.error('Error:', data.error);
+                }
+            })
+            .catch((error) => console.error('Error:', error));
+        }
+
+            fetchCartItems();
+});
+    </script>
 </head>
 <body>
+    <section id="navbar"></section>
     <div class="container">
-        
-        <!-- Search Bar -->
-        <div class="search-bar-container">
-            <input type="text" placeholder="Find a Product">
-            <button>
-                <img src="../../../shared/style/img/search-btn.png" alt="Search Icon">
-            </button>
-        </div>
-
-        <!-- Cart Layout -->
         <div class="cart-layout">
-            
-            <!-- Booth Container -->
             <div class="cart-booth-container">
-                <div class="cart-booth">
-                    <div class="cart-booth-header">
-                        <input type="checkbox" class="cart-booth-checkbox">
-                        <h3 class="cart-booth-title">Booth 1</h3>
-                        <button class="cart-toggle-btn">
-                            <img src="../style/img/arrow_drop_down.png" alt="Toggle Button">
-                        </button>
-                    </div>
-                    
-                    <!-- Product Item -->
-                    <div class="cart-product">
-                        <input type="checkbox">
-                        <img src="../../shared/style/img/prod-placeholder.jpg" alt="Product Image">
-                        <span class="cart-product-name">Product Name</span>
-                        <span class="cart-product-price">₱ 50.00</span>
-                        <div class="cart-quantity">
-                            <button class="cart-quantity-btn">
-                                <img src="../style/img/Minus.png" alt="Decrease Quantity">
-                            </button>
-                            <input type="number" class="cart-quantity-input" value="4" min="1">
-                            <button class="cart-quantity-btn">
-                                <img src="../style/img/Plus.png" alt="Increase Quantity">
-                            </button>
-                        </div>
-                    </div>
-                    <div class="cart-product">
-                        <input type="checkbox">
-                        <img src="../../shared/style/img/prod-placeholder.jpg" alt="Product Image">
-                        <span class="cart-product-name">Product Name</span>
-                        <span class="cart-product-price">₱ 50.00</span>
-                        <div class="cart-quantity">
-                            <button class="cart-quantity-btn">
-                                <img src="../style/img/Minus.png" alt="Decrease Quantity">
-                            </button>
-                            <input type="number" class="cart-quantity-input" value="4" min="1">
-                            <button class="cart-quantity-btn">
-                                <img src="../style/img/Plus.png" alt="Increase Quantity">
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="cart-booth">
-                    <div class="cart-booth-header">
-                        <input type="checkbox" class="cart-booth-checkbox">
-                        <h3 class="cart-booth-title">Booth 2</h3>
-                        <button class="cart-toggle-btn">
-                            <img src="../style/img/arrow_drop_down.png" alt="Toggle Button">
-                        </button>
-                    </div>
-                    
-                    <!-- Product Item -->
-                    <div class="cart-product">
-                        <input type="checkbox">
-                        <img src="../../shared/style/img/prod-placeholder.jpg" alt="Product Image">
-                        <span class="cart-product-name">Product Name</span>
-                        <span class="cart-product-price">₱ 50.00</span>
-                        <div class="cart-quantity">
-                            <button class="cart-quantity-btn">
-                                <img src="../style/img/Minus.png" alt="Decrease Quantity">
-                            </button>
-                            <span>4</span>
-                            <button class="cart-quantity-btn">
-                                <img src="../style/img/Plus.png" alt="Increase Quantity">
-                            </button>
-                        </div>
-                    </div>
-                </div>
             </div>
-            <!-- Order Summary -->
             <div class="cart-order-summary">
                 <h3 class="cart-order-summary-title">Order Summary</h3>
                 <div class="cart-summary-items">
-                    <div class="cart-summary-item">Item 1 <span>₱10.00</span></div>
-                    <div class="cart-summary-item">Item 2 <span>₱15.00</span></div>
-                    <div class="cart-summary-item">Item 3 <span>₱20.00</span></div>
-                    <div class="cart-summary-item">Item 4 <span>₱5.00</span></div>
-                    <div class="cart-summary-item">Item 5 <span>₱8.00</span></div>
-                    <div class="cart-summary-item">Item 6 <span>₱12.00</span></div>
-                    <div class="cart-summary-item">Item 7 <span>₱25.00</span></div>
                 </div>
                 <div class="cart-total">
-                    <span>Total (7 items)</span>
-                    <span>₱600.00</span>
                 </div>
-                <button class="cart-checkout-btn">Check Out (12)</button>
+                <button class="cart-checkout-btn">Check Out (0)</button>
             </div>
         </div>
     </div>
+
+    <div id="footer"></div>
 </body>
-</html>\\
+</html>
