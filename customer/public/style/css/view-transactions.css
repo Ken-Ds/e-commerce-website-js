@@ -139,10 +139,25 @@
 }
 
 .transactions-box .organization-name img{
-    height: 30px;
+    height: 40px;
     margin: auto;
 }
 
+.pdf-download{
+    border: 1px rgb(107, 107, 107, 0.514) solid;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-right: 10%;
+}
+
+.pdf-download:hover{
+    transform: scale(1.05);
+}
+
+.pdf-download:active {
+    background-color: #d0d0d0;
+    transform: scale(0.95);
+}
 .details-table{
     width: 100%;
     overflow: hidden;
@@ -206,25 +221,4 @@
     border-top: 1px solid;
 }
 
-.details-table tfoot tr button{
-    background-color: rgb(108, 108, 199);
-    width: 150px;
-    height: 50px;
-    font-weight: bold;
-    border: 1px solid black;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.details-table tfoot tr button:hover{
-    background-color: #007bff;
-    border-color: #0056b3;
-    transform: scale(1.05);
-}
-
-.details-table tfoot tr button:active {
-    background-color: #d0d0d0;
-    transform: scale(0.95);
-}
 

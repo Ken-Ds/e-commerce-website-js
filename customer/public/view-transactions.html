@@ -113,6 +113,18 @@
                     orgNameButton.appendChild(orgNameButtonImage);
                     orgNameDiv2.appendChild(orgNameButton);
     
+                    const tdbt = document.createElement('button');
+                    tdbt.className = "pdf-download"
+                    tdbt.onclick = () => downloadReceipt(order);
+
+                    var tdbtImage = document.createElement('img');
+                    tdbtImage.src = '../style/img/pdf-download.png';
+                    tdbtImage.alt = "Download Receipt";
+
+                    tdbt.appendChild(tdbtImage);
+
+                    orgNameDiv2.appendChild(tdbt);
+
                     organizationName.appendChild(orgNameDiv);
                     organizationName.appendChild(orgNameDiv2);
 
@@ -187,11 +199,7 @@
                     var tdTotal = document.createElement("td");
                     tdTotal.textContent = "₱" + order.totalAmount;
 
-                    var tdButton = document.createElement("td");
-                    const tdbt = document.createElement('button');
-                    tdbt.innerText = "Download Receipt";
-                    tdbt.onclick = () => downloadReceipt(order); // Pass the order details
-                    tdButton.appendChild(tdbt);
+                   
 
                     var tdBlank2 = document.createElement("td");
 
@@ -199,7 +207,6 @@
                     trFoot.appendChild(tdTotalText);
                     trFoot.appendChild(tdTotal);
                     trFoot.appendChild(tdBlank2);
-                    trFoot.appendChild(tdbt);
 
                     tfoot.appendChild(trFoot);
 
