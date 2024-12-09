@@ -17,13 +17,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Check if attempts were exceeded
+   
     $current_time = time();
     $last_attempt_time = $_SESSION['last_attempt_time'];
     $time_diff = $current_time - $last_attempt_time;
-    $cooldown_period = 30 * 60; // 30 seconds cooldown
+    $cooldown_period = 30 * 60; 
 
-   // If user has exceeded 5 attempts and the cooldown period is not over
+   
    if ($_SESSION['login_attempts'] >= 5 && $time_diff < $cooldown_period) {
     $remaining_time = $cooldown_period - $time_diff;
     $minutes_left = floor($remaining_time / 60); 
@@ -61,11 +61,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 header("Location: ../../vendor/pages/view-product.php?id={$user['orgID']}");
                 exit();
             } else {
-                // User is not Vendor
+                
                 $_SESSION['login_attempts']++;
                 $_SESSION['last_attempt_time'] = $current_time;
 
-                // Check the remaining attempts
+               
                 $remaining_attempts = max(5 - $_SESSION['login_attempts'], 0);
 
                 if ($_SESSION['login_attempts'] >= 5) {
@@ -83,11 +83,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
             }
         } else {
-            // Incorrect password
+            
             $_SESSION['login_attempts']++;
             $_SESSION['last_attempt_time'] = $current_time;
 
-            // Check the remaining attempts
+            
             $remaining_attempts = max(5 - $_SESSION['login_attempts'], 0);
 
             if ($_SESSION['login_attempts'] >= 5) {
@@ -105,7 +105,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
         }
     } else {
-        // Username not found in the database
         $_SESSION['login_attempts']++;
         $_SESSION['last_attempt_time'] = $current_time;
 

@@ -1,23 +1,36 @@
 <?php
-    include '../includes/navbar.php';
-    include '../db/get-functions.php';
+session_start();
 
-    $orgid = isset($_GET['id']) ? $_GET['id'] : '';
-    $orders = getOrders($orgid);
-    $statusFilter = isset($_GET['status']) ? htmlspecialchars($_GET['status']) : 'all';
 
-    $filteredOrders = [];
-    foreach ($orders as $order) {
-        $orderStatus = strtolower($order['status']); 
-        
-        if ($statusFilter === 'pending' && $orderStatus === 'pending') {
-            $filteredOrders[] = $order;
-        } elseif ($statusFilter === 'delivered' && $orderStatus === 'delivered') {
-            $filteredOrders[] = $order;
-        } elseif ($statusFilter === 'all') {
-            $filteredOrders[] = $order;
-        }
+if (!isset($_SESSION['userID'])) {
+    header('Location: ../pages/login.php');  
+    exit();
+}
+
+
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Pragma: no-cache");
+header("Expires: Thu, 01 Jan 1970 00:00:00 GMT");
+
+include '../includes/navbar.php';
+include '../db/get-functions.php';
+
+$orgid = isset($_GET['id']) ? $_GET['id'] : '';
+$orders = getOrders($orgid);
+$statusFilter = isset($_GET['status']) ? htmlspecialchars($_GET['status']) : 'all';
+
+$filteredOrders = [];
+foreach ($orders as $order) {
+    $orderStatus = strtolower($order['status']); 
+    
+    if ($statusFilter === 'pending' && $orderStatus === 'pending') {
+        $filteredOrders[] = $order;
+    } elseif ($statusFilter === 'delivered' && $orderStatus === 'delivered') {
+        $filteredOrders[] = $order;
+    } elseif ($statusFilter === 'all') {
+        $filteredOrders[] = $order;
     }
+}
 ?>
 
 <!DOCTYPE html>

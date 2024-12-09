@@ -1,4 +1,15 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['userID'])) {
+    header('Location: ../pages/login.php');
+    exit();
+}
+
+
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Pragma: no-cache");
+header("Expires: Thu, 01 Jan 1970 00:00:00 GMT");
 
 include '../db/dbconnect.php';  
 include '../db/get-functions.php'; 
@@ -6,7 +17,7 @@ include '../includes/navbar.php';
 
 $userID = isset($_GET['id']) ? $_GET['id'] : '';
 
-// Fetch organization information based on user ID
+
 $organizationQuery = "
     SELECT o.orgID, o.oName, o.oDesc, o.oLogo, b.location
     FROM ORGANIZATIONS o
@@ -18,9 +29,9 @@ $stmt = $conn->prepare($organizationQuery);
 $stmt->bind_param('i', $userID);
 $stmt->execute();
 $result = $stmt->get_result();
-$organizationInfo = $result->fetch_assoc(); // Fetch the data from the query result
+$organizationInfo = $result->fetch_assoc(); 
 
-// Fetch schedules for the current organization
+
 $schedulesQuery = "
     SELECT s.dayAvailable, s.timeStart, s.timeEnd
     FROM SCHEDULES s
@@ -34,6 +45,7 @@ $stmtSchedules->execute();
 $schedulesResult = $stmtSchedules->get_result();
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
