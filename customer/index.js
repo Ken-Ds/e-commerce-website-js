@@ -20,6 +20,7 @@ const getProfile = require('./routes/getProfile.js');
 const getCart = require('./routes/getCart.js');
 const deleteFromCart = require('./routes/deleteFromCart.js');
 const addOrder = require('./routes/addOrder.js');
+const signup = require('./routes/signup.js');
 
 app.use('/getproducts', getProdsRoute);
 app.use('/getorgs', getOrgsRoute);
@@ -30,6 +31,7 @@ app.use('/getprofile', getProfile);
 app.use('/getcart', getCart);
 app.use('/delete-from-cart', deleteFromCart);
 app.use('/add-order', addOrder)
+app.use('/signup', signup);
 
 app.listen(PORT, 'localhost', (error) => {
     if (!error)

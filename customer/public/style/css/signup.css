@@ -88,6 +88,27 @@ body {
     background-color: #218838;
 }
 
+.name {
+    display: flex;
+    width: 108%;
+}
+
+.name input{
+    width: 50%;
+}
+
+.name input:nth-child(1){
+    float: left;
+    width: 50%;
+    margin-right: 2%;
+}
+
+.name input:nth-child(2){
+    float: right;
+    margin-left: 2%;
+}
+
+
 .login-text {
     margin-top: 10px;
     font-size: 14px;
