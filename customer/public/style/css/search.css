@@ -1,0 +1,113 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: block;
+    margin: 0;
+    padding: 0;
+}
+
+.organization-header {
+    display: flex;  /* Using flexbox to place items side by side */
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    padding: 20px;
+    margin-top: 0px;
+}
+
+.organization-header .image-container {
+    margin-right: 20px;  /* Space between image and text */
+}
+
+.organization-image {
+    max-width: 100px;  /* Adjust image size */
+    height: auto;
+    border-radius: 8px;
+}
+
+.organization-name {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.products-container {
+    padding: 30px;
+    background-color: white;
+    margin: 10px auto;
+    max-width: 1100px;
+    text-align: center;
+}
+
+.products-container h2 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.product-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.product-item {
+    background-color: #fff;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    width: 28%;
+    padding: 15px;
+    box-sizing: border-box;
+    transition: transform 0.2s ease;
+}
+
+.product-item:hover {
+    transform: scale(1.05);
+}
+
+.product-image {
+    max-width: 80%;
+    height: auto;
+    border-radius: 8px;
+    border: 2px solid #bbb;
+}
+
+.product-details {
+    margin-top: 10px;
+}
+
+.product-name {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 6px 0;
+}
+
+.product-description {
+    font-size: 14px;
+    color: #555;
+    margin: 8px 0;
+}
+
+.product-price {
+    display: block;
+    margin-top: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+.add-to-cart {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 6px;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.add-to-cart:hover {
+    background-color: #181a18;
+}

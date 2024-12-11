@@ -21,6 +21,9 @@ const getCart = require('./routes/getCart.js');
 const deleteFromCart = require('./routes/deleteFromCart.js');
 const addOrder = require('./routes/addOrder.js');
 const signup = require('./routes/signup.js');
+const search = require('./routes/search.js');
+
+app.use(express.json());
 
 app.use('/getproducts', getProdsRoute);
 app.use('/getorgs', getOrgsRoute);
@@ -32,6 +35,7 @@ app.use('/getcart', getCart);
 app.use('/delete-from-cart', deleteFromCart);
 app.use('/add-order', addOrder)
 app.use('/signup', signup);
+app.use('/search', search);
 
 app.listen(PORT, 'localhost', (error) => {
     if (!error)
