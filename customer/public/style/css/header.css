@@ -128,8 +128,8 @@ body {
     cursor: pointer;
 }
 
-.logout-button a {
-    text-decoration: 0;
+ a {
+    text-decoration: none;
     color: white;
 }
 

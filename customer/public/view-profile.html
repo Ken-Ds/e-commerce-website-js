@@ -57,10 +57,7 @@
 
 
         function loadUserProfile() {
-            const userID = new URLSearchParams(window.location.search).get('userID');
-
-            if (userID) {
-                fetch(`/getprofile?userID=${userID}`)
+                fetch(`/getprofile`)
                     .then(response => response.json())
                     .then(data => {
                         document.getElementById('firstName').textContent = data.firstname;
@@ -76,9 +73,7 @@
                         console.error('Error fetching profile:', err);
                         alert('Failed to load user profile');
                     });
-            } else {
-                alert('User ID is required to view the profile');
-            }
+            
         }
 
         function loadNavbar() {

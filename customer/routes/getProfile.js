@@ -5,7 +5,7 @@ const conn = require('./db');
 // Get user profile details
 router.get('/', (request, response) => {
 
-    const userID = request.query.userID || request.params.userID;
+    const userID = request.session.userID;
 
     if (!userID) {
         response.status(400).json({ error: 'User ID is required' });

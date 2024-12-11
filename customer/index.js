@@ -2,22 +2,26 @@ const express = require('express');
 const session = require('express-session')
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
+
+let open;
+(async () => {
+    open = (await import('open')).default;
+})();
 var mysql = require('mysql');
 const app = express();
+
+app.use(express.static('public'));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 app.use(session({
     secret: 'secret_key',
     resave: true,
     saveUninitialized: false,
+    cookie: {secure: false}
 }));
 
-app.use(express.static('public'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
-const activeSessions = {};
-
-const PORT = 3000;
 
 const sql = require('./routes/db');
 const getProdsRoute = require('./routes/getProducts');
@@ -46,19 +50,35 @@ app.use('/add-order', addOrder)
 app.use('/signup', signup);
 app.use('/search', search);
 
-app.get('/login-php', (req, res) => {
-    res.redirect('http://localhost/ings-website/shared/pages/login.php');
+const PORT = 3000;
+
+var id = null;
+
+app.get('/', (req, res) => {
+    console.log(`Passing ID${id}`);
+    req.session.userID = id;
+    console.log(`Got ID${req.session.userID}`);
+    res.redirect('/view-booths.html')
 });
 
 app.post('/set-session', (req, res) => {
     const { userID } = req.body;
+    console.log(req.body);
     if (userID) {
-        req.session.userID = userID;
-        console.log(`User  ID ${userID} has been set in the session.`);
-        res.status(200).send('Session set successfully');
+        id = userID;
+        open('http://localhost:3000');
     } else {
-        res.status(400).send('User  ID is required');
+        res.status(400).send('User ID is required');
     }
+});
+
+app.get('/view-cart', (req, res) => {
+    console.log(`Cart ID ${req.session.userID}`)
+    res.redirect(`/view-cart.html?userID=${req.session.userID}`)
+});
+
+app.get('/login-php', (req, res) => {
+    res.redirect('http://localhost/ings-website/shared/pages/login.php');
 });
 
 app.get('/logout', (req, res) => {
@@ -67,8 +87,7 @@ app.get('/logout', (req, res) => {
             if (err) {
                 return res.status(500).send('Could not log out');
             }
-            delete activeSessions[req.session.userID];
-            console.log(`User  ID ${req.session.userID} has logged out.`);
+            console.log(`User  Have Been Logged Out`);
             res.redirect('http://localhost/ings-website/shared/pages/login.php?logout=success');
         });
     } else {
@@ -76,7 +95,6 @@ app.get('/logout', (req, res) => {
             if (err) {
                 return res.status(400).send('Could not log out');
             }
-            delete activeSessions[req.session.userID];
             console.log(`No User To log Out`);
             res.redirect('http://localhost/ings-website/shared/pages/login.php?logout=noUser');
         });     

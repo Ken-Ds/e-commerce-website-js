@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if($user['type'] === 'vendor'){
                     header("Location: ../../vendor/pages/view-product.php?id={$user['orgID']}");
                 } elseif($user['type'] === 'customer'){
-                    $url = 'http://localhost:3000/set-session'; // Node.js endpoint
+                    $url = 'http://localhost:3000/set-session';
                     $data = array('userID' => $user['userID']);
 
                     $options = array(
