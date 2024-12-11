@@ -50,16 +50,37 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         if ($password === $user['password']) {
 
-            if ($user['type'] === 'vendor') {
+            if ($user['type'] === 'vendor' || $user['type'] === 'customer') {
                 $_SESSION['login_attempts'] = 0;
                 $_SESSION['last_attempt_time'] = 0;  
-
+            
                 $_SESSION['userID'] = $user['userID'];
                 $_SESSION['username'] = $user['username'];
                 $_SESSION['type'] = $user['type'];
+            
+                if($user['type'] === 'vendor'){
+                    header("Location: ../../vendor/pages/view-product.php?id={$user['orgID']}");
+                } elseif($user['type'] === 'customer'){
+                    $url = 'http://localhost:3000/set-session'; // Node.js endpoint
+                    $data = array('userID' => $user['userID']);
 
-                header("Location: ../../vendor/pages/view-product.php?id={$user['orgID']}");
+                    $options = array(
+                        'http' => array(
+                            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                            'method'  => 'POST',
+                            'content' => http_build_query($data),
+                        ),
+                    );
+
+                    $context  = stream_context_create($options);
+                    $result = file_get_contents($url, false, $context);
+
+                    // Redirect to the view-booths.html after setting the session
+                    header("Location: http://localhost:3000/view-booths.html");
+                    exit();
+                }
                 exit();
+            }
             } else {
                 
                 $_SESSION['login_attempts']++;
@@ -76,7 +97,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     exit();
                 } else {
                     echo "<script>
-                            alert('You must be a vendor to log in. You have $remaining_attempts attempt(s) remaining.'); 
+                            alert('Invalid Credentials. You have $remaining_attempts attempt(s) remaining.'); 
                             window.location.href = '../pages/login.php';
                         </script>";
                     exit();
@@ -119,5 +140,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $stmt->close();
     $conn->close();
-}
 ?>

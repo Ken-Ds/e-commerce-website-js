@@ -1,12 +1,21 @@
 const express = require('express');
+const session = require('express-session')
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 var mysql = require('mysql');
 const app = express();
 
+app.use(session({
+    secret: 'secret_key',
+    resave: true,
+    saveUninitialized: false,
+}));
+
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+const activeSessions = {};
 
 const PORT = 3000;
 
@@ -32,6 +41,43 @@ app.use('/getcart', getCart);
 app.use('/delete-from-cart', deleteFromCart);
 app.use('/add-order', addOrder)
 app.use('/signup', signup);
+
+app.get('/login-php', (req, res) => {
+    res.redirect('http://localhost/ings-website/shared/pages/login.php');
+});
+
+app.post('/set-session', (req, res) => {
+    const { userID } = req.body;
+    if (userID) {
+        req.session.userID = userID;
+        console.log(`User  ID ${userID} has been set in the session.`);
+        res.status(200).send('Session set successfully');
+    } else {
+        res.status(400).send('User  ID is required');
+    }
+});
+
+app.get('/logout', (req, res) => {
+    if (req.session.userID) {
+        req.session.destroy(err => {
+            if (err) {
+                return res.status(500).send('Could not log out');
+            }
+            delete activeSessions[req.session.userID];
+            console.log(`User  ID ${req.session.userID} has logged out.`);
+            res.redirect('http://localhost/ings-website/shared/pages/login.php?logout=success');
+        });
+    } else {
+        req.session.destroy(err => {
+            if (err) {
+                return res.status(400).send('Could not log out');
+            }
+            delete activeSessions[req.session.userID];
+            console.log(`No User To log Out`);
+            res.redirect('http://localhost/ings-website/shared/pages/login.php?logout=noUser');
+        });     
+    }
+});
 
 app.listen(PORT, 'localhost', (error) => {
     if (!error)
