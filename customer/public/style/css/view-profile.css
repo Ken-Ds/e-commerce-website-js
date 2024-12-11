@@ -3,15 +3,13 @@ body {
     margin: 0;
     padding: 0;
     height: 100vh;
-    display: flex;
+    display: block;
     justify-content: center;
     align-items: center;
     background-image: linear-gradient(to bottom, #ffffff, #abaeea); 
 
-
 .profile-container {
-    width: 70%;
-    max-width: px; 
+    width: 90%;
     height: 70%; 
     background-color: #ffffff; 
     padding: 40px; 
@@ -20,7 +18,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    
+    margin: auto;
 }
 
 h1 {
