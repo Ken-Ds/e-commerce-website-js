@@ -60,23 +60,22 @@
         }
     
         function getOrders(){
-            const userID = 6;
-    
-            var u = `getorders`;
-    
-            var url = `${u}?userID=${userID}`;
-    
+            const url = `/getorders`;
+
             fetch(url)
-            .then(response => {
-                return response.json();
-            })
-            .then(data => {
-                showOrders(data);
-            })
-            .catch(error => {
-                console.error('Error fetching orders: ', error);
-                alert("error");
-            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    showOrders(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching orders: ', error);
+                    alert("An error occurred while fetching orders. Please try again later.");
+                });
         }
     
         function showOrders(orders){
