@@ -1,10 +1,11 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
+  
 }
 
 .main-header {
-    z-index: 50;
+    z-index: 1000;
     position: fixed; 
     top: 0; 
     left: 0; 
@@ -16,6 +17,8 @@ body {
     background-color: #2c2e5f;
     padding: 20px 40px;
     color: white;
+    height: 100px; 
+    min-height: 100px; 
 }
 
 .logo-section {
@@ -24,17 +27,19 @@ body {
 }
 
 .logo {
-    width: 100px;
-    height: 100px;
+    width: 100x;  /* Increase the width to make the logo bigger */
+    height: 100px; /* Increase the height to match the width */
     margin-right: 10px;
     border-radius: 10px;
+    margin-bottom: 50px;
 }
 
 .brand-name {
-    font-size: 36px;
+    font-size: 30px;  /* Reduce the font size to make it more proportional to the logo */
     font-weight: bold;
     margin-left: 10px;
 }
+
 
 .search-section {
     display: flex;
@@ -53,7 +58,7 @@ body {
 }
 
 .search-button {
-    background-color: #4f5294;
+    background-color: #ea808e;
     border: none;
     border-radius: 0 10px 10px 0;
     padding: 15px 25px;
@@ -67,7 +72,7 @@ body {
 
 .cart-button, .bag-button {
     margin-left: 10px;
-    background-color: #4f5294;
+    background-color: #ea808e;
     border: none;
     border-radius: 10px;
     padding: 15px 25px;
@@ -80,7 +85,7 @@ body {
 }
 
 .cart-button:hover, .bag-button:hover, .search-button:hover {
-    background-color: #6669a4;
+    background-color: #ea808e;
 }
 
 .profile-logout-section {
@@ -94,7 +99,7 @@ body {
     align-items: center;
     gap: 10px;
     text-decoration: none; 
-    color: white; 
+    color: #ea808e; 
     cursor: pointer; 
 }
 
@@ -106,7 +111,7 @@ body {
     width: 45px;
     height: 45px;
     border-radius: 50%;
-    background-color: #6669a4;
+    background-color: #ea808e;
 }
 
 .username {
@@ -114,7 +119,7 @@ body {
 }
 
 .logout-button {
-    background-color: #4f5294;
+    background-color: #ea808e;
     color: white;
     border: none;
     border-radius: 10px;
@@ -124,5 +129,5 @@ body {
 }
 
 .logout-button:hover {
-    background-color: #6669a4;
+    background-color: #ea808e;
 }

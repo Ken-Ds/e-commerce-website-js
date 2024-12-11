@@ -8,6 +8,9 @@
 </head>
 <body>
     <div id="header-placeholder"></div>
+    
+    <!-- Navbar placeholder -->
+    <section id="navbar" style="padding-bottom: 140px;"></section>
 
     <div class="profile-container">
         <h1>My Profile</h1>
@@ -43,36 +46,60 @@
             </div>
         </div>
     </div> 
-   
+
+    <section class="trans"></section>
+    <section id="footer"></section>
 
     <script>
-        
-         fetch('header.html')
-            .then(response => response.text())
-            .then(data => document.getElementById('header-placeholder').innerHTML = data);
-        
-        const userID = new URLSearchParams(window.location.search).get('userID');
+        loadNavbar(); 
+        loadUserProfile();
+        loadFooter();
 
-        if (userID) {
-            fetch(`/getprofile?userID=${userID}`)
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('firstName').textContent = data.firstname;
-                    document.getElementById('lastName').textContent = data.lastname;
-                    document.getElementById('username').textContent = data.username;
-                    document.getElementById('email').textContent = data.email;
 
-                    if (data.uImg) {
-                        document.getElementById('profileImg').src = data.uImg;
-                    }
-                })
-                .catch(err => {
-                    console.error('Error fetching profile:', err);
-                    alert('Failed to load user profile');
-                });
-        } else {
-            alert('User ID is required to view the profile');
+        function loadUserProfile() {
+            const userID = new URLSearchParams(window.location.search).get('userID');
+
+            if (userID) {
+                fetch(`/getprofile?userID=${userID}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        document.getElementById('firstName').textContent = data.firstname;
+                        document.getElementById('lastName').textContent = data.lastname;
+                        document.getElementById('username').textContent = data.username;
+                        document.getElementById('email').textContent = data.email;
+
+                        if (data.uImg) {
+                            document.getElementById('profileImg').src = data.uImg;
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Error fetching profile:', err);
+                        alert('Failed to load user profile');
+                    });
+            } else {
+                alert('User ID is required to view the profile');
+            }
         }
+
+        function loadNavbar() {
+            fetch('header.html')  
+                .then(response => response.text()) 
+                .then(html => {
+                    document.getElementById('navbar').innerHTML = html; 
+                })
+                .catch(error => console.error('Error loading navbar:', error));
+        }
+
+        function loadFooter() {
+            fetch('footer.html')  
+                .then(response => response.text()) 
+                .then(html => {
+                    document.getElementById('footer').innerHTML = html; 
+                })
+                .catch(error => console.error('Error loading footer:', error));
+        }
+        
     </script>
+
 </body>
 </html>
