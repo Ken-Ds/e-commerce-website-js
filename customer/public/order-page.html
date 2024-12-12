@@ -43,7 +43,6 @@
 
     <script>
         var org = null;
-        var availableStock = 0; 
         loadNavbar();
         fetchProductData();
 
@@ -108,6 +107,7 @@
             })
             .then(data => {
                 alert(data.message);
+                window.location.href = 'view-transaction.html';
             })
             .catch(error => {
                 alert('Error: ' + error.message);
@@ -142,12 +142,8 @@
        
         increaseButton.addEventListener("click", () => {
             let currentQuantity = parseInt(quantityInput.value);
-            if (currentQuantity < availableStock) {
-                currentQuantity++;
-                quantityInput.value = currentQuantity;
-            } else {
-                alert("Quantity exceeds available stock!");
-            }
+            currentQuantity++;
+            quantityInput.value = currentQuantity;
         });
 
         
@@ -232,11 +228,11 @@
 
            
             const productDescription = document.getElementById('productOrder-description');
-            productDescription.textContent = data.pDescription; 
+            productDescription.textContent = data.pDesc; 
 
            
             const availableStockElem = document.getElementById('available-stock');
-            availableStockElem.textContent = `Available Stock: ${data.availableStock}`;  
+            availableStockElem.textContent = `Available Stock: ${data.stock}`;  
         }
 
        
