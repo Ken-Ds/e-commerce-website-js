@@ -1,3 +1,4 @@
+<!-- AUTHORED BY: LUMANGLAS, YENZY HYNNA -->
 <?php
 session_start();
 

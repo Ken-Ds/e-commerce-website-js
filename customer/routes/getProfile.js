@@ -1,4 +1,4 @@
-// Author: Miguel Joshua Burgos 
+/*  AUTHORED BY: BURGOS, MIGUEL JOSHUA */
 
 const express = require('express');
 const router = express.Router();

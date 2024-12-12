@@ -1,5 +1,6 @@
 // Import required modules
-// Author: Miguel Joshua Burgos
+// AUTHORED BY: BURGOS, MIGUEL JOSHUA & EVANGELISTA, KENDRICK
+
 const express = require('express');
 const router = express.Router();
 const conn = require('./db'); 

@@ -1,3 +1,6 @@
+<!-- getSalesDataByOrg AUTHORED BY: BURGOS, MIGUEL JOSHUA
+    getOrders & getOrderDetails AUTHORED BY: LUMANGLAS, YENZY HYNNA -->
+
 <?php
 // Author: Miguel Joshua Burgos --Create the getsaledDataByOrg 
 

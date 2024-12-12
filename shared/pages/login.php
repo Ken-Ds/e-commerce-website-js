@@ -1,3 +1,4 @@
+<!-- HTML AUTHORED BY: CHUA, HARVEY LANCE -->
 <!DOCTYPE html>
 <html lang="en">
 <head>

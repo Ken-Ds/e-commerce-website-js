@@ -1,3 +1,5 @@
+/* AUTHORED BY: BURGOS, MIGUEL JOSHUA */
+
 const mysql = require("mysql");
 
 var connection = mysql.createConnection(

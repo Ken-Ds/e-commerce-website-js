@@ -1,4 +1,4 @@
-// AUTHOR: ALEXX EVAN O. MODELO
+// AUTHORED BY: MODELO, ALEXX EVAN
 
 const express = require('express');
 const router = express.Router();

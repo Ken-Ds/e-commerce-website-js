@@ -1,3 +1,5 @@
+/* AUTHORED BY: EVANGELISTA, KENDRICK, & LUMANGLAS, YENZY HYNNA */
+
 const express = require('express');
 const router = express.Router();
 const conn = require('./db');
