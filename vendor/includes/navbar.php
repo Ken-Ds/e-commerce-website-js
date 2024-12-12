@@ -1,5 +1,3 @@
-<!-- AUTHORED BY: CAGULADA, SHERYN ANN 
-    LOGOUT ADDED BY: LUMANGLAS, YENZY HYNNA-->
 <?php
 $id = isset($_GET['id']) ? $_GET['id'] : '';
 ?>

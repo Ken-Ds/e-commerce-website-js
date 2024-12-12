@@ -1,5 +1,3 @@
-<!-- AUTHORED BY: EVANGELISTA, KENDRICK -->
- 
 <?php
 include '../db/dbconnect.php';
 

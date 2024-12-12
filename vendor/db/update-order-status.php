@@ -1,5 +1,3 @@
-<!-- AUTHORED BY: LUMANGLAS, YENZY HYNNA -->
- 
 <?php
 include '../db/get-functions.php'; 
 

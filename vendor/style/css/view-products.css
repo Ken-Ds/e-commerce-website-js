@@ -1,5 +1,3 @@
-/* AUTHORED BY: CAGULADA, SHERYN ANN */
-
 @import url(navbar.css);
 @import url(footer.css);
 
@@ -81,10 +79,6 @@
     margin: 0px 20px; 
 }
 
-.search-inner input {
-    padding: 10px;
-}
-
 .search-bar {
     border: 0;
     outline: none;
@@ -153,7 +147,7 @@
     display: flex;
     align-items: center;
     height: 25px;
-    margin-left: 20px; /* Space between elements */
+    margin-left: 20px; 
 }
 
 .filter-product h2 {
@@ -207,7 +201,7 @@
 }
 
 .name-price {
-    grid-column: 1 / -1; /* Span across both columns */
+    grid-column: 1 / -1; 
     font-family: Inter;
     display: flex;
     flex-direction: row;
@@ -238,7 +232,8 @@
     justify-content: flex-end;
     align-items: center;
     margin-top: auto;
-    margin-left: 150px; 
+    margin-bottom: -25px;
+    margin-left: auto; 
 }
 
 .delete {
@@ -281,7 +276,27 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    margin-top: 10px;
+    margin-bottom: -10px;
 }
+
+.stock-edit p {
+    display: flex;
+    align-items: center;
+    margin-right: 5px; 
+    margin-bottom: 5px;
+    margin-left: auto;
+  }
+  
+  .stock-edit p:first-child {
+    margin-left: 0; 
+    font-weight: bold; 
+  }
+  
+  .stock-edit p:last-child {
+    margin-left: 10px; 
+    text-align: left;
+  }
 
 .to-edit {
     background-color: var(--primary-color);
@@ -290,6 +305,7 @@
     font-size: 20px;
     border: 0;
     width: 100px;
+    margin-left: auto;
 }
 
 .to-edit:hover {
@@ -300,9 +316,27 @@
   display: flex;
   justify-content: space-between;
   align-items: center; 
+  margin-top: 10px;
+  margin-left: -10px;
 }
 
 .product .to-edit {
-  margin-left: 30px;
+  margin-left: 50px;
 }
 
+.name-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .name-price h3 {
+    margin-right: auto;
+  }
+  
+  .name-price p {
+    margin-left: 20px; 
+    text-align: right; 
+    flex-shrink: 0; 
+}
