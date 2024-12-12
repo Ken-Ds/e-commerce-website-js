@@ -1,5 +1,5 @@
 <!-- AUTHORED BY: EVANGELISTA, KENDRICK -->
- 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -154,7 +154,7 @@
                         tdQuantity.textContent = orderDetail.quantity;
 
                         var tdPrice = document.createElement("td");
-                        tdPrice.innerText = "₱" + orderDetail.price;
+                        tdPrice.innerText = "₱" + orderDetail.price + ".00";
 
                         trBody.appendChild(tdName);
                         trBody.appendChild(tdQuantity);
@@ -198,7 +198,7 @@
                     tdTotalText.textContent = "TOTAL:";
 
                     var tdTotal = document.createElement("td");
-                    tdTotal.textContent = "₱" + order.totalAmount;
+                    tdTotal.textContent = "₱" + order.totalAmount + ".00";
 
                    
 
@@ -353,8 +353,8 @@
                 orderDetails.forEach(detail => {
                     pdf.text(detail.pName, 10, y);
                     pdf.text(detail.quantity.toString(), 80, y, { align: "right" });
-                    pdf.text(`Php ${detail.price}`, 110, y, { align: "right" });
-                    pdf.text(`Php ${detail.quantity * detail.price}`, 150, y, { align: "right" });
+                    pdf.text(`Php ${detail.price}.00`, 110, y, { align: "right" });
+                    pdf.text(`Php ${detail.quantity * detail.price}.00`, 150, y, { align: "right" });
                     y += 10;
                 });
             } catch (error) {
@@ -366,7 +366,7 @@
             y += 10;
             pdf.setFont("times", "bold");
             pdf.text("Total Amount:", 10, y);
-            pdf.text(`Php${order.totalAmount}`, 150, y, { align: "right" });
+            pdf.text(`Php${order.totalAmount}.00`, 150, y, { align: "right" });
             
             pdf.save(`Order_${order.orderID}_Receipt.pdf`);
         }
