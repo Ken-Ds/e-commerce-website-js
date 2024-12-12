@@ -42,8 +42,7 @@
     <script>
         loadNavbar();
         fetchProductData();
-        loadFooter();
-    
+
         // Header
         function loadNavbar() {
                 fetch('header.html')  
@@ -54,7 +53,7 @@
                     .catch(error => console.error('Error loading navbar:', error));
             }
 
-            // Footer
+        // Footer
         function loadFooter(){
             fetch('footer.html')  
                 .then(response => response.text()) 
@@ -88,7 +87,6 @@
                     quantityInput.value = currentQuantity;
                 }
             });
-
 
             function fetchProductData(){
                 const productID = getParameterByName('productID'); 
@@ -137,35 +135,6 @@
 
                     // Store available stock for validation
                     availableStock = product.stock;
-            
-                  /*   // Handle Buy Now Button
-                    const buyNowButton = document.getElementById("buy-now");
-                    buyNowButton.addEventListener("click", () => {
-                        const quantity = parseInt(quantityInput.value);
-                        const orderData = {
-                            userID: getUserID(), 
-                            productID: product.productID,
-                            quantity: quantity,
-                            totalAmount: product.price * quantity,
-                            status: "Pending",
-                            dateOrdered: new Date().toISOString(),
-                        };
-
-                        // Save to Orders Table
-                        fetch('/api/placeOrder', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify(orderData),
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            alert('Order placed successfully!');
-                            window.location.href = 'view-transactions.html'; 
-                        })
-                        .catch(error => console.error('Error placing order:', error));
-                    }); */
 
                 } catch (error) {
                     console.error('Error fetching product data:', error);
@@ -187,7 +156,8 @@
                         `;
                         
                         productsGrid.appendChild(productItem);
- })  };
+                });
+            } 
  
             // Add product to cart
             function addToCart(product) {
