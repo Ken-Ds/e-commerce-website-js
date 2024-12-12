@@ -3,8 +3,9 @@ const router = express.Router();
 const conn = require('./db');
 
 router.post('/', (request, response) => {
+    userID = request.session.userID;
     console.log("IN ADD TO CART");
-    const { userID, productID, quantity } = request.body;
+    const {productID, quantity } = request.body;
 
     // Validate input
     if (!userID || !productID || !quantity || quantity <= 0) {
