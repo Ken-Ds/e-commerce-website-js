@@ -40,12 +40,11 @@ router.post('/', (req, res) => {
             });
             Promise.all(productOrgQueries)
                 .then(() => {
-                    const orgID = products[0].orgID; 
                     const orderQuery = `
-                        INSERT INTO orders (orderID, userID, orgID, totalAmount, dateOrdered, status)
+                        INSERT INTO orders (orderID, userID, totalAmount, dateOrdered, status)
                         VALUES (?, ?, ?, ?, NOW(), 'pending')
                     `;
-                    conn.query(orderQuery, [newOrderID, userID, orgID, totalAmount], (err, result) => {
+                    conn.query(orderQuery, [newOrderID, userID, totalAmount], (err, result) => {
                         if (err) {
                             console.error('Error inserting order:', err);
                             return res.status(500).json({ success: false, error: 'Failed to insert order' });

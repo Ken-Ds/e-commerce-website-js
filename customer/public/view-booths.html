@@ -413,18 +413,48 @@
                     });
 
                     button.addEventListener("click", function() {
-                        var successImg = document.createElement('img');
-                        successImg.src = "/style/img/success-icon.png";
-                        button.appendChild(successImg);
-                        button.classList.add("clicked");
+                        event.stopPropagation();
+                        url = `/add-to-cart`;
 
-                        button.innerHTML = ''; 
-                        button.appendChild(successImg);  
+                        const userID = '1'; // Replace with actual user ID
+                        const productID = product.productID;
+                        const quantity = 1;
 
-                        setTimeout(function() {
+                        fetch(url , {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                userID: userID,
+                                productID: productID,
+                                quantity: quantity
+                            })
+                        })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error(response.statusText);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            alert(data.message);
+                            var successImg = document.createElement('img');
+                            successImg.src = "/style/img/success-icon.png";
+                            button.appendChild(successImg);
+                            button.classList.add("clicked");
+
+                            button.innerHTML = ''; 
+                            button.appendChild(successImg);  
+
+                            setTimeout(function() {
                             button.innerHTML = 'Add To Cart';
                             button.classList.remove("clicked");
-                        }, 2000); 
+                            }, 2000); 
+                        })
+                        .catch(error => {
+                            alert("Insufficient Stock!");
+                        });
                     })
 
                     addcart.appendChild(button);
@@ -440,7 +470,6 @@
                     div.appendChild(prodDiv);
                 })
             }
-
             
         </script>
     </body>

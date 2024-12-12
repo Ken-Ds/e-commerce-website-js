@@ -159,13 +159,11 @@ DROP TABLE IF EXISTS `orders`;
 CREATE TABLE IF NOT EXISTS `orders` (
   `orderID` int NOT NULL AUTO_INCREMENT,
   `userID` int NOT NULL,
-  `orgID` int NOT NULL,
   `totalAmount` decimal(10,2) DEFAULT NULL,
   `dateOrdered` date DEFAULT NULL,
   `dateServed` date DEFAULT NULL,
   `status` varchar(50) DEFAULT 'Pending',
   PRIMARY KEY (`orderID`),
-  KEY `fk_orgID_orders` (`orgID`),
   KEY `fk_userID_orders` (`userID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -173,13 +171,13 @@ CREATE TABLE IF NOT EXISTS `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`orderID`, `userID`, `orgID`, `totalAmount`, `dateOrdered`, `dateServed`, `status`) VALUES
-(1, 1, 1, 150.00, '2024-10-01', '2024-10-02', 'Delivered'),
-(2, 2, 2, 800.00, '2024-10-03', '2024-10-04', 'Pending'),
-(3, 3, 3, 10999.00, '2024-10-05', '2024-10-06', 'Delivered'),
-(4, 5, 1, 420.00, '2024-11-01', NULL, 'Pending'),
-(5, 6, 1, 295.00, '2024-11-02', NULL, 'Pending'),
-(6, 6, 1, 300.00, '2024-10-20', '2024-10-25', 'Delivered');
+INSERT INTO `orders` (`orderID`, `userID`, `totalAmount`, `dateOrdered`, `dateServed`, `status`) VALUES
+(1, 1, 150.00, '2024-10-01', '2024-10-02', 'Delivered'),
+(2, 2, 800.00, '2024-10-03', '2024-10-04', 'Pending'),
+(3, 3, 10999.00, '2024-10-05', '2024-10-06', 'Delivered'),
+(4, 5, 420.00, '2024-11-01', NULL, 'Pending'),
+(5, 6, 295.00, '2024-11-02', NULL, 'Pending'),
+(6, 6, 300.00, '2024-10-20', '2024-10-25', 'Delivered');
 
 -- --------------------------------------------------------
 
@@ -343,7 +341,6 @@ ALTER TABLE `cart`
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `fk_orgID_orders` FOREIGN KEY (`orgID`) REFERENCES `organizations` (`orgID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `fk_userID_orders` FOREIGN KEY (`userID`) REFERENCES `users` (`userID`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 
