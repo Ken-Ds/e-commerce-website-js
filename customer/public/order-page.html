@@ -40,6 +40,7 @@
    
     <section id="footer"></section>
     <script>
+        var org = null
         loadNavbar();
         fetchProductData();
 
@@ -47,7 +48,6 @@
         addToCartBtn.addEventListener("click", function() {
             url = `/add-to-cart`;
 
-            const userID = '1'; // Replace with actual user ID
             const productID = getParameterByName('productID');
             const quantity = document.getElementById('quantity').value;
 
@@ -57,7 +57,6 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    userID: userID,
                     productID: productID,
                     quantity: quantity
                 })
@@ -80,13 +79,7 @@
         const buyNowButton = document.getElementById('buy-now');
         buyNowButton.addEventListener("click", function () {
             const productID = getParameterByName('productID');
-            const userID = getUserID();
             const quantity = parseInt(document.getElementById('quantity').value);
-
-            if (!userID) {
-                alert('Please log in to buy products.');
-                return;
-            }
 
             if (quantity > availableStock) {
                 alert('Insufficient stock available.');
@@ -99,9 +92,9 @@
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                userID: userID,
                 productID: productID,
                 quantity: quantity,
+                orgID: org
             }),
         })
             .then(response => {
@@ -179,6 +172,7 @@
                     })
                     .then (data => {
                         renderProduct(data);
+                        org = data.orgID;
                         fetchRelatedProducts(data.orgID);
                     })
                     .catch(error => {

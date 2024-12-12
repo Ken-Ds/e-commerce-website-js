@@ -36,6 +36,7 @@ const signup = require('./routes/signup');
 const search = require('./routes/search');
 const addToCart= require('./routes/addToCart');
 const getProductDetails = require('./routes/getProductDetails');
+const buyNow = require('./routes/buyNow')
 
 app.use(express.json());
 
@@ -53,6 +54,7 @@ app.use('/search', search);
 app.use('/getproductdetails', getProductDetails);
 app.use('/add-to-cart', addToCart);
 app.use('/addorder', addOrder);
+app.use('/buy-now', buyNow)
 
 const PORT = 3000;
 
