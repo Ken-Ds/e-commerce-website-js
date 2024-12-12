@@ -3,80 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/style/css/view-profile.css">
-    <title>Profile Page</title>
+    <link href="style/css/view-profile.css" rel="stylesheet">
+    <title>In Genius Orders</title>
 </head>
 <body>
-    <div id="header-placeholder"></div>
-    
-    <!-- Navbar placeholder -->
     <section id="navbar" style="padding-bottom: 140px;"></section>
-
     <div class="profile-container">
-        <h1>My Profile</h1>
-        <div class="profile-content">
-            <div class="profile-picture">
-                <img id="profileImg" src="" alt="Profile Picture" style="max-width: 600px; height: 300px;">
-            </div>
-            <div class="profile-details">
-                <h2>Basic Profile Details</h2>
-                <div class="detail-row">
-                    <div class="detail-item">
-                        <span>First Name</span>
-                        <p id="firstName">Loading...</p>
-                    </div>
-                    <div class="detail-item">
-                        <span>Last Name</span>
-                        <p id="lastName">Loading...</p>
-                    </div>
-                </div>
-                <hr>
-                <div class="detail-row">
-                    <div class="detail-item">
-                        <span>User Name</span>
-                        <p id="username">Loading...</p>
-                    </div>
-                </div>
-                <div class="detail-row">
-                    <div class="detail-item">
-                        <span>Email</span>
-                        <p id="email">Loading...</p>
-                    </div>
-                </div>
+        <div class="profile-section">
+            <h2 id="username"></h2>
+            <div class="logo-container">
+                <img id="userImage" src="" alt="User Image" class="org-logo">
             </div>
         </div>
-    </div> 
-
-    <section class="trans"></section>
-    <section id="footer" style="padding-top: 3%;"></section>
+        
+        <div class="organization-section">
+            <h2>Profile</h2>
+            <div class="organization-info">
+                <ul>
+                    <li><strong>Username: </strong> <span id="userUsername" class="org-info-text"></span></li>
+                    <li><strong>Email: </strong> <span id="userEmail" class="org-info-text"></span></li>
+                    <li><strong>Firstname: </strong> <span id="userFirstname" class="org-info-text"></span></li>
+                    <li><strong>Lastname: </strong> <span id="userLastname" class="org-info-text"></span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <section id="footer"></section>
 
     <script>
-        loadNavbar(); 
-        loadUserProfile();
+        loadNavbar();
         loadFooter();
+        
+        // Fetch user profile data from the backend
+        fetch('/getprofile')  // Assuming the route for user profile is '/profile'
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert('Error: ' + data.error);
+                    return;
+                }
 
-
-        function loadUserProfile() {
-                fetch(`/getprofile`)
-                    .then(response => response.json())
-                    .then(data => {
-                        document.getElementById('firstName').textContent = data.firstname;
-                        document.getElementById('lastName').textContent = data.lastname;
-                        document.getElementById('username').textContent = data.username;
-                        document.getElementById('email').textContent = data.email;
-
-                        if (data.uImg) {
-                            document.getElementById('profileImg').src = data.uImg;
-                        }
-                    })
-                    .catch(err => {
-                        console.error('Error fetching profile:', err);
-                        alert('Failed to load user profile');
-                    });
-            
-        }
-
-        function loadNavbar() {
+                // Set the profile details in the HTML
+                document.getElementById('username').innerText = data.username;
+                document.getElementById('userImage').src = data.uImg;
+                document.getElementById('userUsername').innerText = data.username;
+                document.getElementById('userEmail').innerText = data.email;
+                document.getElementById('userFirstname').innerText = data.firstname;
+                document.getElementById('userLastname').innerText = data.lastname;
+            })
+            .catch(err => {
+                console.error('Error fetching user profile:', err);
+            });
+            function loadNavbar() {
             fetch('header.html')  
                 .then(response => response.text()) 
                 .then(html => {
@@ -84,17 +62,15 @@
                 })
                 .catch(error => console.error('Error loading navbar:', error));
         }
-
-        function loadFooter() {
+    
+        function loadFooter(){
             fetch('footer.html')  
                 .then(response => response.text()) 
                 .then(html => {
                     document.getElementById('footer').innerHTML = html; 
                 })
-                .catch(error => console.error('Error loading footer:', error));
+                .catch(error => console.error('Error loading navbar:', error));
         }
-        
     </script>
-
 </body>
 </html>
