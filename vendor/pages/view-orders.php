@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <?php
 session_start();
 
@@ -33,7 +34,7 @@ foreach ($orders as $order) {
 }
 ?>
 
-<!DOCTYPE html>
+
 <html>
 <head>
     <title>In Genius Orders</title>
@@ -125,7 +126,7 @@ foreach ($orders as $order) {
             var markDeliveredButton = document.createElement('button');
             markDeliveredButton.className = 'mark-delivered';
             markDeliveredButton.onclick = function(event) {
-                 markAsDelivered(order.ID, event); 
+                 markAsDelivered(order.orderID, event); 
             };
             markDeliveredButton.innerText = "Mark as Delivered";
             if(isDelivered){
@@ -284,7 +285,7 @@ foreach ($orders as $order) {
                     alert('Failed to update order status.');
                 }
             })
-            };
+            }
         }
 
     function toggleDetails(button) {
