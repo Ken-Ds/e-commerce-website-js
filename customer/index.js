@@ -59,14 +59,12 @@ const PORT = 3000;
 var id = null;
 
 app.get('/', (req, res) => {
-app.get('/', (req, res) => {
     console.log(`Passing ID${id}`);
     req.session.userID = id;
     console.log(`Got ID${req.session.userID}`);
     res.redirect('/view-booths.html')
 });
 
-app.post('/set-session', (req, res) => {
 app.post('/set-session', (req, res) => {
     const { userID } = req.body;
     console.log(req.body);
@@ -77,7 +75,7 @@ app.post('/set-session', (req, res) => {
         res.status(400).send('User ID is required');
     }
 }); 
-});
+
 
 app.get('/view-cart', (req, res) => {
     console.log(`Cart ID ${req.session.userID}`)

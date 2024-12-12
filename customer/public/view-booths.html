@@ -456,7 +456,6 @@
                         event.stopPropagation();
                         url = `/add-to-cart`;
 
-                        const userID = '1'; // Replace with actual user ID
                         const productID = product.productID;
                         const quantity = 1;
 
@@ -466,7 +465,6 @@
                                 'Content-Type': 'application/json'
                             },
                             body: JSON.stringify({
-                                userID: userID,
                                 productID: productID,
                                 quantity: quantity
                             })
