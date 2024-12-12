@@ -40,7 +40,6 @@ if ($result->num_rows > 0) {
         <table class="sales-table">
             <thead>
                 <tr>
-                    <th>Organization Name</th>
                     <th>Product Name</th>
                     <th>Price</th>
                     <th>Quantity</th>
@@ -55,7 +54,6 @@ if ($result->num_rows > 0) {
                 if ($salesData && $salesData->num_rows > 0) {
                     while ($row = $salesData->fetch_assoc()) {
                         echo "<tr>";
-                        echo "<td>" . htmlspecialchars($row['OrganizationName']) . "</td>";
                         echo "<td>" . htmlspecialchars($row['ProductName']) . "</td>";
                         echo "<td>₱" . htmlspecialchars(number_format($row['Price'], 2)) . "</td>";
                         echo "<td>" . htmlspecialchars($row['Quantity']) . "</td>";
@@ -65,13 +63,13 @@ if ($result->num_rows > 0) {
                         $grandTotal += $row['TotalAmount'];
                     }
                 } else {
-                    echo "<tr><td colspan='5'>No sales data available.</td></tr>";
+                    echo "<tr><td colspan='4'>No sales data available.</td></tr>";
                 }
                 ?>
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="4" class="total-label">Grand Total Sales</td>
+                    <td colspan="3" class="total-label">Grand Total Sales</td>
                     <td>₱<?php echo number_format($grandTotal, 2); ?></td>
                 </tr>
             </tfoot>
