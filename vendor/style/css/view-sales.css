@@ -45,7 +45,6 @@
 .sales-table th, .sales-table td {
     font-family: Inter;
     padding: 15px;
-    text-align: left;
     border-bottom: 1px solid #ddd;
 }
 
@@ -72,4 +71,25 @@
     position: sticky;
     bottom: 0;
     background-color: #ccc;
+}
+
+.sales-table th, .sales-table td {
+    padding: 15px;
+    border-bottom: 1px solid #ddd;
+    text-align: left; /* Default alignment */
+}
+
+.sales-table th:first-child,
+.sales-table td:first-child {
+    min-width: 150px; /* Adjust as needed */
+    text-align: left;
+}
+
+.sales-table th:nth-child(2),
+.sales-table th:nth-child(3),
+.sales-table th:nth-child(4),
+.sales-table td:nth-child(2),
+.sales-table td:nth-child(3),
+.sales-table td:nth-child(4) {
+    text-align: right;
 }
