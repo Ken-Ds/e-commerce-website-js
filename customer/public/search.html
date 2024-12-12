@@ -45,22 +45,21 @@
 
                 const data = await response.json();
 
-                // Check if the product is available
+               
                 if (!data.product) {
                     alert('Product is not available');
                     return;
                 }
 
-                // Populate organization information
+               
                 const orgLogo = document.getElementById('organization-logo');
                 const orgName = document.getElementById('organization-name');
 
                 orgLogo.src = data.organization.logo || '/customer/public/style/img/default-logo.jpg';
                 orgName.textContent = data.organization.name;
 
-                // Populate product list
                 const productList = document.getElementById('product-list');
-                productList.innerHTML = ''; // Clear existing products
+                productList.innerHTML = ''; 
 
                 const product = data.product;
 
@@ -87,19 +86,7 @@
                 productPrice.className = 'product-price';
                 productPrice.textContent = `₱${product.price.toFixed(2)}`;
 
-                const addToCartButton = document.createElement('button');
-                addToCartButton.className = 'add-to-cart';
-                addToCartButton.textContent = 'Add to Cart';
-
-                addToCartButton.addEventListener('click', function () {
-                    addToCart(product);
-                    addToCartButton.innerText = 'Added!';
-                    setTimeout(() => {
-                        addToCartButton.innerText = 'Add to Cart';
-                    }, 2000);
-                });
-
-                productDetails.append(productNameElement, productDescription, productPrice, addToCartButton);
+                productDetails.append(productNameElement, productDescription, productPrice);
                 productItem.append(productImage, productDetails);
                 productList.appendChild(productItem);
             } catch (error) {
@@ -108,12 +95,12 @@
             }
         }
 
-        // Function to add a product to the cart
+        
         function addToCart(product) {
             console.log('Product added to cart:', product);
         }
     
-        // Load navbar
+        
         function loadNavbar() {
             fetch('header.html')
                 .then(response => response.text())
@@ -123,7 +110,7 @@
                 .catch(error => console.error('Error loading navbar:', error));
         }
     
-        // Load footer
+        
         function loadFooter() {
             fetch('footer.html')
                 .then(response => response.text())
@@ -133,7 +120,7 @@
                 .catch(error => console.error('Error loading footer:', error));
         }
     
-        // Ensure DOM is loaded before executing scripts
+        
         document.addEventListener('DOMContentLoaded', () => {
             fetchProducts(productName);
             loadFooter();
