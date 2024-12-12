@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Cart</title>
     <link rel="stylesheet" href="../style/css/view-cart-style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <script>
 
     //AUTHOR: ALEXX EVAN O. MODELO
@@ -435,6 +436,16 @@
             })
             .catch((error) => console.error('Error:', error));
         }
+        
+        document.querySelector('.cart-checkout-btn').addEventListener('mouseenter', () => {
+            const checkoutButton = document.querySelector('.cart-checkout-btn');
+            checkoutButton.classList.add('animate__animated', 'animate__pulse');
+        });
+
+        document.querySelector('.cart-checkout-btn').addEventListener('animationend', () => {
+            const checkoutButton = document.querySelector('.cart-checkout-btn');
+            checkoutButton.classList.remove('animate__pulse');
+        });
 
             fetchCartItems();
 });
