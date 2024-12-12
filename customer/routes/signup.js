@@ -71,7 +71,7 @@ router.post('/', upload.single('profileImage'), (request, response) => {
                         response.status(201).send(`
                             <script>
                                 alert("Customer created successfully!");
-                                window.location.href = "../public/signup.html"; // Redirect to login page
+                                window.location.href = "./signup.html"; // Redirect to login page
                             </script>
                         `);
                     }
@@ -100,7 +100,7 @@ router.post('/', upload.single('profileImage'), (request, response) => {
                                 response.status(201).send(`
                                     <script>
                                         alert("Vendor created successfully!");
-                                        window.location.href = "../public/signup.html"; // Redirect to login page
+                                        window.location.href = "./signup.html"; // Redirect to login page
                                     </script>
                                 `);
                             }
