@@ -43,6 +43,69 @@
         loadNavbar();
         fetchProductData();
 
+        const addToCartBtn = document.getElementById('add-to-cart');
+        addToCartBtn.addEventListener("click", function() {
+            url = `/add-to-cart`;
+
+            const userID = '1'; // Replace with actual user ID
+            const productID = getParameterByName('productID');
+            const quantity = document.getElementById('quantity').value;
+
+            fetch(url , {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    userID: userID,
+                    productID: productID,
+                    quantity: quantity
+                })
+            })
+            .then(response => {
+                            if (!response.ok) {
+                                throw new Error(response.statusText);
+                            }
+                            return response.json();
+            })
+            .then(data => {
+                alert(data.message);
+            })
+            .catch(error => {
+                alert("Insufficient Stock!");
+            });
+        });
+
+        // Handle Buy Now Button
+        const buyNowButton = document.getElementById("buy-now");
+        buyNowButton.addEventListener("click", () => {
+            const quantity = parseInt(quantityInput.value);
+            const orderData = {
+                userID: 1, 
+                productID: product.productID,
+                quantity: quantity,
+                totalAmount: product.price * quantity,
+                    status: "Pending",
+                    dateOrdered: new Date().toISOString(),
+            };
+
+            // Save to Orders Table
+            url = '/addorder';
+            fetch( url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(orderData),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    alert('Order placed successfully!');
+                    window.location.href = 'view-transactions.html'; 
+                })
+                    .catch(error => console.error('Error placing order:', error));
+        }); 
+
         // Header
         function loadNavbar() {
                 fetch('header.html')  
@@ -159,31 +222,6 @@
                 });
             } 
  
-            // Add product to cart
-            function addToCart(product) {
-                const quantity = parseInt(quantityInput.value);
-                const cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-                const existingProduct = cart.find(item => item.productID === product.productID);
-
-                if (existingProduct) {
-                    existingProduct.quantity += quantity; // Update the quantity
-                } else {
-                    cart.push({
-                        productID: product.productID,
-                        pName: product.pName,
-                        price: product.price,
-                        quantity: quantity,
-                        pImage: product.pImage
-                    });
-                }
-
-                // Save updated cart to localStorage
-                localStorage.setItem('cart', JSON.stringify(cart));
-
-                alert(`${product.pName} has been added to your cart!`);
-            }
-
             function getParameterByName(name) {
                 const urlParams = new URLSearchParams(window.location.search);
                 console.log(urlParams);
