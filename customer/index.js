@@ -93,13 +93,13 @@ app.get('/login-php', (req, res) => {
 
 app.get('/logout', (req, res) => {
     if (req.session.userID) {
+        req.session.loggedIn = false;
         req.session.destroy(err => {
             if (err) {
                 return res.status(500).send('Could not log out');
             }
             console.log(`User  Have Been Logged Out`);
             loggedIn = false;
-            req.session.loggedIn = false;
             res.redirect('http://localhost/ings-website/shared/pages/login.php?logout=success');
         });
     } else {
