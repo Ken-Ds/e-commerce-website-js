@@ -34,50 +34,50 @@ if ($result->num_rows > 0) {
 </head>
 <body>
 
-    <div class="sales-container">
-        <h1 class="sales-header">Sales</h1>
-        <div class="table-wrapper">
-            <table class="sales-table">
-                <thead>
-                    <tr> 
-                        <th>Product Name</th>
-                        <th>Price</th>
-                        <th>Quantity</th>
-                        <th>Total Amount</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    // Fetch sales data using the updated function
-                    $salesData = getSalesData($userID, $orgID);
-                    $grandTotal = 0;
+<div class="sales-container">
+    <h1 class="sales-header">Sales by Organization</h1>
+    <div class="table-wrapper">
+        <table class="sales-table">
+            <thead>
+                <tr>
+                    <th>Organization Name</th>
+                    <th>Product Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $salesData = getSalesDataByOrg($orgID);  // Pass the orgID to the function
+                $grandTotal = 0;
 
-                    // Fetch and display each row of data
-                    if ($salesData && $salesData->num_rows > 0) {
-                        while ($row = $salesData->fetch_assoc()) {
-                            echo "<tr>";
-                            echo "<td>" . htmlspecialchars($row['ProductName']) . "</td>";
-                            echo "<td>₱" . htmlspecialchars(number_format($row['Price'], 2)) . "</td>";
-                            echo "<td>" . htmlspecialchars($row['Quantity']) . "</td>";
-                            echo "<td>₱" . htmlspecialchars(number_format($row['TotalAmount'], 2)) . "</td>";
-                            echo "</tr>";
+                if ($salesData && $salesData->num_rows > 0) {
+                    while ($row = $salesData->fetch_assoc()) {
+                        echo "<tr>";
+                        echo "<td>" . htmlspecialchars($row['OrganizationName']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['ProductName']) . "</td>";
+                        echo "<td>₱" . htmlspecialchars(number_format($row['Price'], 2)) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['Quantity']) . "</td>";
+                        echo "<td>₱" . htmlspecialchars(number_format($row['TotalAmount'], 2)) . "</td>";
+                        echo "</tr>";
 
-                            $grandTotal += $row['TotalAmount'];
-                        }
-                    } else {
-                        echo "<tr><td colspan='4'>No sales data available.</td></tr>";
+                        $grandTotal += $row['TotalAmount'];
                     }
-                    ?>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="3" class="total-label">Total Sales</td>
-                        <td>₱<?php echo number_format($grandTotal, 2); ?></td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
+                } else {
+                    echo "<tr><td colspan='5'>No sales data available.</td></tr>";
+                }
+                ?>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4" class="total-label">Grand Total Sales</td>
+                    <td>₱<?php echo number_format($grandTotal, 2); ?></td>
+                </tr>
+            </tfoot>
+        </table>
     </div>
+</div>
 
 <?php include "../includes/footer.php"; ?>
 </body>
