@@ -77,35 +77,52 @@
         });
 
         // Handle Buy Now Button
-        const buyNowButton = document.getElementById("buy-now");
-        buyNowButton.addEventListener("click", () => {
-            const quantity = parseInt(quantityInput.value);
-            const orderData = {
-                userID: 1, 
-                productID: product.productID,
+        const buyNowButton = document.getElementById('buy-now');
+        buyNowButton.addEventListener("click", function () {
+            const productID = getParameterByName('productID');
+            const userID = getUserID();
+            const quantity = parseInt(document.getElementById('quantity').value);
+
+            if (!userID) {
+                alert('Please log in to buy products.');
+                return;
+            }
+
+            if (quantity > availableStock) {
+                alert('Insufficient stock available.');
+                return;
+            }
+
+            fetch('/buy-now', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                userID: userID,
+                productID: productID,
                 quantity: quantity,
-                totalAmount: product.price * quantity,
-                    status: "Pending",
-                    dateOrdered: new Date().toISOString(),
-            };
-
-            // Save to Orders Table
-            url = '/addorder';
-            fetch( url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(orderData),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    alert('Order placed successfully!');
-                    window.location.href = 'view-transactions.html'; 
-                })
-                    .catch(error => console.error('Error placing order:', error));
-        }); 
-
+            }),
+        })
+            .then(response => {
+                console.log('Response:', response);
+                if (!response.ok) {
+                    console.error('Error response:', response);
+                    throw new Error(response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Buy Now success:', data);
+                alert(data.message);
+            })
+            .catch(error => {
+                console.error('Buy Now error:', error);
+                alert('Error: ' + error.message);
+            });
+            
+        });
+    
         // Header
         function loadNavbar() {
                 fetch('header.html')  
