@@ -1,3 +1,7 @@
+<!-- HTML BASIS AUTHORED BY: MODELO, ALEXX EVAN
+    PHP AUTHORED BY: BURGOS, MIGUEL JOSHUA
+    SESSION HANDLING ADDED BY: CHUA, HARVEY LANCE -->
+    
 <?php
 include '../db/get-functions.php';
 include '../includes/navbar.php';

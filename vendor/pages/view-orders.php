@@ -1,3 +1,6 @@
+<!-- AUTHORED BY: LUMANGLAS, YENZY HYNNA 
+    SESSION HANDLING BY: CHUA, HARVEY LANCE -->
+    
 <?php
 session_start();
 
@@ -44,7 +47,7 @@ foreach ($orders as $order) {
 <body>
     
 
-<section class='inner-body'>
+<section class='inner-body' style = 'padding: 30px;'>
     <div class='orders-container'>
          <h2>Orders</h2>
          </div>

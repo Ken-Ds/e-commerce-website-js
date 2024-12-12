@@ -1,7 +1,15 @@
+/* AUTHORED BY:  */
 @import url(navbar.css);
 @import url(footer.css);
 
 /* ORDERS PAGE */
+body {
+    padding: 50px;
+}
+
+.inner-body {
+    padding: 30px;
+}
 .orders-container{
     max-width: 1850px;
     margin: 0 auto;

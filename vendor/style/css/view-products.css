@@ -79,6 +79,10 @@
     margin: 0px 20px; 
 }
 
+.search-inner input {
+    padding: 10px;
+}
+
 .search-bar {
     border: 0;
     outline: none;

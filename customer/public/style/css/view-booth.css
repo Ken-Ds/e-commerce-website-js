@@ -270,7 +270,7 @@ html, body {
     background-color: white;
     border: 1px solid black;
     border-radius: 5px;
-    width: 40%;
+    width: 50%;
     height: auto;
 }
 
@@ -300,11 +300,13 @@ table {
 thead {
     background-color: #6B7BB8; 
     color: black;
+    text-align: center;
+    text-transform: uppercase;
 }
 
 th {
     font-family: Voguella;
-    padding: 12px;
+    padding: 18px;
     text-align: center;
     font-weight: bold;
     font-size: 23px;
@@ -325,7 +327,7 @@ td {
     border: 1px solid #b1afaf;
     color: black;
     font-size: 20px;
-    padding: 10px;
+    padding: 20px;
     text-align: center;
 }
 
@@ -363,8 +365,10 @@ tbody tr:hover {
 .filters h2 {
     display: flex;
     align-items: center;
-    font-family: Arial;
-    font-size: 25px;
+    font-family: Poppins;
+    font-weight: bold;
+    margin-top: 13px;
+    font-size: 28px;
     color: black;
     padding: 10px;
 }
@@ -372,7 +376,7 @@ tbody tr:hover {
 .filters select {
     background-color: #AEAEB7;
     font-family: Poppins;
-    font-size: 20px;
+    font-size: 25px;
     border: none;
     flex-grow: 1;
 }
