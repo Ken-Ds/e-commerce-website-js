@@ -1,4 +1,4 @@
-//AUTHOR: ALEXX EVAN O. MODELO
+// AUTHOR: ALEXX EVAN O. MODELO
 
 const express = require('express');
 const router = express.Router();
@@ -14,78 +14,118 @@ router.post('/', (req, res) => {
         return res.status(400).json({ success: false, error: 'Invalid input' });
     }
 
-    const latestOrderQuery = 'SELECT MAX(orderID) AS latestOrderID FROM orders';
-    conn.query(latestOrderQuery, (err, result) => {
+    const productIDs = booths.flatMap(booth => booth.products.map(product => product.productID));
+    console.log('Collected productIDs:', productIDs);
+
+    const orgIDQuery = `
+        SELECT DISTINCT orgID
+        FROM products
+        WHERE productID IN (?)
+    `;
+
+    conn.query(orgIDQuery, [productIDs], (err, orgResults) => {
         if (err) {
-            console.error('Error fetching latest orderID:', err);
-            return res.status(500).json({ success: false, error: 'Failed to fetch latest orderID' });
+            console.error('Error fetching orgIDs:', err);
+            return res.status(500).json({ success: false, error: 'Failed to validate product orgIDs.' });
         }
 
-        const latestOrderID = result[0].latestOrderID || 0;
-        const newOrderID = latestOrderID + 1;
-        booths.forEach(booth => {
-            const { totalAmount, products } = booth;
-            const productOrgQueries = products.map(product => {
-                return new Promise((resolve, reject) => {
-                    const orgIDQuery = 'SELECT orgID FROM products WHERE productID = ?';
-                    conn.query(orgIDQuery, [product.productID], (err, result) => {
-                        if (err || result.length === 0) {
-                            reject(`Failed to find orgID for productID: ${product.productID}`);
-                        } else {
-                            product.orgID = result[0].orgID;
-                            resolve();
-                        }
-                    });
+        console.log('Fetched orgResults:', orgResults);
+
+        if (orgResults.length !== 1) {
+            console.error('Products belong to different organizations:', orgResults);
+            return res.status(400).json({ success: false, error: 'All products must belong to the same organization.' });
+        }
+
+        const orgID = orgResults[0].orgID;
+
+        const latestOrderQuery = 'SELECT MAX(orderID) AS latestOrderID FROM orders';
+        conn.query(latestOrderQuery, (err, result) => {
+            if (err) {
+                console.error('Error fetching latest orderID:', err);
+                return res.status(500).json({ success: false, error: 'Failed to fetch latest orderID.' });
+            }
+
+            const latestOrderID = result[0].latestOrderID || 0;
+            const newOrderID = latestOrderID + 1;
+
+            const stockValidationPromises = [];
+
+            booths.forEach(booth => {
+                const { products } = booth;
+
+                products.forEach(product => {
+                    stockValidationPromises.push(new Promise((resolve, reject) => {
+                        const productNameQuery = 'SELECT pName, stock FROM products WHERE productID = ?';
+                        conn.query(productNameQuery, [product.productID], (err, stockResult) => {
+                            if (err || stockResult.length === 0) {
+                                reject(`Product ID ${product.productID} not found.`);
+                            } else {
+                                const availableStock = stockResult[0].stock;
+                                const productName = stockResult[0].pName;
+
+                                if (availableStock < product.quantity) {
+                                    reject(`Insufficient stock for product '${productName}'. Available: ${availableStock}, Requested: ${product.quantity}`);
+                                } else {
+                                    const deductStockQuery = 'UPDATE products SET stock = stock - ? WHERE productID = ?';
+                                    conn.query(deductStockQuery, [product.quantity, product.productID], (err) => {
+                                        if (err) {
+                                            reject(`Failed to update stock for product '${productName}'.`);
+                                        } else {
+                                            resolve();
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                    }));
                 });
             });
-            Promise.all(productOrgQueries)
+
+            Promise.all(stockValidationPromises)
                 .then(() => {
-                    
-                    
-                    const orgIDs = products.map(product => product.orgID);
-                    const uniqueOrgIDs = [...new Set(orgIDs)];
-    
-                    if (uniqueOrgIDs.length !== 1) {
-                        return res.status(400).json({ success: false, error: 'All products in a booth must belong to the same organization.' })
-                    }
+                    const insertOrdersPromises = booths.map(booth => {
+                        const { totalAmount, products } = booth;
 
-                    orgID = uniqueOrgIDs[0];
+                        return new Promise((resolve, reject) => {
+                            const orderQuery = `
+                                INSERT INTO orders (orderID, userID, orgID, totalAmount, dateOrdered, status)
+                                VALUES (?, ?, ?, ?, NOW(), 'pending')
+                            `;
+                            conn.query(orderQuery, [newOrderID, userID, orgID, totalAmount], (err) => {
+                                if (err) {
+                                    reject('Failed to insert order.');
+                                } else {
+                                    const orderDetails = products.map(product => [
+                                        newOrderID,
+                                        product.productID,
+                                        product.quantity,
+                                        product.price
+                                    ]);
 
-                    const orderQuery = `
-                        INSERT INTO orders (orderID, userID, orgID, totalAmount, dateOrdered, status)
-                        VALUES (?, ?, ?, ?, NOW(), 'pending')
-                    `;
-                    
-                    conn.query(orderQuery, [newOrderID, userID, orgID, totalAmount], (err, result) => {
-                        if (err) {
-                            console.error('Error inserting order:', err);
-                            return res.status(500).json({ success: false, error: 'Failed to insert order' });
-                        }
-
-                        const orderDetails = products.map(product => [
-                            newOrderID,
-                            product.productID,
-                            product.quantity,
-                            product.price
-                        ]);
-
-                        const orderDetailsQuery = `
-                            INSERT INTO orderdetails (orderID, productID, quantity, price)
-                            VALUES ?
-                        `;
-                        conn.query(orderDetailsQuery, [orderDetails], (err, result) => {
-                            if (err) {
-                                console.error('Error inserting order details:', err);
-                                return res.status(500).json({ success: false, error: 'Failed to insert order details' });
-                            }
-
-                            res.status(200).json({ success: true, message: 'Order placed successfully' });
+                                    const orderDetailsQuery = `
+                                        INSERT INTO orderdetails (orderID, productID, quantity, price)
+                                        VALUES ?
+                                    `;
+                                    conn.query(orderDetailsQuery, [orderDetails], (err) => {
+                                        if (err) {
+                                            reject('Failed to insert order details.');
+                                        } else {
+                                            resolve();
+                                        }
+                                    });
+                                }
+                            });
                         });
                     });
+
+                    return Promise.all(insertOrdersPromises);
+                })
+                .then(() => {
+                    res.status(200).json({ success: true, message: 'Order placed successfully' });
                 })
                 .catch(error => {
-                    console.error('Error fetching orgID for products:', error);
-                    res.status(500).json({ success: false, error: 'Failed to fetch orgID for products' });
+                    console.error('Error processing order:', error);
+                    res.status(400).json({ success: false, error });
                 });
         });
     });
