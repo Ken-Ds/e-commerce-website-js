@@ -1,4 +1,5 @@
 <?php
+// Author: Miguel Joshua Burgos --Create the getsaledDataByOrg 
 
     include '../db/dbconnect.php';
 
@@ -51,7 +52,7 @@
                 orgs.oName, p.pName";
         
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("i", $orgID);  // Bind the orgID parameter
+        $stmt->bind_param("i", $orgID);  
         $stmt->execute();
         $result = $stmt->get_result();
         

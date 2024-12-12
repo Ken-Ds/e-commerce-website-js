@@ -1,4 +1,5 @@
 // Import required modules
+// Author: Miguel Joshua Burgos
 const express = require('express');
 const router = express.Router();
 const conn = require('./db'); 

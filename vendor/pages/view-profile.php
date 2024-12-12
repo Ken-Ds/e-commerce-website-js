@@ -1,4 +1,7 @@
 <?php
+
+// Author: Miguel Joshua Burgos -- implement backend logic
+
 session_start();
 
 if (!isset($_SESSION['userID'])) {

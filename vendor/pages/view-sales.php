@@ -1,4 +1,6 @@
 <?php
+
+// Author: Miguel Joshua Burgos -- implement backend logic
 include '../db/get-functions.php';
 include '../includes/navbar.php';
 
