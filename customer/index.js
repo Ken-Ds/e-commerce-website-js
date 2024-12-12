@@ -14,27 +14,28 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.use(session({
+/* app.use(session({
     secret: 'secret_key',
     resave: true,
     saveUninitialized: false,
     cookie: {secure: false}
-}));
-
+})); */
 
 
 const sql = require('./routes/db');
 const getProdsRoute = require('./routes/getProducts');
 const getOrgsRoute = require('./routes/getOrgs');
 const getOrgDetailsRoute = require('./routes/getOrgDetails');
-const getOrders = require('./routes/getOrders.js');
-const getOrderDetails = require('./routes/getOrderDetails.js');
-const getProfile = require('./routes/getProfile.js');
-const getCart = require('./routes/getCart.js');
-const deleteFromCart = require('./routes/deleteFromCart.js');
-const addOrder = require('./routes/addOrder.js');
-const signup = require('./routes/signup.js');
-const search = require('./routes/search.js');
+const getOrders = require('./routes/getOrders');
+const getOrderDetails = require('./routes/getOrderDetails');
+const getProfile = require('./routes/getProfile');
+const getCart = require('./routes/getCart');
+const deleteFromCart = require('./routes/deleteFromCart');
+const addOrder = require('./routes/addOrder');
+const signup = require('./routes/signup');
+const search = require('./routes/search');
+const addToCart= require('./routes/addToCart');
+const getProductDetails = require('./routes/getProductDetails');
 
 app.use(express.json());
 
@@ -49,19 +50,20 @@ app.use('/delete-from-cart', deleteFromCart);
 app.use('/add-order', addOrder)
 app.use('/signup', signup);
 app.use('/search', search);
+app.use('/getproductdetails', getProductDetails)
 
 const PORT = 3000;
 
 var id = null;
 
-app.get('/', (req, res) => {
+/* app.get('/', (req, res) => {
     console.log(`Passing ID${id}`);
     req.session.userID = id;
     console.log(`Got ID${req.session.userID}`);
     res.redirect('/view-booths.html')
-});
+}); */
 
-app.post('/set-session', (req, res) => {
+/* app.post('/set-session', (req, res) => {
     const { userID } = req.body;
     console.log(req.body);
     if (userID) {
@@ -70,7 +72,7 @@ app.post('/set-session', (req, res) => {
     } else {
         res.status(400).send('User ID is required');
     }
-});
+}); */
 
 app.get('/view-cart', (req, res) => {
     console.log(`Cart ID ${req.session.userID}`)

@@ -15,7 +15,6 @@ router.get('/', (request, response) => {
     const price = request.query.price;
     console.log("Received price: ", price);
 
-
     let query = `SELECT p.* FROM products p LEFT JOIN orderdetails od ON p.productID = od.productID`;
     let queryParams = []; 
 

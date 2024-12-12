@@ -83,7 +83,7 @@
                 </div>
 
                 <h1 id="products-label">Top Products</h1>
-                <h3 id="y-label">Showing Results for: </h3>
+                <h3 id="query-label">Showing Results for: </h3>
                 <div class="products">
                 </div>
             </section>
@@ -408,6 +408,10 @@
                     var button = document.createElement('button');
                     button.innerText="Add To Cart"
 
+                    prodDiv.addEventListener("click", function() {
+                        window.location.href = `order-page.html?productID=${product.productID}`;
+                    });
+
                     button.addEventListener("click", function() {
                         var successImg = document.createElement('img');
                         successImg.src = "/style/img/success-icon.png";
@@ -437,6 +441,7 @@
                 })
             }
 
+            
         </script>
     </body>
 </html>

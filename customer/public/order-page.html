@@ -42,6 +42,7 @@
     <script>
         loadNavbar();
         loadFooter();
+        fetchProductData();
 
         // Header
         function loadNavbar() {
@@ -54,14 +55,14 @@
             }
 
             // Footer
-            function loadFooter(){
-                fetch('footer.html')  
-                    .then(response => response.text()) 
-                    .then(html => {
-                        document.getElementById('footer').innerHTML = html; 
-                    })
-                    .catch(error => console.error('Error loading navbar:', error));
-            }
+        function loadFooter(){
+            fetch('footer.html')  
+                .then(response => response.text()) 
+                .then(html => {
+                    document.getElementById('footer').innerHTML = html; 
+                })
+                .catch(error => console.error('Error loading navbar:', error));
+        }
 
             // Increase and Decrease Button
             const quantityInput = document.getElementById("quantity");
@@ -88,46 +89,56 @@
                 }
             });
 
-            async function fetchProductData() {
-                try {
-                    const productID = getParameterByName('productID'); 
-                    const response = await fetch(`/api/getProductDetails?productID=${productID}`); 
-                    const product = await response.json();
 
+            function fetchProductData(){
+                const productID = getParameterByName('productID'); 
+                var url = `/getproductdetails?productID=${productID}`;
+                console.log("Fetching product details from: ", url)
+
+                fetch(url)
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then (data => {
+                        renderProduct(data);
+                        fetchRelatedProducts(data.orgID);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching org details', error)
+                        alert("error");
+                })
+            }
+
+            function fetchRelatedProducts(orgID){
+                var url = `/getproducts?orgID=${orgID}`;
+                console.log("Fetching products from: ", url)
+
+                fetch(url)
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then (data => {
+                        renderRelatedProducts(data);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching org details', error)
+                        alert("error");
+                    })
+            } 
+            
+            function renderProduct(product) {
+                try {
+                    console.log(product);
                     document.getElementById("productOrder-image").src = product.pImage;
-                    document.getElementById("productOrder-name").textContent = product.pName;
-                    document.getElementById("productOrder-price").textContent = `₱ ${product.price.toFixed(2)}`;
-                    document.getElementById("productOrder-description").textContent = product.pDesc;
-                    document.getElementById("available-stock").textContent = `Available Stock: ${product.stock}`;
+                    document.getElementById("productOrder-name").innerText= product.pName;
+                    document.getElementById("productOrder-price").innerText = `₱ ${product.price}`;
+                    document.getElementById("productOrder-description").innerText = product.pDesc;
+                    document.getElementById("available-stock").innerText = `Available Stock: ${product.stock}`;
 
                     // Store available stock for validation
                     availableStock = product.stock;
-
-                    // Display other products from the same organization
-                    const productsGrid = document.getElementById("products-grid");
-                    const otherProductsResponse = await fetch(`/api/getProducts?orgID=${product.orgID}`); 
-                    const products = await otherProductsResponse.json();
-                    
-                    products.forEach(otherProduct => {
-                        if (otherProduct.productID !== productID) {  // Avoid displaying the same product
-                            const productItem = document.createElement("div");
-                            productItem.classList.add("product-item");
-                            productItem.innerHTML = `
-                                <img src="${otherProduct.pImage}" alt="${otherProduct.pName}">
-                                <p>${otherProduct.pName}</p>
-                                <p>₱ ${otherProduct.price.toFixed(2)}</p>
-                                <button class="btn add-to-cart">Add to Cart</button>
-                            `;
-                            productsGrid.appendChild(productItem);
-
-                            const addToCartBtn = productItem.querySelector('.add-to-cart');
-                            addToCartBtn.addEventListener("click", function() {
-                                addToCart(otherProduct);
-                            });
-                        }
-                    });
-
-                    // Handle Buy Now Button
+            
+                  /*   // Handle Buy Now Button
                     const buyNowButton = document.getElementById("buy-now");
                     buyNowButton.addEventListener("click", () => {
                         const quantity = parseInt(quantityInput.value);
@@ -154,15 +165,36 @@
                             window.location.href = 'view-transactions.html'; 
                         })
                         .catch(error => console.error('Error placing order:', error));
-                    });
+                    }); */
 
                 } catch (error) {
                     console.error('Error fetching product data:', error);
                 }
             }
 
-            fetchProductData();
+            function renderRelatedProducts(products){
+                // Display other products from the same organization
+                const productsGrid = document.getElementById("products-grid");
+        
+                products.forEach(otherProduct => {
+                        const productItem = document.createElement("div");
+                        productItem.classList.add("product-item");
+                        productItem.innerHTML = `
+                            <img src="${otherProduct.pImage}" alt="${otherProduct.pName}">
+                            <p>${otherProduct.pName}</p>
+                            <p>₱ ${otherProduct.price.toFixed(2)}</p>
+                            <button class="btn add-to-cart">Add to Cart</button>
+                        `;
+                        
+                        productsGrid.appendChild(productItem);
 
+                        const addToCartBtn = productItem.querySelector('.add-to-cart');
+                        addToCartBtn.addEventListener("click", function() {
+                            addToCart(otherProduct);
+                        });
+                });
+            } 
+ 
             // Add product to cart
             function addToCart(product) {
                 const quantity = parseInt(quantityInput.value);
@@ -190,6 +222,7 @@
 
             function getParameterByName(name) {
                 const urlParams = new URLSearchParams(window.location.search);
+                console.log(urlParams);
                 return urlParams.get(name);
             }
 
