@@ -36,6 +36,7 @@ const signup = require('./routes/signup');
 const search = require('./routes/search');
 const addToCart= require('./routes/addToCart');
 const getProductDetails = require('./routes/getProductDetails');
+const buyNow = require('./routes/buyNow')
 
 app.use(express.json());
 
@@ -53,14 +54,17 @@ app.use('/search', search);
 app.use('/getproductdetails', getProductDetails);
 app.use('/add-to-cart', addToCart);
 app.use('/addorder', addOrder);
+app.use('/buy-now', buyNow)
 
 const PORT = 3000;
 
 var id = null;
+var loggedIn = false;
 
 app.get('/', (req, res) => {
     console.log(`Passing ID${id}`);
     req.session.userID = id;
+    req.session.loggedIn = loggedIn;
     console.log(`Got ID${req.session.userID}`);
     res.redirect('/view-booths.html')
 });
@@ -70,6 +74,7 @@ app.post('/set-session', (req, res) => {
     console.log(req.body);
     if (userID) {
         id = userID;
+        loggedIn = true;
         open('http://localhost:3000');
     } else {
         res.status(400).send('User ID is required');
@@ -93,6 +98,8 @@ app.get('/logout', (req, res) => {
                 return res.status(500).send('Could not log out');
             }
             console.log(`User  Have Been Logged Out`);
+            loggedIn = false;
+            req.session.loggedIn = false;
             res.redirect('http://localhost/ings-website/shared/pages/login.php?logout=success');
         });
     } else {
