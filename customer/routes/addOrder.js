@@ -40,11 +40,23 @@ router.post('/', (req, res) => {
             });
             Promise.all(productOrgQueries)
                 .then(() => {
+                    
+                    
+                    const orgIDs = products.map(product => product.orgID);
+                    const uniqueOrgIDs = [...new Set(orgIDs)];
+    
+                    if (uniqueOrgIDs.length !== 1) {
+                        return res.status(400).json({ success: false, error: 'All products in a booth must belong to the same organization.' })
+                    }
+
+                    orgID = uniqueOrgIDs[0];
+
                     const orderQuery = `
-                        INSERT INTO orders (orderID, userID, totalAmount, dateOrdered, status)
+                        INSERT INTO orders (orderID, userID, orgID, totalAmount, dateOrdered, status)
                         VALUES (?, ?, ?, ?, NOW(), 'pending')
                     `;
-                    conn.query(orderQuery, [newOrderID, userID, totalAmount], (err, result) => {
+                    
+                    conn.query(orderQuery, [newOrderID, userID, orgID, totalAmount], (err, result) => {
                         if (err) {
                             console.error('Error inserting order:', err);
                             return res.status(500).json({ success: false, error: 'Failed to insert order' });
