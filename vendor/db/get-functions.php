@@ -25,34 +25,36 @@
         }
     }
 
-    function getSalesData($userID, $orgID) {
+    function getSalesDataByOrg($orgID) {
         global $conn;
-    
-        $query = "SELECT 
-                    p.pName AS ProductName,
-                    od.price AS Price,
-                    SUM(od.quantity) AS Quantity,
-                    (od.price * SUM(od.quantity)) AS TotalAmount
-                  FROM 
-                    orders o
-                  JOIN 
-                    orderdetails od ON o.orderID = od.orderID
-                  JOIN 
-                    products p ON od.productID = p.productID
-                  WHERE 
-                    o.orgID = ?        
-                    AND o.status = 'Delivered'  
-                  GROUP BY
-                    p.pName
-                  ORDER BY 
-                    o.orderID";
-    
+        
+        $query = "
+            SELECT 
+                orgs.oName AS OrganizationName,
+                p.pName AS ProductName,
+                od.price AS Price,
+                SUM(od.quantity) AS Quantity,
+                (od.price * SUM(od.quantity)) AS TotalAmount
+            FROM 
+                orders o
+            JOIN 
+                orderdetails od ON o.orderID = od.orderID
+            JOIN 
+                products p ON od.productID = p.productID
+            JOIN 
+                organizations orgs ON o.orgID = orgs.orgID
+            WHERE 
+                o.status = 'Delivered' AND o.orgID = ?  -- Filter by the user's orgID
+            GROUP BY 
+                orgs.oName, p.pName
+            ORDER BY 
+                orgs.oName, p.pName";
+        
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("i", $orgID); 
+        $stmt->bind_param("i", $orgID);  // Bind the orgID parameter
         $stmt->execute();
-    
         $result = $stmt->get_result();
-    
+        
         return $result;
     }
 
