@@ -14,12 +14,12 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-/* app.use(session({
+app.use(session({
     secret: 'secret_key',
     resave: true,
     saveUninitialized: false,
     cookie: {secure: false}
-})); */
+})); 
 
 
 const sql = require('./routes/db');
@@ -36,7 +36,6 @@ const signup = require('./routes/signup');
 const search = require('./routes/search');
 const addToCart= require('./routes/addToCart');
 const getProductDetails = require('./routes/getProductDetails');
-const addOrder = require('./routes/addOrder');
 
 app.use(express.json());
 
@@ -59,14 +58,14 @@ const PORT = 3000;
 
 var id = null;
 
-/* app.get('/', (req, res) => {
+app.get('/', (req, res) => {
     console.log(`Passing ID${id}`);
     req.session.userID = id;
     console.log(`Got ID${req.session.userID}`);
     res.redirect('/view-booths.html')
-}); */
+}); 
 
-/* app.post('/set-session', (req, res) => {
+app.post('/set-session', (req, res) => {
     const { userID } = req.body;
     console.log(req.body);
     if (userID) {
@@ -75,7 +74,7 @@ var id = null;
     } else {
         res.status(400).send('User ID is required');
     }
-}); */
+}); 
 
 app.get('/view-cart', (req, res) => {
     console.log(`Cart ID ${req.session.userID}`)
