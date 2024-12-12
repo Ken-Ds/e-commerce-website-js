@@ -15,8 +15,17 @@ router.get('/', (request, response) => {
     const price = request.query.price;
     console.log("Received price: ", price);
 
+    const search = request.query.search;
+    console.log("Received search ", search)
+
     let query = `SELECT p.* FROM products p LEFT JOIN orderdetails od ON p.productID = od.productID`;
-    let queryParams = []; 
+    let queryParams = [];
+
+    if (search){
+        query += ` WHERE p.pName LIKE ?`
+        key = "%" + search + "%"
+        queryParams.push(key);
+    }
 
     if (orgID) {
         query += ` WHERE p.orgID = ?`;

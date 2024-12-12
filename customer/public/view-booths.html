@@ -92,10 +92,13 @@
         <section id="footer"></section>
 
         <script>
+            
+
             getProducts();
             getOrgs();
             loadNavbar();
             loadFooter();
+
 
             var orgID = null;
 
@@ -105,40 +108,53 @@
                 });
             });
 
-            var catSelect = document.getElementById("cat-select");
-            catSelect.addEventListener("change", function () {
-                const selectedValue = catSelect.value;
-                console.log("Selected option:", selectedValue);
-                getProducts(orgID,selectedValue);
+            const urlParams = new URLSearchParams(window.location.search);
+            var query = null
+                if (urlParams.has('query')) {
+                query = urlParams.get('query');
+                console.log(`You searched for: ${query}`);
+                } else {
+                console.log('No query parameter found');
+                }
+
+            if (query) {
+                searchProduct(query);
                 
-                const queryLabel = document.getElementById("query-label");
-                queryLabel.innerText = "Showing Results for: Category " + catSelect.value;
-                catSelect.selectedIndex = 0;
-                queryLabel.style.display = "block";
-            });
+            } else {
+                var catSelect = document.getElementById("cat-select");
+                catSelect.addEventListener("change", function () {
+                    const selectedValue = catSelect.value;
+                    console.log("Selected option:", selectedValue);
+                    getProducts(orgID,selectedValue);
+                    
+                    const queryLabel = document.getElementById("query-label");
+                    queryLabel.innerText = "Showing Results for: Category " + catSelect.value;
+                    catSelect.selectedIndex = 0;
+                    queryLabel.style.display = "block";
+                });
 
-            var alphaSelect = document.getElementById("alpha-select");
-            alphaSelect.addEventListener("change", function() {
-                const selectedValue = alphaSelect.value;
-                getProducts(orgID, null, selectedValue);
+                var alphaSelect = document.getElementById("alpha-select");
+                alphaSelect.addEventListener("change", function() {
+                    const selectedValue = alphaSelect.value;
+                    getProducts(orgID, null, selectedValue);
 
-                const queryLabel = document.getElementById("query-label");
-                queryLabel.innerText = "Showing Results for: " + alphaSelect.value;
-                alphaSelect.selectedIndex = 0;
-                queryLabel.style.display = "block";
-            })
+                    const queryLabel = document.getElementById("query-label");
+                    queryLabel.innerText = "Showing Results for: " + alphaSelect.value;
+                    alphaSelect.selectedIndex = 0;
+                    queryLabel.style.display = "block";
+                })
 
-            var priceSelect = document.getElementById("price-select");
-            priceSelect.addEventListener("change", function() {
-                const selectedValue = priceSelect.value;
-                getProducts(orgID, null, null, selectedValue);
+                var priceSelect = document.getElementById("price-select");
+                priceSelect.addEventListener("change", function() {
+                    const selectedValue = priceSelect.value;
+                    getProducts(orgID, null, null, selectedValue);
 
-                const queryLabel = document.getElementById("query-label");
-                queryLabel.innerText = "Showing Results for: Price " + priceSelect.value;
-                priceSelect.selectedIndex = 0;
-                queryLabel.style.display = "block";
-            })
-
+                    const queryLabel = document.getElementById("query-label");
+                    queryLabel.innerText = "Showing Results for: Price " + priceSelect.value;
+                    priceSelect.selectedIndex = 0;
+                    queryLabel.style.display = "block";
+                })
+            }
 
             function resetFilters(){
                 getProducts(orgID);
@@ -356,6 +372,30 @@
                 }
 
                 console.log('Fetching products from:', url); 
+
+                fetch(url)
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then( data=> {
+                        showProducts(data);
+                    })
+                    .catch( error => {
+                        console.error('Error fetching products:', error); ;
+                        alert("error");
+                    });
+            }
+
+            function searchProduct(query){
+                const queryLabel = document.getElementById("query-label");
+                queryLabel.innerText = "Showing Results for: " + query;
+                queryLabel.style.display = "block";
+
+                var url = `getproducts`;
+
+                if(query){
+                    url += `?search=${query}`
+                }
 
                 fetch(url)
                     .then(response => {
