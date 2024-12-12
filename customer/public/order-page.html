@@ -35,38 +35,39 @@
         <div class="other-products">
             <h3>Other Products</h3>
             <div class="products-grid" id="products-grid"></div>
+        </div>
     </div>
 
-   
     <section id="footer"></section>
+
     <script>
+        var org = null;
+        var availableStock = 0; 
         loadNavbar();
         fetchProductData();
 
+        
         const addToCartBtn = document.getElementById('add-to-cart');
         addToCartBtn.addEventListener("click", function() {
-            url = `/add-to-cart`;
-
-            const userID = '1'; // Replace with actual user ID
+            const url = `/add-to-cart`;
             const productID = getParameterByName('productID');
             const quantity = document.getElementById('quantity').value;
 
-            fetch(url , {
+            fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    userID: userID,
                     productID: productID,
                     quantity: quantity
                 })
             })
             .then(response => {
-                            if (!response.ok) {
-                                throw new Error(response.statusText);
-                            }
-                            return response.json();
+                if (!response.ok) {
+                    throw new Error(response.statusText);
+                }
+                return response.json();
             })
             .then(data => {
                 alert(data.message);
@@ -76,17 +77,11 @@
             });
         });
 
-        // Handle Buy Now Button
+       
         const buyNowButton = document.getElementById('buy-now');
         buyNowButton.addEventListener("click", function () {
             const productID = getParameterByName('productID');
-            const userID = getUserID();
             const quantity = parseInt(document.getElementById('quantity').value);
-
-            if (!userID) {
-                alert('Please log in to buy products.');
-                return;
-            }
 
             if (quantity > availableStock) {
                 alert('Insufficient stock available.');
@@ -94,161 +89,166 @@
             }
 
             fetch('/buy-now', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                userID: userID,
-                productID: productID,
-                quantity: quantity,
-            }),
-        })
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    productID: productID,
+                    quantity: quantity,
+                    orgID: org
+                }),
+            })
             .then(response => {
-                console.log('Response:', response);
                 if (!response.ok) {
-                    console.error('Error response:', response);
                     throw new Error(response.statusText);
                 }
                 return response.json();
             })
             .then(data => {
-                console.log('Buy Now success:', data);
                 alert(data.message);
             })
             .catch(error => {
-                console.error('Buy Now error:', error);
                 alert('Error: ' + error.message);
             });
-            
         });
-    
-        // Header
-        function loadNavbar() {
-                fetch('header.html')  
-                    .then(response => response.text()) 
-                    .then(html => {
-                        document.getElementById('navbar').innerHTML = html; 
-                    })
-                    .catch(error => console.error('Error loading navbar:', error));
-            }
 
-        // Footer
-        function loadFooter(){
+     
+        function loadNavbar() {
+            fetch('header.html')  
+                .then(response => response.text()) 
+                .then(html => {
+                    document.getElementById('navbar').innerHTML = html; 
+                })
+                .catch(error => console.error('Error loading navbar:', error));
+        }
+
+      
+        function loadFooter() {
             fetch('footer.html')  
                 .then(response => response.text()) 
                 .then(html => {
                     document.getElementById('footer').innerHTML = html; 
                 })
-                .catch(error => console.error('Error loading navbar:', error));
+                .catch(error => console.error('Error loading footer:', error));
         }
 
-            // Increase and Decrease Button
-            const quantityInput = document.getElementById("quantity");
-            const decreaseButton = document.getElementById("decrease");
-            const increaseButton = document.getElementById("increase");
+     
+        const quantityInput = document.getElementById("quantity");
+        const decreaseButton = document.getElementById("decrease");
+        const increaseButton = document.getElementById("increase");
 
-            // Increase 
-            increaseButton.addEventListener("click", () => {
-                let currentQuantity = parseInt(quantityInput.value); 
-                if (currentQuantity < availableStock) {
-                    currentQuantity++;
-                    quantityInput.value = currentQuantity;
-                } else {
-                    alert("Quantity exceeds available stock!");
-                }
-            });
-
-            // Decrease
-            decreaseButton.addEventListener("click", () => {
-                let currentQuantity = parseInt(quantityInput.value); 
-                if (currentQuantity > 1) { 
-                    currentQuantity--; 
-                    quantityInput.value = currentQuantity;
-                }
-            });
-
-            function fetchProductData(){
-                const productID = getParameterByName('productID'); 
-                var url = `/getproductdetails?productID=${productID}`;
-                console.log("Fetching product details from: ", url)
-
-                fetch(url)
-                    .then(response => {
-                        return response.json();
-                    })
-                    .then (data => {
-                        renderProduct(data);
-                        fetchRelatedProducts(data.orgID);
-                    })
-                    .catch(error => {
-                        console.error('Error fetching org details', error)
-                        alert("error");
-                })
+       
+        increaseButton.addEventListener("click", () => {
+            let currentQuantity = parseInt(quantityInput.value);
+            if (currentQuantity < availableStock) {
+                currentQuantity++;
+                quantityInput.value = currentQuantity;
+            } else {
+                alert("Quantity exceeds available stock!");
             }
+        });
 
-            function fetchRelatedProducts(orgID){
-                var url = `/getproducts?orgID=${orgID}`;
-                console.log("Fetching products from: ", url)
-
-                fetch(url)
-                    .then(response => {
-                        return response.json();
-                    })
-                    .then (data => {
-                        renderRelatedProducts(data);
-                    })
-                    .catch(error => {
-                        console.error('Error fetching org details', error)
-                        alert("error");
-                    })
-            } 
-            
-            function renderProduct(product) {
-                try {
-                    console.log(product);
-                    document.getElementById("productOrder-image").src = product.pImage;
-                    document.getElementById("productOrder-name").innerText= product.pName;
-                    document.getElementById("productOrder-price").innerText = `₱ ${product.price}`;
-                    document.getElementById("productOrder-description").innerText = product.pDesc;
-                    document.getElementById("available-stock").innerText = `Available Stock: ${product.stock}`;
-
-                    // Store available stock for validation
-                    availableStock = product.stock;
-
-                } catch (error) {
-                    console.error('Error fetching product data:', error);
-                }
-            }
-
-            function renderRelatedProducts(products){
-                // Display other products from the same organization
-                const productsGrid = document.getElementById("products-grid");
         
-                products.forEach(otherProduct => {
-                        const productItem = document.createElement("div");
-                        productItem.classList.add("product-item");
-                        productItem.innerHTML = `
-                            <img src="${otherProduct.pImage}" alt="${otherProduct.pName}">
-                            <p>${otherProduct.pName}</p>
-                            <p>₱ ${otherProduct.price.toFixed(2)}</p>
-                            
-                        `;
-                        
-                        productsGrid.appendChild(productItem);
-                });
-            } 
- 
-            function getParameterByName(name) {
-                const urlParams = new URLSearchParams(window.location.search);
-                console.log(urlParams);
-                return urlParams.get(name);
+        decreaseButton.addEventListener("click", () => {
+            let currentQuantity = parseInt(quantityInput.value);
+            if (currentQuantity > 1) {
+                currentQuantity--;
+                quantityInput.value = currentQuantity;
             }
+        });
 
-            function getUserID() {
-                return localStorage.getItem('userID'); 
-            }
-            
+      
+        function fetchProductData() {
+            const productID = getParameterByName('productID');
+            var url = `/getproductdetails?productID=${productID}`;
+            console.log("Fetching product details from: ", url);
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    renderProduct(data);
+                    org = data.orgID;
+                    availableStock = data.availableStock;  
+                    fetchRelatedProducts(data.orgID);
+                })
+                .catch(error => {
+                    console.error('Error fetching product details', error);
+                    alert("Error fetching product details.");
+                });
+        }
+
+
+        function fetchRelatedProducts(orgID) {
+            var url = `/getproducts?orgID=${orgID}`;
+            console.log("Fetching products from: ", url);
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    renderRelatedProducts(data);
+                })
+                .catch(error => {
+                    console.error('Error fetching related products', error);
+                    alert("Error fetching related products.");
+                });
+        }
+
+     
+        function renderRelatedProducts(products) {
+            const productsGrid = document.getElementById("products-grid");
+
+            products.forEach(otherProduct => {
+                const productItem = document.createElement("div");
+                productItem.classList.add("product-item");
+                productItem.innerHTML = `
+                    <img src="${otherProduct.pImage}" alt="${otherProduct.pName}">
+                    <p>${otherProduct.pName}</p>
+                    <p>₱ ${otherProduct.price.toFixed(2)}</p>
+                `;
+
+               
+                productItem.addEventListener("click", function() {
+                    window.location.href = `order-page.html?productID=${otherProduct.productID}`;
+                });
+
+                productsGrid.appendChild(productItem);
+            });
+        }
+
+      
+        function renderProduct(data) {
+           
+            const productImage = document.getElementById('productOrder-image');
+            productImage.src = data.pImage; 
+           
+            const productName = document.getElementById('productOrder-name');
+            productName.textContent = data.pName;  
+
+          
+            const productPrice = document.getElementById('productOrder-price');
+            productPrice.textContent = `₱ ${data.price.toFixed(2)}`; 
+
+           
+            const productDescription = document.getElementById('productOrder-description');
+            productDescription.textContent = data.pDescription; 
+
+           
+            const availableStockElem = document.getElementById('available-stock');
+            availableStockElem.textContent = `Available Stock: ${data.availableStock}`;  
+        }
+
+       
+        function getParameterByName(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+       
+        function getUserID() {
+            return localStorage.getItem('userID'); 
+        }
+
     </script>
 </body>
 </html>
