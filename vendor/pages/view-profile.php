@@ -1,11 +1,4 @@
-<!-- HTML BASIS AUTHORED BY: MODELO, ALEX EVAN
-    PHP AUTHORED BY: BURGOS, MIGUEL JOSHUA
-    SESSION HANDLING ADDED BY: CHUA, HARVEY LANCE -->
-    
 <?php
-
-// Author: Miguel Joshua Burgos -- implement backend logic
-
 session_start();
 
 if (!isset($_SESSION['userID'])) {

@@ -1,5 +1,3 @@
-<!-- AUTHORED BY: CAGULADA, SHERYN ANN -->
- 
 <?php
 
 $conn = new mysqli("localhost", "root", "", "ings");

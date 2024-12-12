@@ -1,10 +1,4 @@
-<!-- HTML BASIS AUTHORED BY: MODELO, ALEXX EVAN
-    PHP AUTHORED BY: BURGOS, MIGUEL JOSHUA
-    SESSION HANDLING ADDED BY: CHUA, HARVEY LANCE -->
-    
 <?php
-
-// Author: Miguel Joshua Burgos -- implement backend logic
 include '../db/get-functions.php';
 include '../includes/navbar.php';
 
@@ -40,48 +34,50 @@ if ($result->num_rows > 0) {
 </head>
 <body>
 
-<div class="sales-container">
-    <h1 class="sales-header">Sales by Organization</h1>
-    <div class="table-wrapper">
-        <table class="sales-table">
-            <thead>
-                <tr>
-                    <th>Product Name</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Total Amount</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                $salesData = getSalesDataByOrg($orgID);  // Pass the orgID to the function
-                $grandTotal = 0;
+    <div class="sales-container">
+        <h1 class="sales-header">Sales</h1>
+        <div class="table-wrapper">
+            <table class="sales-table">
+                <thead>
+                    <tr> 
+                        <th>Product Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    // Fetch sales data using the updated function
+                    $salesData = getSalesData($userID, $orgID);
+                    $grandTotal = 0;
 
-                if ($salesData && $salesData->num_rows > 0) {
-                    while ($row = $salesData->fetch_assoc()) {
-                        echo "<tr>";
-                        echo "<td>" . htmlspecialchars($row['ProductName']) . "</td>";
-                        echo "<td>₱" . htmlspecialchars(number_format($row['Price'], 2)) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['Quantity']) . "</td>";
-                        echo "<td>₱" . htmlspecialchars(number_format($row['TotalAmount'], 2)) . "</td>";
-                        echo "</tr>";
+                    // Fetch and display each row of data
+                    if ($salesData && $salesData->num_rows > 0) {
+                        while ($row = $salesData->fetch_assoc()) {
+                            echo "<tr>";
+                            echo "<td>" . htmlspecialchars($row['ProductName']) . "</td>";
+                            echo "<td>₱" . htmlspecialchars(number_format($row['Price'], 2)) . "</td>";
+                            echo "<td>" . htmlspecialchars($row['Quantity']) . "</td>";
+                            echo "<td>₱" . htmlspecialchars(number_format($row['TotalAmount'], 2)) . "</td>";
+                            echo "</tr>";
 
-                        $grandTotal += $row['TotalAmount'];
+                            $grandTotal += $row['TotalAmount'];
+                        }
+                    } else {
+                        echo "<tr><td colspan='4'>No sales data available.</td></tr>";
                     }
-                } else {
-                    echo "<tr><td colspan='4'>No sales data available.</td></tr>";
-                }
-                ?>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="3" class="total-label">Grand Total Sales</td>
-                    <td>₱<?php echo number_format($grandTotal, 2); ?></td>
-                </tr>
-            </tfoot>
-        </table>
+                    ?>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="total-label">Total Sales</td>
+                        <td>₱<?php echo number_format($grandTotal, 2); ?></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
     </div>
-</div>
 
 <?php include "../includes/footer.php"; ?>
 </body>

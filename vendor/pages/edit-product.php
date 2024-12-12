@@ -1,7 +1,3 @@
-<!--HTML BASIS AUTHORED BY: EVANGELISTA, KENDRICK  
-    AUTHORED BY: CAGULADA, SHERYN ANN 
-    VALIDATION AUTHORED BY: BURGOS, MIGUEL JOSHUA -->
-    
 <?php 
 include '../includes/navbar.php';
 include '../db/get-functions.php';

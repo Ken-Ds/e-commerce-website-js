@@ -1,5 +1,3 @@
-<!-- AUTHORED BY: CAGULADA, SHERYN ANN
-    VALIDATION AUTHORED BY: BURGOS, MIGUEL JOSHUA -->
 <?php
 include 'dbconnect.php';
 

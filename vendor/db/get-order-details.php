@@ -1,4 +1,3 @@
-<!-- AUTHORED BY: LUMANGLAS, YENZY HYNNA -->
 <?php
 include 'dbconnect.php';
 

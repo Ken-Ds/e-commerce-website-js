@@ -1,8 +1,4 @@
-<!-- getSalesDataByOrg AUTHORED BY: BURGOS, MIGUEL JOSHUA
-    getOrders & getOrderDetails AUTHORED BY: LUMANGLAS, YENZY HYNNA -->
-
 <?php
-// Author: Miguel Joshua Burgos --Create the getsaledDataByOrg 
 
     include '../db/dbconnect.php';
 
@@ -29,36 +25,34 @@
         }
     }
 
-    function getSalesDataByOrg($orgID) {
+    function getSalesData($userID, $orgID) {
         global $conn;
-        
-        $query = "
-            SELECT 
-                orgs.oName AS OrganizationName,
-                p.pName AS ProductName,
-                od.price AS Price,
-                SUM(od.quantity) AS Quantity,
-                (od.price * SUM(od.quantity)) AS TotalAmount
-            FROM 
-                orders o
-            JOIN 
-                orderdetails od ON o.orderID = od.orderID
-            JOIN 
-                products p ON od.productID = p.productID
-            JOIN 
-                organizations orgs ON o.orgID = orgs.orgID
-            WHERE 
-                o.status = 'Delivered' AND o.orgID = ?  -- Filter by the user's orgID
-            GROUP BY 
-                orgs.oName, p.pName
-            ORDER BY 
-                orgs.oName, p.pName";
-        
+    
+        $query = "SELECT 
+                    p.pName AS ProductName,
+                    od.price AS Price,
+                    SUM(od.quantity) AS Quantity,
+                    (od.price * SUM(od.quantity)) AS TotalAmount
+                  FROM 
+                    orders o
+                  JOIN 
+                    orderdetails od ON o.orderID = od.orderID
+                  JOIN 
+                    products p ON od.productID = p.productID
+                  WHERE 
+                    o.orgID = ?        
+                    AND o.status = 'Delivered'  
+                  GROUP BY
+                    p.pName
+                  ORDER BY 
+                    o.orderID";
+    
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("i", $orgID);  
+        $stmt->bind_param("i", $orgID); 
         $stmt->execute();
+    
         $result = $stmt->get_result();
-        
+    
         return $result;
     }
 
